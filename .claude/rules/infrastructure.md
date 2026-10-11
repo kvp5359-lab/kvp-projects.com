@@ -27,7 +27,7 @@
   `kvp-projects.com` (файл `docs/CNAME`). DNS — на Hostinger: A-записи корня на адреса GitHub Pages, `www` — CNAME на
   `kvp5359-lab.github.io`.
 - Обновить сайт: `python3 build.py` → коммит → `git push` (только с «да» пользователя).
-- Ленты обновлений живут отдельно (`../updates`, `kvp5359-lab.github.io/updates/…`) — приложения ходят туда, домен на них не влияет.
+- Ленты обновлений живут отдельно (`../updates`, `updates.kvp-projects.com/…`) — приложения ходят туда, домен на них не влияет.
 
 ## Окружение и секреты
 Нет.
