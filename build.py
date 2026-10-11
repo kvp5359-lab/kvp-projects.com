@@ -29,6 +29,8 @@ T = {
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
         "all": "Все программы", "noEn": "", "langSwitch": "English", "next": "Скоро — {list}.",
         "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников", "contact": "Написать мне",
+        "activateTitle": "Активация лицензии", "activateLead": "Открой приложение — ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или вставь ключ вручную: Настройки → О программе → Лицензия.",
+        "openIn": "Открыть в {name}", "copy": "Скопировать ключ", "copied": "Скопировано", "noKey": "В ссылке нет ключа — открой ссылку из письма ещё раз.",
         "sections": {"mac": ("Для Mac", "macOS"), "chrome": ("Для браузера", "Google Chrome"), "windows": ("Для Windows", ""),
                      "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
@@ -41,6 +43,8 @@ T = {
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
         "all": "All apps", "noEn": "The change history is available in Russian.", "langSwitch": "Русский",
         "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov", "contact": "Contact me",
+        "activateTitle": "License activation", "activateLead": "Open the app — the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or paste the key yourself: Settings → About → License.",
+        "openIn": "Open in {name}", "copy": "Copy Key", "copied": "Copied", "noKey": "There’s no key in this link — open the link from the email again.",
         "sections": {"mac": ("For Mac", "macOS"), "chrome": ("For the browser", "Google Chrome"), "windows": ("For Windows", ""),
                      "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
@@ -203,7 +207,7 @@ def build():
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     os.makedirs(os.path.join(OUT, "assets", "icons"))
-    for name in ("style.css", "favicon.svg"):
+    for name in ("style.css", "favicon.svg", "activate.js"):
         shutil.copy(os.path.join(ROOT, "assets", name), os.path.join(OUT, "assets"))
     shutil.copytree(os.path.join(ROOT, "assets", "fonts"), os.path.join(OUT, "assets", "fonts"))
     open(os.path.join(OUT, "assets", "ink.svg"), "w").write(pencil.sprite())
@@ -238,6 +242,19 @@ def build():
                     f'{beta_note(p, lang)}'
                     f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/"))
+
+    # The license activation page: the purchase email links here (license-tool issue prints the link); the key is in
+    # the fragment (#key=…), which browsers never send to the server. assets/activate.js does the rest.
+    apps = [{"id": p["id"], "name": p["name"], "scheme": pl["scheme"]} for p in data for pl in p["platforms"] if pl.get("scheme")]
+    for lang in ("ru", "en"):
+        t = T[lang]
+        base = "en/" if lang == "en" else ""
+        payload = json.dumps({"apps": apps, "texts": {k: t[k] for k in ("openIn", "noKey", "copied")}}, ensure_ascii=False)
+        body = (f'<section class="hero"><h1>{t["activateTitle"]}</h1>{ink("under", "under")}<p class="lead">{t["activateLead"]}</p></section>'
+                f'<div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p>'
+                f'<div class="action"><button class="button is-off" id="copy">{t["copy"]}</button></div>'
+                f'<script type="application/json" id="activate-data">{payload}</script><script src="/assets/activate.js"></script>')
+        write(f"{base}activate/index.html", page(lang, t["activateTitle"], t["activateLead"], body, "activate/"))
 
     write("404.html", page("ru", T["ru"]["notFound"], "", f'<section class="hero"><h1>{T["ru"]["notFound"]}</h1>'
                            f'<p class="lead"><a href="/">{T["ru"]["home"]}</a> · <a href="/en/">Home</a></p></section>', ""))

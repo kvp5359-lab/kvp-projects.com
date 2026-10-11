@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>License activation</title>
+<meta name="description" content="Open the app — the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or paste the key yourself: Settings → About → License.">
+<link rel="alternate" hreflang="ru" href="https://kvp-projects.com/activate/">
+<link rel="alternate" hreflang="en" href="https://kvp-projects.com/en/activate/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="wrap">
+<header class="top"><a class="brand" href="/en/">kvp projects</a><a class="lang" href="/activate/" hreflang="ru">Русский</a></header>
+<main>
+<section class="hero"><h1>License activation</h1><svg class="under" aria-hidden="true"><use href="/assets/ink.svg#under"></use></svg><p class="lead">Open the app — the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or paste the key yourself: Settings → About → License.</p></section><div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p><div class="action"><button class="button is-off" id="copy">Copy Key</button></div><script type="application/json" id="activate-data">{"apps": [{"id": "dictum", "name": "Dictum", "scheme": "dictum"}, {"id": "textum", "name": "Textum", "scheme": "textum"}, {"id": "cliplark", "name": "Cliplark", "scheme": "cliplark"}, {"id": "shotlark", "name": "Shotlark", "scheme": "shotlark"}, {"id": "note-calc", "name": "Note Calc", "scheme": "notecalc"}], "texts": {"openIn": "Open in {name}", "noKey": "There’s no key in this link — open the link from the email again.", "copied": "Copied"}}</script><script src="/assets/activate.js"></script>
+</main>
+<footer class="foot"><span>© 2026 Kirill Prudnikov</span><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Contact me</a></footer>
+<script>/* The address is put together on click: not in the page for spam bots. */
+document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => { e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }));</script>
+</div>
+</body>
+</html>
