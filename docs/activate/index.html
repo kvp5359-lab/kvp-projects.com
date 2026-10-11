@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Активация лицензии</title>
-<meta name="description" content="Открой приложение — ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или вставь ключ вручную: Настройки → О программе → Лицензия.">
-<link rel="alternate" hreflang="ru" href="https://kvp-projects.com/activate/">
-<link rel="alternate" hreflang="en" href="https://kvp-projects.com/en/activate/">
+<meta name="description" content="Нажми кнопку — приложение откроется, и ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или скопируй ключ и вставь вручную.">
+<meta name="robots" content="noindex">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
@@ -15,9 +14,9 @@
 <div class="wrap">
 <header class="top"><a class="brand" href="/">kvp projects</a><a class="lang" href="/en/activate/" hreflang="en">English</a></header>
 <main>
-<section class="hero"><h1>Активация лицензии</h1><svg class="under" aria-hidden="true"><use href="/assets/ink.svg#under"></use></svg><p class="lead">Открой приложение — ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или вставь ключ вручную: Настройки → О программе → Лицензия.</p></section><div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p><div class="action"><button class="button is-off" id="copy">Скопировать ключ</button></div><script type="application/json" id="activate-data">{"apps": [{"id": "dictum", "name": "Dictum", "scheme": "dictum"}, {"id": "textum", "name": "Textum", "scheme": "textum"}, {"id": "cliplark", "name": "Cliplark", "scheme": "cliplark"}, {"id": "shotlark", "name": "Shotlark", "scheme": "shotlark"}, {"id": "note-calc", "name": "Note Calc", "scheme": "notecalc"}], "texts": {"openIn": "Открыть в {name}", "noKey": "В ссылке нет ключа — открой ссылку из письма ещё раз.", "copied": "Скопировано"}}</script><script src="/assets/activate.js"></script>
+<section class="hero"><h1>Активация лицензии</h1><svg class="under" aria-hidden="true"><use href="/assets/ink.svg#under"></use></svg><p class="lead">Нажми кнопку — приложение откроется, и ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или скопируй ключ и вставь вручную.</p></section><div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p><div class="action"><button class="button" id="copy" type="button"><svg class="frame" aria-hidden="true"><use href="/assets/ink.svg#btn"></use></svg><span>Скопировать ключ</span></button></div><script type="application/json" id="activate-data">{"apps": [{"id": "dictum", "name": "Dictum", "scheme": "dictum", "page": "/dictum/", "path": "Настройки → О программе → Лицензия"}, {"id": "textum", "name": "Textum", "scheme": "textum", "page": "/textum/", "path": "Настройки → О программе → Лицензия"}, {"id": "cliplark", "name": "Cliplark", "scheme": "cliplark", "page": "/cliplark/", "path": "Настройки → О программе → Лицензия"}, {"id": "shotlark", "name": "Shotlark", "scheme": "shotlark", "page": "/shotlark/", "path": "Настройки → О программе → Лицензия"}, {"id": "note-calc", "name": "Note Calc", "scheme": "notecalc", "page": "/note-calc/", "path": "Настройки → Справка → Лицензия"}], "texts": {"openIn": "Открыть {name}", "noKey": "В ссылке нет ключа или он повреждён — открой ссылку из письма ещё раз.", "copied": "Скопировано", "copyManually": "Ключ выделен — нажми ⌘C", "unknownApp": "Ссылка указывает на приложение, которого я не знаю. Выбери своё приложение ниже.", "paste": "Вручную: {path}", "download": "страница {name}"}}</script><script src="/assets/activate.js"></script>
 </main>
-<footer class="foot"><span>© 2026 Кирилл Прудников</span><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Написать мне</a></footer>
+<footer class="foot"><span>© 2026 Кирилл Прудников</span><span class="foot-links"><a href="/privacy/">Конфиденциальность</a><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Написать мне</a></span></footer>
 <script>/* The address is put together on click: not in the page for spam bots. */
 document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => { e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }));</script>
 </div>

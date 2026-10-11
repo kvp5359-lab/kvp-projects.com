@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kvp-projects.com/sitemap.xml

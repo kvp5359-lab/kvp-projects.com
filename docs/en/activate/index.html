@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>License activation</title>
-<meta name="description" content="Open the app — the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or paste the key yourself: Settings → About → License.">
-<link rel="alternate" hreflang="ru" href="https://kvp-projects.com/activate/">
-<link rel="alternate" hreflang="en" href="https://kvp-projects.com/en/activate/">
+<meta name="description" content="Press the button — the app opens and the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or copy the key and paste it yourself.">
+<meta name="robots" content="noindex">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
@@ -15,9 +14,9 @@
 <div class="wrap">
 <header class="top"><a class="brand" href="/en/">kvp projects</a><a class="lang" href="/activate/" hreflang="ru">Русский</a></header>
 <main>
-<section class="hero"><h1>License activation</h1><svg class="under" aria-hidden="true"><use href="/assets/ink.svg#under"></use></svg><p class="lead">Open the app — the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or paste the key yourself: Settings → About → License.</p></section><div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p><div class="action"><button class="button is-off" id="copy">Copy Key</button></div><script type="application/json" id="activate-data">{"apps": [{"id": "dictum", "name": "Dictum", "scheme": "dictum"}, {"id": "textum", "name": "Textum", "scheme": "textum"}, {"id": "cliplark", "name": "Cliplark", "scheme": "cliplark"}, {"id": "shotlark", "name": "Shotlark", "scheme": "shotlark"}, {"id": "note-calc", "name": "Note Calc", "scheme": "notecalc"}], "texts": {"openIn": "Open in {name}", "noKey": "There’s no key in this link — open the link from the email again.", "copied": "Copied"}}</script><script src="/assets/activate.js"></script>
+<section class="hero"><h1>License activation</h1><svg class="under" aria-hidden="true"><use href="/assets/ink.svg#under"></use></svg><p class="lead">Press the button — the app opens and the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or copy the key and paste it yourself.</p></section><div class="actions" id="open"></div><p class="key-line"><code id="key"></code></p><div class="action"><button class="button" id="copy" type="button"><svg class="frame" aria-hidden="true"><use href="/assets/ink.svg#btn"></use></svg><span>Copy Key</span></button></div><script type="application/json" id="activate-data">{"apps": [{"id": "dictum", "name": "Dictum", "scheme": "dictum", "page": "/en/dictum/", "path": "Settings → About → License"}, {"id": "textum", "name": "Textum", "scheme": "textum", "page": "/en/textum/", "path": "Settings → About → License"}, {"id": "cliplark", "name": "Cliplark", "scheme": "cliplark", "page": "/en/cliplark/", "path": "Settings → About → License"}, {"id": "shotlark", "name": "Shotlark", "scheme": "shotlark", "page": "/en/shotlark/", "path": "Settings → About → License"}, {"id": "note-calc", "name": "Note Calc", "scheme": "notecalc", "page": "/en/note-calc/", "path": "Settings → Help → License"}], "texts": {"openIn": "Open {name}", "noKey": "There’s no key in this link, or it’s damaged — open the link from the email again.", "copied": "Copied", "copyManually": "The key is selected — press ⌘C", "unknownApp": "This link points to an app I don’t know. Choose your app below.", "paste": "By hand: {path}", "download": "{name} page"}}</script><script src="/assets/activate.js"></script>
 </main>
-<footer class="foot"><span>© 2026 Kirill Prudnikov</span><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Contact me</a></footer>
+<footer class="foot"><span>© 2026 Kirill Prudnikov</span><span class="foot-links"><a href="/en/privacy/">Privacy</a><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Contact me</a></span></footer>
 <script>/* The address is put together on click: not in the page for spam bots. */
 document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => { e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }));</script>
 </div>
