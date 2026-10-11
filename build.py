@@ -5,9 +5,13 @@ Reads products.json, each product's CHANGELOG.md (and CHANGELOG.en.md when it ha
 ../updates (the newest released version → the download link). Run after a release or a change in products.json:
     python3 build.py
 Paths in products.json are relative to this folder; the shelf ~/Проекты/mac-apps must be next to it.
+The look — the design on claude.ai (canvas «kvp-projects.com»): white paper, dark ink, pencil frames drawn like
+Dictum's pencil style (pencil.py).
 """
 import html, json, os, re, shutil, subprocess, sys, urllib.parse
 import xml.etree.ElementTree as ET
+
+import pencil
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "docs")
@@ -17,20 +21,26 @@ SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 
 T = {
     "ru": {
-        "title": "kvp projects", "lead": "Небольшие программы, которые я делаю для себя и делюсь ими. Mac-приложения и расширения для Chrome — дальше Windows, Android и iOS.",
-        "apps": "Приложения", "download": "Скачать для Mac", "soon": "Скоро", "store": "Установить из Chrome Web Store",
-        "chromeSoon": "Скоро в Chrome Web Store", "requires": "Нужна {min} или новее", "chromeReq": "Google Chrome и браузеры на его основе",
-        "version": "Версия {v}", "changes": "Что нового", "older": "Предыдущие версии", "all": "Все программы",
-        "free": "Бесплатно. Тексты, записи и файлы остаются у тебя.", "noEn": "", "langSwitch": "English", "unreleased": "Готовится",
-        "notFound": "Такой страницы нет", "home": "На главную",
+        "title": "kvp projects", "h1": "Приложения для Mac<br>и браузера",
+        "lead": "Диктовка, работа с текстом, буфер обмена, скриншоты, заметки-калькулятор и расширения для Chrome.",
+        "download": "Скачать для Mac", "soon": "Скоро", "store": "Установить из Chrome Web Store",
+        "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
+        "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
+        "all": "Все программы", "noEn": "", "langSwitch": "English", "next": "Скоро — {list}.",
+        "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников",
+        "sections": {"mac": ("Для Mac", "macOS"), "chrome": ("Для браузера", "Google Chrome"), "windows": ("Для Windows", ""),
+                     "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
     "en": {
-        "title": "kvp projects", "lead": "Small apps I make for myself and share. Mac apps and Chrome extensions — Windows, Android and iOS are next.",
-        "apps": "Apps", "download": "Download for Mac", "soon": "Coming soon", "store": "Add from Chrome Web Store",
-        "chromeSoon": "Coming soon to Chrome Web Store", "requires": "Requires {min} or later", "chromeReq": "Google Chrome and Chromium-based browsers",
-        "version": "Version {v}", "changes": "What’s new", "older": "Earlier versions", "all": "All apps",
-        "free": "Free. Your texts, recordings and files stay with you.", "noEn": "The change history is available in Russian.", "langSwitch": "Русский", "unreleased": "In the works",
-        "notFound": "Page not found", "home": "Home",
+        "title": "kvp projects", "h1": "Apps for Mac<br>and the browser",
+        "lead": "Dictation, text tools, clipboard history, screenshots, a calculator notepad and Chrome extensions.",
+        "download": "Download for Mac", "soon": "Coming soon", "store": "Add from Chrome Web Store",
+        "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
+        "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
+        "all": "All apps", "noEn": "The change history is available in Russian.", "langSwitch": "Русский",
+        "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov",
+        "sections": {"mac": ("For Mac", "macOS"), "chrome": ("For the browser", "Google Chrome"), "windows": ("For Windows", ""),
+                     "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
 }
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
@@ -44,7 +54,7 @@ def rel(p):
 
 
 def parse_changelog(path):
-    """Keep a Changelog, the shelf's rules: [(version|None, date, [(section, [items])])], newest first."""
+    """Keep a Changelog, the shelf's rules: [{version|None, date, sections: [{title, items}]}], newest first."""
     if not path or not os.path.exists(rel(path)):
         return None
     out, cur, sec = [], None, None
@@ -82,29 +92,34 @@ def latest_mac(feed):
     if not os.path.exists(path):
         return None
     items = ET.parse(path).getroot().findall("./channel/item")
-    versions = [i.findtext(SPARKLE + "shortVersionString") for i in items]
-    versions = [v for v in versions if v]
+    versions = [v for v in (i.findtext(SPARKLE + "shortVersionString") for i in items) if v]
     return max(versions, key=lambda v: [int(x) for x in v.split(".")]) if versions else None
 
 
 def make_icon(p):
-    dest = os.path.join(OUT, "assets", "icons", p["id"] + (".svg" if "symbol" in p["icon"] else ".png"))
     icon = p["icon"]
+    dest = os.path.join(OUT, "assets", "icons", p["id"] + (".svg" if "symbol" in icon else ".png"))
     if "symbol" in icon:
         open(dest, "w").write(CAMERA_SVG)
     else:
         src = next((rel(icon[k]) for k in ("icns", "fallback", "png") if icon.get(k) and os.path.exists(rel(icon[k]))), None)
         if not src:
             sys.exit(f"❌ нет значка для {p['id']}")
-        subprocess.run(["sips", "-s", "format", "png", "--resampleHeightWidthMax", "256", src, "--out", dest],
+        subprocess.run(["sips", "-s", "format", "png", "--resampleHeightWidthMax", "288", src, "--out", dest],
                        check=True, capture_output=True)
     return "assets/icons/" + os.path.basename(dest)
+
+
+def ink(shape, cls):
+    """A pencil shape from the sprite (assets/ink.svg), stretched over its box, in the text colour."""
+    return f'<svg class="{cls}" aria-hidden="true"><use href="/assets/ink.svg#{shape}"></use></svg>'
 
 
 def page(lang, title, description, body, path):
     """One page; links are from the site root (the site lives at the domain root). `path`: "" or "dictum/"."""
     other = "en" if lang == "ru" else "ru"
     switch = f"/en/{path}" if lang == "ru" else f"/{path}"
+    home = "/en/" if lang == "en" else "/"
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -115,21 +130,22 @@ def page(lang, title, description, body, path):
 <link rel="alternate" hreflang="ru" href="https://{DOMAIN}/{path}">
 <link rel="alternate" hreflang="en" href="https://{DOMAIN}/en/{path}">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-<header class="top"><a class="brand" href="/{'en/' if lang == 'en' else ''}">kvp projects</a><a class="lang" href="{switch}" hreflang="{other}">{T[lang]['langSwitch']}</a></header>
+<div class="wrap">
+<header class="top"><a class="brand" href="{home}">kvp projects</a><a class="lang" href="{switch}" hreflang="{other}">{T[lang]['langSwitch']}</a></header>
 <main>
 {body}
 </main>
-<footer class="foot">© 2026 Kirill Prudnikov · <a href="mailto:kvp5359@gmail.com">kvp5359@gmail.com</a></footer>
+<footer class="foot"><span>© 2026 {T[lang]['author']}</span><a href="mailto:kvp5359@gmail.com">kvp5359@gmail.com</a></footer>
+</div>
 </body>
 </html>
 """
-
-
-def platform_badges(p):
-    return "".join(f'<span class="badge">{PLATFORM[x["kind"]]}</span>' for x in p["platforms"])
 
 
 def actions(p, lang):
@@ -139,14 +155,15 @@ def actions(p, lang):
             v = latest_mac(pl["feed"])
             if v:
                 url = f"{RELEASES}/{pl['feed']}-{v}/{urllib.parse.quote(pl['file'])}-{v}.dmg"
-                out.append(f'<a class="button" href="{url}">{t["download"]}</a><span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}</span>')
+                out.append(f'<a class="button" href="{url}">{ink("btn", "frame")}<span>{t["download"]}</span></a>'
+                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}</span>')
             else:
                 out.append(f'<span class="button is-off">{t["soon"]}</span><span class="meta">{t["requires"].format(min=pl["min"])}</span>')
         elif pl["kind"] == "chrome":
             if pl.get("store"):
-                out.append(f'<a class="button" href="{e(pl["store"])}">{t["store"]}</a><span class="meta">{t["chromeReq"]}</span>')
+                out.append(f'<a class="button is-wide" href="{e(pl["store"])}">{ink("btn", "frame")}<span>{t["store"]}</span></a>')
             else:
-                out.append(f'<span class="button is-off">{t["chromeSoon"]}</span><span class="meta">{t["chromeReq"]}</span>')
+                out.append(f'<span class="button is-off">{t["chromeSoon"]}</span>')
         else:
             out.append(f'<span class="button is-off">{PLATFORM[pl["kind"]]} — {t["soon"]}</span>')
     return "".join(f'<div class="action">{a}</div>' for a in out)
@@ -156,18 +173,19 @@ def changes(p, lang):
     t = T[lang]
     log = parse_changelog(p.get("changelog_en")) if lang == "en" else parse_changelog(p.get("changelog"))
     if log is None:
-        return f'<p class="meta">{t["noEn"]}</p>' if lang == "en" and t["noEn"] else ""
+        return f'<p class="meta">{t["noEn"]}</p>' if t["noEn"] else ""
     released = [r for r in log if r["version"]]
     if not released:
         return ""
 
     def block(r):
-        secs = "".join(f'<h4>{e(s["title"])}</h4><ul>{"".join(f"<li>{inline(i)}</li>" for i in s["items"])}</ul>' for s in r["sections"] if s["items"])
+        secs = "".join(f'<h4>{e(s["title"])}</h4><ul>{"".join(f"<li>{inline(i)}</li>" for i in s["items"])}</ul>'
+                       for s in r["sections"] if s["items"])
         return f'<section class="release"><h3>{t["version"].format(v=r["version"])}<span class="meta"> · {r["date"] or ""}</span></h3>{secs}</section>'
 
     first, rest = released[0], released[1:]
     older = f'<details><summary>{t["older"]}</summary>{"".join(block(r) for r in rest)}</details>' if rest else ""
-    return f'<h2>{t["changes"]}</h2>{block(first)}{older}'
+    return f'<section class="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{block(first)}{older}</section>'
 
 
 def build():
@@ -175,31 +193,42 @@ def build():
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     os.makedirs(os.path.join(OUT, "assets", "icons"))
-    shutil.copy(os.path.join(ROOT, "assets", "style.css"), os.path.join(OUT, "assets"))
-    shutil.copy(os.path.join(ROOT, "assets", "favicon.svg"), os.path.join(OUT, "assets"))
+    for name in ("style.css", "favicon.svg"):
+        shutil.copy(os.path.join(ROOT, "assets", name), os.path.join(OUT, "assets"))
+    open(os.path.join(OUT, "assets", "ink.svg"), "w").write(pencil.sprite())
     icons = {p["id"]: make_icon(p) for p in data}
+    kinds = [k for k in PLATFORM if any(pl["kind"] == k for p in data for pl in p["platforms"])]
+    later = [k for k in ("windows", "android", "ios") if k not in kinds]
 
     for lang in ("ru", "en"):
         t = T[lang]
         base = "en/" if lang == "en" else ""
-        cards = "".join(
-            f'<a class="card" href="/{base}{p["id"]}/"><img src="/{icons[p["id"]]}" alt="" width="64" height="64">'
-            f'<div><h3>{e(p["name"])}</h3><p>{e(p["tagline"][lang])}</p><div class="badges">{platform_badges(p)}</div></div></a>'
-            for p in data)
-        body = f'<section class="hero"><h1>{t["title"]}</h1><p class="lead">{t["lead"]}</p></section><h2>{t["apps"]}</h2><div class="grid">{cards}</div>'
+        sections, n = "", 0
+        for kind in kinds:
+            title, sub = t["sections"][kind]
+            cards = ""
+            for p in (p for p in data if any(pl["kind"] == kind for pl in p["platforms"])):
+                cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
+                          f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
+                          f'<span class="card-text"><b>{e(p["name"])}</b><span>{e(p["tagline"][lang])}</span></span></a>')
+                n += 1
+            sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
+                         f'<span class="meta">{sub}</span></div><div class="grid">{cards}</div></section>')
+        nxt = f'<p class="meta next">{t["next"].format(list=", ".join(PLATFORM[k] for k in later))}</p>' if later else ""
+        body = f'<section class="hero"><h1>{t["h1"]}</h1>{ink("under", "under")}<p class="lead">{t["lead"]}</p></section>{sections}{nxt}'
         write(base + "index.html", page(lang, t["title"], t["lead"], body, ""))
 
         for p in data:
-            feats = "".join(f"<li>{e(f)}</li>" for f in p["features"][lang])
+            feats = "".join(f'<li>{ink("dot", "dot")}<span>{e(f)}</span></li>' for f in p["features"][lang])
             body = (f'<a class="back" href="/{base}">← {t["all"]}</a>'
-                    f'<section class="product"><img src="/{icons[p["id"]]}" alt="" width="128" height="128">'
-                    f'<div><h1>{e(p["name"])}</h1><p class="lead">{e(p["tagline"][lang])}</p><div class="badges">{platform_badges(p)}</div></div></section>'
-                    f'<p>{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
-                    f'<ul class="features">{feats}</ul><p class="meta">{t["free"]}</p>{changes(p, lang)}')
-            write(f'{base}{p["id"]}/index.html',
-                  page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/"))
+                    f'<section class="product"><img src="/{icons[p["id"]]}" alt="" width="144" height="144">'
+                    f'<div><h1>{e(p["name"])}</h1><p class="lead">{e(p["tagline"][lang])}</p></div></section>'
+                    f'<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
+                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}')
+            write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/"))
 
-    write("404.html", page("ru", T["ru"]["notFound"], "", f'<section class="hero"><h1>{T["ru"]["notFound"]}</h1><p><a href="/">{T["ru"]["home"]}</a> · <a href="/en/">Home</a></p></section>', ""))
+    write("404.html", page("ru", T["ru"]["notFound"], "", f'<section class="hero"><h1>{T["ru"]["notFound"]}</h1>'
+                           f'<p class="lead"><a href="/">{T["ru"]["home"]}</a> · <a href="/en/">Home</a></p></section>', ""))
     write("CNAME", DOMAIN + "\n")
     write(".nojekyll", "")
     print(f"✅ {DOMAIN}: {len(data)} продуктов → docs/")
