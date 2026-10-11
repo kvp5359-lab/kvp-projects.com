@@ -36,7 +36,8 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 15, Apple silicon",
+          "min": "macOS 15",
+          "arch": "Apple silicon",
           "feed": "dictum",
           "file": "Dictum",
           "scheme": "dictum",
@@ -134,7 +135,8 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 26, Apple silicon",
+          "min": "macOS 26",
+          "arch": "Apple silicon",
           "feed": "cliplark",
           "file": "Cliplark",
           "scheme": "cliplark",
@@ -184,7 +186,8 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 26, Apple silicon",
+          "min": "macOS 26",
+          "arch": "Apple silicon",
           "feed": "shotlark",
           "file": "Shotlark",
           "scheme": "shotlark",

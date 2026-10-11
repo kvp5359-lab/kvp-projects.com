@@ -247,13 +247,14 @@ def actions(p, lang):
     ui = f' · {t["uiRuOnly"]}' if lang == "en" and "en" not in p.get("ui_langs", ["en", "ru"]) else ""
     for pl in p["platforms"]:
         if pl["kind"] == "mac":
+            arch = f' · {pl["arch"]}' if pl.get("arch") else ""   # e.g. "Apple silicon" for arm64-only builds
             v = latest_mac(pl["feed"])
             if v:
                 url = f"{RELEASES}/{pl['feed']}-{v}/{urllib.parse.quote(pl['file'])}-{v}.dmg"
                 out.append(f'<a class="button" href="{url}">{ink("btn", "frame")}<span>{t["download"]}</span></a>'
-                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{ui}</span>')
+                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{arch}{ui}</span>')
             else:
-                out.append(f'<span class="button is-off">{t["soon"]}</span><span class="meta">{t["requires"].format(min=pl["min"])}{ui}</span>')
+                out.append(f'<span class="button is-off">{t["soon"]}</span><span class="meta">{t["requires"].format(min=pl["min"])}{arch}{ui}</span>')
         elif pl["kind"] == "chrome":
             if pl.get("store"):
                 out.append(f'<a class="button is-wide" href="{e(pl["store"])}">{ink("btn", "frame")}<span>{t["store"]}</span></a>')
@@ -270,6 +271,12 @@ def changes(p, lang):
     if log is None:
         return f'<p class="meta">{t["noEn"]}</p>' if t["noEn"] else ""
     released = [r for r in log if r["version"]]
+    # Never ahead of the Download button: a Mac app shows only versions already published in its feed.
+    feeds = [pl["feed"] for pl in p.get("platforms", []) if pl["kind"] == "mac"]
+    if feeds:
+        published = latest_mac(feeds[0])
+        num = lambda v: [int(x) for x in v.split(".")]
+        released = [r for r in released if published and num(r["version"]) <= num(published)]
     if not released:
         return ""
 
