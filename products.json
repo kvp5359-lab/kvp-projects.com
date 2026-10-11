@@ -60,7 +60,7 @@
     {
       "id": "cliplark",
       "name": "Cliplark",
-      "icon": {"icns": "/Applications/Cliplark.app/Contents/Resources/AppIcon.icns", "fallback": "../clipboard-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512.png"},
+      "icon": {"png": "../clipboard-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"},
       "changelog": "../clipboard-app/CHANGELOG.md",
       "changelog_en": "../clipboard-app/CHANGELOG.en.md",
       "tagline": {"ru": "Всё, что ты копируешь, — под рукой", "en": "Everything you copy, one shortcut away"},
@@ -89,7 +89,7 @@
     {
       "id": "shotlark",
       "name": "Shotlark",
-      "icon": {"icns": "/Applications/Shotlark.app/Contents/Resources/AppIcon.icns", "fallback": "../screenshot-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"},
+      "icon": {"png": "../screenshot-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"},
       "changelog": "../screenshot-app/CHANGELOG.md",
       "changelog_en": "../screenshot-app/CHANGELOG.en.md",
       "tagline": {"ru": "Скриншоты и запись экрана", "en": "Screenshots and screen recording"},
