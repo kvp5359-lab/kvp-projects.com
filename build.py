@@ -28,7 +28,7 @@ T = {
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
         "all": "Все программы", "noEn": "", "langSwitch": "English", "next": "Скоро — {list}.",
-        "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников",
+        "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников", "contact": "Написать мне",
         "sections": {"mac": ("Для Mac", "macOS"), "chrome": ("Для браузера", "Google Chrome"), "windows": ("Для Windows", ""),
                      "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
@@ -40,13 +40,12 @@ T = {
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
         "all": "All apps", "noEn": "The change history is available in Russian.", "langSwitch": "Русский",
-        "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov",
+        "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov", "contact": "Contact me",
         "sections": {"mac": ("For Mac", "macOS"), "chrome": ("For the browser", "Google Chrome"), "windows": ("For Windows", ""),
                      "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
 }
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
-CAMERA_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa3ff"/><stop offset="1" stop-color="#0a64e0"/></linearGradient></defs><rect x="16" y="16" width="224" height="224" rx="52" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"><path d="M64 96V76a12 12 0 0 1 12-12h20M160 64h20a12 12 0 0 1 12 12v20M192 160v20a12 12 0 0 1-12 12h-20M96 192H76a12 12 0 0 1-12-12v-20"/><circle cx="128" cy="128" r="30"/></g></svg>"""
 
 e = html.escape
 
@@ -103,15 +102,12 @@ def latest_mac(feed):
 
 def make_icon(p):
     icon = p["icon"]
-    dest = os.path.join(OUT, "assets", "icons", p["id"] + (".svg" if "symbol" in icon else ".png"))
-    if "symbol" in icon:
-        open(dest, "w").write(CAMERA_SVG)
-    else:
-        src = next((rel(icon[k]) for k in ("icns", "fallback", "png") if icon.get(k) and os.path.exists(rel(icon[k]))), None)
-        if not src:
-            sys.exit(f"❌ нет значка для {p['id']}")
-        subprocess.run(["sips", "-s", "format", "png", "--resampleHeightWidthMax", "288", src, "--out", dest],
-                       check=True, capture_output=True)
+    dest = os.path.join(OUT, "assets", "icons", p["id"] + ".png")
+    src = next((rel(icon[k]) for k in ("icns", "fallback", "png") if icon.get(k) and os.path.exists(rel(icon[k]))), None)
+    if not src:
+        sys.exit(f"❌ нет значка для {p['id']}")
+    subprocess.run(["sips", "-s", "format", "png", "--resampleHeightWidthMax", "288", src, "--out", dest],
+                   check=True, capture_output=True)
     return "assets/icons/" + os.path.basename(dest)
 
 
@@ -144,9 +140,7 @@ def page(lang, title, description, body, path):
 <link rel="alternate" hreflang="ru" href="https://{DOMAIN}/{path}">
 <link rel="alternate" hreflang="en" href="https://{DOMAIN}/en/{path}">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap">
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -155,7 +149,9 @@ def page(lang, title, description, body, path):
 <main>
 {body}
 </main>
-<footer class="foot"><span>© 2026 {T[lang]['author']}</span><a href="mailto:kvp5359@gmail.com">kvp5359@gmail.com</a></footer>
+<footer class="foot"><span>© 2026 {T[lang]['author']}</span><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">{T[lang]['contact']}</a></footer>
+<script>/* The address is put together on click: not in the page for spam bots. */
+document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => {{ e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }}));</script>
 </div>
 </body>
 </html>
@@ -209,6 +205,7 @@ def build():
     os.makedirs(os.path.join(OUT, "assets", "icons"))
     for name in ("style.css", "favicon.svg"):
         shutil.copy(os.path.join(ROOT, "assets", name), os.path.join(OUT, "assets"))
+    shutil.copytree(os.path.join(ROOT, "assets", "fonts"), os.path.join(OUT, "assets", "fonts"))
     open(os.path.join(OUT, "assets", "ink.svg"), "w").write(pencil.sprite())
     icons = {p["id"]: make_icon(p) for p in data}
     kinds = [k for k in PLATFORM if any(pl["kind"] == k for p in data for pl in p["platforms"])]

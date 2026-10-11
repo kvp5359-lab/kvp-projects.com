@@ -8,9 +8,7 @@
 <link rel="alternate" hreflang="ru" href="https://kvp-projects.com/dictum/">
 <link rel="alternate" hreflang="en" href="https://kvp-projects.com/en/dictum/">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap">
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -19,7 +17,9 @@
 <main>
 <a class="back" href="/en/">← All apps</a><section class="product"><img src="/assets/icons/dictum.png" alt="" width="144" height="144"><div><h1>Dictum <span class="beta">Beta</span></h1><p class="lead">Dictation into any app</p></div></section><p class="summary">Press a key, speak, and the text appears where your cursor is. Speech recognition right on your Mac or in the cloud with your own key, with AI text cleanup.</p><div class="actions"><div class="action"><a class="button" href="https://github.com/kvp5359-lab/updates/releases/download/dictum-0.3.0/Dictum-0.3.0.dmg"><svg class="frame" aria-hidden="true"><use href="/assets/ink.svg#btn"></use></svg><span>Download for Mac</span></a><span class="meta">Version 0.3.0 · macOS 15 or later</span></div></div><p class="meta beta-note">Beta: the app is in active development, more is on the way.</p><section class="features"><h2>Features</h2><ul><li><svg class="dot" aria-hidden="true"><use href="/assets/ink.svg#dot"></use></svg><span>Recognition on your Mac (Whisper, Parakeet, Apple) or in the cloud: OpenAI, Groq, Deepgram, ElevenLabs</span></li><li><svg class="dot" aria-hidden="true"><use href="/assets/ink.svg#dot"></use></svg><span>Modes, each with its own model, language and AI text processing</span></li><li><svg class="dot" aria-hidden="true"><use href="/assets/ink.svg#dot"></use></svg><span>A live pill with the text as you speak, pause and switch modes on the fly</span></li><li><svg class="dot" aria-hidden="true"><use href="/assets/ink.svg#dot"></use></svg><span>A dictionary with word forms, dictation history by day</span></li><li><svg class="dot" aria-hidden="true"><use href="/assets/ink.svg#dot"></use></svg><span>Music is lowered or paused while you record</span></li></ul></section><p class="meta">The change history is available in Russian.</p>
 </main>
-<footer class="foot"><span>© 2026 Kirill Prudnikov</span><a href="mailto:kvp5359@gmail.com">kvp5359@gmail.com</a></footer>
+<footer class="foot"><span>© 2026 Kirill Prudnikov</span><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">Contact me</a></footer>
+<script>/* The address is put together on click: not in the page for spam bots. */
+document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => { e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }));</script>
 </div>
 </body>
 </html>
