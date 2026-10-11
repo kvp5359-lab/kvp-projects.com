@@ -1,0 +1,228 @@
+{
+  "_comment": "The catalog of kvp-projects.com. A product = one entry; a new platform = one more item in its platforms (kind: mac, chrome, windows, linux, ios, android). build.py makes the pages from this file and the products' changelogs.",
+  "products": [
+    {
+      "id": "dictum",
+      "name": "Dictum",
+      "icon": {"icns": "/Applications/Dictum.app/Contents/Resources/AppIcon.icns", "fallback": "../transcribe-app/Resources/AppIcon.icns"},
+      "changelog": "../transcribe-app/CHANGELOG.md",
+      "tagline": {"ru": "Диктовка в любое приложение", "en": "Dictation into any app"},
+      "summary": {
+        "ru": "Нажал клавишу, сказал — текст появился там, где стоит курсор. Распознавание прямо на Mac или в облаке по своему ключу, с обработкой текста ИИ.",
+        "en": "Press a key, speak, and the text appears where your cursor is. Speech recognition right on your Mac or in the cloud with your own key, with AI text cleanup."
+      },
+      "features": {
+        "ru": [
+          "Распознавание на Mac (Whisper, Parakeet, Apple) или в облаке: OpenAI, Groq, Deepgram, ElevenLabs",
+          "Режимы: у каждого своя модель, язык и обработка текста ИИ",
+          "Плашка с текстом прямо во время речи, пауза и смена режима на ходу",
+          "Словарь с формами слов, история диктовок по дням",
+          "Музыка на время записи приглушается или встаёт на паузу"
+        ],
+        "en": [
+          "Recognition on your Mac (Whisper, Parakeet, Apple) or in the cloud: OpenAI, Groq, Deepgram, ElevenLabs",
+          "Modes, each with its own model, language and AI text processing",
+          "A live pill with the text as you speak, pause and switch modes on the fly",
+          "A dictionary with word forms, dictation history by day",
+          "Music is lowered or paused while you record"
+        ]
+      },
+      "platforms": [{"kind": "mac", "min": "macOS 15", "feed": "dictum", "file": "Dictum"}]
+    },
+    {
+      "id": "textum",
+      "name": "Textum",
+      "icon": {"icns": "/Applications/Textum.app/Contents/Resources/AppIcon.icns", "fallback": "../textum/App/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"},
+      "changelog": "../textum/CHANGELOG.md",
+      "tagline": {"ru": "Всё для текста — у курсора", "en": "Everything for text, at your cursor"},
+      "summary": {
+        "ru": "Одна клавиша — и у курсора панель действий: ИИ, умные кнопки под тип текста, сниппеты, эмодзи и исправление текста, набранного не в той раскладке.",
+        "en": "One key opens an action panel at your cursor: AI, smart buttons for the kind of text, snippets, emoji, and fixing text typed in the wrong keyboard layout."
+      },
+      "features": {
+        "ru": [
+          "ИИ-действия с выделенным текстом: перевод, исправление, свои команды",
+          "Умные кнопки для ссылок, почты, телефонов, адресов, выражений и валют",
+          "Сниппеты: ключевое слово разворачивается в текст в любом приложении",
+          "Переключатель раскладки: исправит «ghbdtn» на «привет»",
+          "Галерея эмодзи с поиском по-русски"
+        ],
+        "en": [
+          "AI actions on selected text: translate, fix, your own commands",
+          "Smart buttons for links, email, phone numbers, addresses, expressions and currencies",
+          "Snippets: a keyword expands into text in any app",
+          "Layout switcher: fixes text typed in the wrong keyboard layout",
+          "Emoji gallery with search"
+        ]
+      },
+      "platforms": [{"kind": "mac", "min": "macOS 15", "feed": "textum", "file": "Textum"}]
+    },
+    {
+      "id": "cliplark",
+      "name": "Cliplark",
+      "icon": {"icns": "/Applications/Cliplark.app/Contents/Resources/AppIcon.icns", "fallback": "../clipboard-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512.png"},
+      "changelog": "../clipboard-app/CHANGELOG.md",
+      "changelog_en": "../clipboard-app/CHANGELOG.en.md",
+      "tagline": {"ru": "Всё, что ты копируешь, — под рукой", "en": "Everything you copy, one shortcut away"},
+      "summary": {
+        "ru": "История буфера обмена: тексты, ссылки, картинки, файлы и цвета хранятся на твоём Mac и вставляются по ⇧⌘V.",
+        "en": "Clipboard history: texts, links, images, files and colors are kept on your Mac and pasted with ⇧⌘V."
+      },
+      "features": {
+        "ru": [
+          "Панель с карточками и превью, поиск, вставка без форматирования",
+          "Списки: сохраняй нужное навсегда и перетаскивай в другие приложения",
+          "Paste Stack: скопируй несколько, и каждое ⌘V вставит следующее",
+          "Пароли из менеджеров паролей не сохраняются, история вне Time Machine",
+          "Ограничения истории по сроку, количеству и месту"
+        ],
+        "en": [
+          "A panel of cards with previews, search, paste without formatting",
+          "Lists: keep what you need forever and drag it into other apps",
+          "Paste Stack: copy several items, and each ⌘V pastes the next",
+          "Passwords from password managers are never saved, history kept out of Time Machine",
+          "History limits by age, count and disk space"
+        ]
+      },
+      "platforms": [{"kind": "mac", "min": "macOS 26", "feed": "cliplark", "file": "Cliplark"}]
+    },
+    {
+      "id": "shotlark",
+      "name": "Shotlark",
+      "icon": {"symbol": "camera"},
+      "changelog": "../screenshot-app/CHANGELOG.md",
+      "changelog_en": "../screenshot-app/CHANGELOG.en.md",
+      "tagline": {"ru": "Скриншоты и запись экрана", "en": "Screenshots and screen recording"},
+      "summary": {
+        "ru": "Снимки области, окна и экрана, длинные снимки с прокруткой, пометки, распознавание текста и запись экрана в видео или GIF.",
+        "en": "Capture an area, a window or the screen, scrolling captures, annotations, text recognition and screen recording to video or GIF."
+      },
+      "features": {
+        "ru": [
+          "Снимки с таймером, заморозкой экрана, перекрестием и лупой",
+          "Снимок с прокруткой — одна длинная картинка",
+          "Редактор: стрелки, фигуры, текст, шаги, размытие, обрезка",
+          "Распознавание текста и QR-кодов на снимке",
+          "Запись экрана в видео или GIF со звуком и кликами"
+        ],
+        "en": [
+          "Captures with a timer, frozen screen, crosshair and magnifier",
+          "Scrolling capture — one long image",
+          "Editor: arrows, shapes, text, steps, blur, crop",
+          "Text and QR code recognition in captures",
+          "Screen recording to video or GIF with sound and clicks"
+        ]
+      },
+      "platforms": [{"kind": "mac", "min": "macOS 26", "feed": "shotlark", "file": "Shotlark"}]
+    },
+    {
+      "id": "note-calc",
+      "name": "Note Calc",
+      "icon": {"icns": "/Applications/Note Calc.app/Contents/Resources/icon.icns", "fallback": "../note-calc/src-tauri/icons/128x128@2x.png"},
+      "changelog": "../note-calc/CHANGELOG.md",
+      "changelog_en": "../note-calc/CHANGELOG.en.md",
+      "tagline": {"ru": "Заметки, которые считают сами", "en": "Notes that do the math"},
+      "summary": {
+        "ru": "Пишешь как в блокноте, а строки с расчётами сразу показывают результат: переменные, валюты с курсами дня, проценты, даты и мини-таблицы.",
+        "en": "Write as in a notepad, and lines with calculations show the result right away: variables, currencies with today's rates, percentages, dates and mini tables."
+      },
+      "features": {
+        "ru": [
+          "Переменные и ссылки на строки, слова-итоги: сумма, среднее, итого",
+          "Функции по-русски и по-английски, валюты, проценты, налоги, даты",
+          "Мини-таблицы с формулами и итогами",
+          "Заметки — обычные файлы Markdown в «Документах»",
+          "Быстрая запись из любой программы по ⌘⇧Пробел"
+        ],
+        "en": [
+          "Variables, line references and total words: sum, average, total",
+          "Functions in English and Russian, currencies, percentages, taxes, dates",
+          "Mini tables with formulas and totals",
+          "Notes are plain Markdown files in Documents",
+          "Quick entry from any app with ⌘⇧Space"
+        ]
+      },
+      "platforms": [{"kind": "mac", "min": "macOS 10.13", "feed": "note-calc", "file": "Note Calc"}]
+    },
+    {
+      "id": "subtitle-tools",
+      "name": "Subtitle Tools",
+      "icon": {"png": "../../chrome-extentions/subtitles2/icons/icon128.png"},
+      "changelog": "../../chrome-extentions/subtitles2/CHANGELOG.md",
+      "tagline": {"ru": "Двойные субтитры на YouTube", "en": "Dual subtitles for YouTube"},
+      "summary": {
+        "ru": "Оригинал и перевод одновременно — на паузе или всегда. Субтитры можно выделить, скопировать и сохранить в файл.",
+        "en": "The original and a translation at once — on pause or always. Select, copy and save subtitles to a file."
+      },
+      "features": {
+        "ru": [
+          "У каждого языка свой режим: выкл, на паузе или всегда",
+          "Перевод из субтитров автора, автоперевода YouTube или переводчика Chrome",
+          "Подсветка произносимого слова",
+          "Сохранение субтитров в .txt и .srt",
+          "Интерфейс на русском, английском и испанском"
+        ],
+        "en": [
+          "Each language has its own mode: off, on pause or always",
+          "Translation from the author's subtitles, YouTube auto-translate or Chrome's translator",
+          "The spoken word is highlighted",
+          "Save subtitles as .txt and .srt",
+          "Interface in English, Russian and Spanish"
+        ]
+      },
+      "platforms": [{"kind": "chrome", "store": ""}]
+    },
+    {
+      "id": "steady-speed",
+      "name": "Steady Speed",
+      "icon": {"png": "../../chrome-extentions/steady-speed/public/icons/128.png"},
+      "changelog": "../../chrome-extentions/steady-speed/CHANGELOG.md",
+      "tagline": {"ru": "Скорость видео, которая не слетает", "en": "Video speed that stays put"},
+      "summary": {
+        "ru": "Скорость видео на любом сайте: не сбрасывается после паузы и перемотки, запоминается для каждого сайта.",
+        "en": "Video speed on any site: it doesn't reset after pausing or seeking and is remembered per site."
+      },
+      "features": {
+        "ru": [
+          "Скорость держится после паузы, перемотки и полноэкранного режима",
+          "Запоминание по сайту, по вкладке или везде",
+          "Закладки на видео с названиями из субтитров",
+          "Горячие клавиши при любой раскладке"
+        ],
+        "en": [
+          "Speed holds after pause, seeking and full screen",
+          "Remembered per site, per tab or everywhere",
+          "Bookmarks in videos, named from the subtitles",
+          "Shortcuts that work in any keyboard layout"
+        ]
+      },
+      "platforms": [{"kind": "chrome", "store": ""}]
+    },
+    {
+      "id": "clear-site-data",
+      "name": "Clear Site Data",
+      "icon": {"png": "../../chrome-extentions/clear-cache/extension/icons/icon128.png"},
+      "changelog": "../../chrome-extentions/clear-cache/CHANGELOG.md",
+      "tagline": {"ru": "Очистка данных одного сайта", "en": "Clear data for one site"},
+      "summary": {
+        "ru": "Кэш, куки и хранилища только у сайта в текущей вкладке — остальные сайты не трогаются.",
+        "en": "Cache, cookies and storage for the site in the current tab only — other sites stay untouched."
+      },
+      "features": {
+        "ru": [
+          "Очистить кэш, куки или всё сразу",
+          "Защита от случайного выхода из аккаунта",
+          "Видно, сколько куки у сайта и на каких доменах",
+          "Alt+Shift+C — очистить кэш и перезагрузить вкладку"
+        ],
+        "en": [
+          "Clear the cache, cookies or everything",
+          "Protection against accidentally logging out",
+          "See how many cookies the site has and on which domains",
+          "Alt+Shift+C clears the cache and reloads the tab"
+        ]
+      },
+      "platforms": [{"kind": "chrome", "store": ""}]
+    }
+  ]
+}
