@@ -89,6 +89,9 @@ def inline(s):
 def latest_mac(feed):
     """The newest version in the app's update feed (../updates/<feed>/appcast.xml), or None before the first release."""
     path = os.path.join(ROOT, "..", "updates", feed, "appcast.xml")
+    tauri = os.path.join(ROOT, "..", "updates", feed, "latest.json")   # note-calc: Tauri's updater feed
+    if os.path.exists(tauri):
+        return json.load(open(tauri, encoding="utf-8")).get("version")
     if not os.path.exists(path):
         return None
     items = ET.parse(path).getroot().findall("./channel/item")

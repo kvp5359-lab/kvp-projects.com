@@ -142,7 +142,7 @@
           "Quick entry from any app with ⌘⇧Space"
         ]
       },
-      "platforms": [{"kind": "mac", "min": "macOS 10.13", "feed": "note-calc", "file": "Note Calc"}]
+      "platforms": [{"kind": "mac", "min": "macOS 10.13", "feed": "note-calc", "file": "Note-Calc"}]
     },
     {
       "id": "subtitle-tools",

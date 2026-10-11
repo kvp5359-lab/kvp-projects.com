@@ -13,7 +13,7 @@
   запасной `fallback`, `png`, или `symbol` — нарисованный значок), `changelog` / `changelog_en`, тексты `tagline`,
   `summary`, `features` на `ru`/`en`, `platforms`: `{kind: mac, min, feed, file}` / `{kind: chrome, store}` / позже
   `windows`, `linux`, `ios`, `android`. Новая платформа у продукта = ещё одна запись в `platforms`.
-- Кнопка «Скачать для Mac» появляется сама, когда в ленте `../updates/<feed>/appcast.xml` есть выпуск: ссылка
+- Кнопка «Скачать для Mac» появляется сама, когда в ленте `../updates/<feed>/appcast.xml` (у note-calc — `latest.json`) есть выпуск: ссылка
   `https://github.com/kvp5359-lab/updates/releases/download/<feed>-<версия>/<file>-<версия>.dmg` (так называет файлы
   `distribution/scripts/release.sh`). До выпуска — «Скоро». У расширений — ссылка `store` или «Скоро в Chrome Web Store».
 - Главная — разделы по платформам (Mac, браузер, дальше Windows / Android / iOS — появляются сами, когда у продукта есть
