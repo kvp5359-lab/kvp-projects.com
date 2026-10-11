@@ -25,6 +25,7 @@ T = {
         "lead": "Диктовка, работа с текстом, буфер обмена, скриншоты, заметки-калькулятор и расширения для Chrome.",
         "download": "Скачать для Mac", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
+        "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
         "all": "Все программы", "noEn": "", "langSwitch": "English", "next": "Скоро — {list}.",
         "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников",
@@ -36,6 +37,7 @@ T = {
         "lead": "Dictation, text tools, clipboard history, screenshots, a calculator notepad and Chrome extensions.",
         "download": "Download for Mac", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
+        "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
         "all": "All apps", "noEn": "The change history is available in Russian.", "langSwitch": "Русский",
         "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov",
@@ -111,6 +113,15 @@ def make_icon(p):
         subprocess.run(["sips", "-s", "format", "png", "--resampleHeightWidthMax", "288", src, "--out", dest],
                        check=True, capture_output=True)
     return "assets/icons/" + os.path.basename(dest)
+
+
+def beta(p, lang):
+    """The «Бета» mark: every product until products.json says "beta": false (a 1.0 release)."""
+    return f' <span class="beta">{T[lang]["beta"]}</span>' if p.get("beta", True) else ""
+
+
+def beta_note(p, lang):
+    return f'<p class="meta beta-note">{T[lang]["betaNote"]}</p>' if p.get("beta", True) else ""
 
 
 def ink(shape, cls):
@@ -213,7 +224,7 @@ def build():
             for p in (p for p in data if any(pl["kind"] == kind for pl in p["platforms"])):
                 cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
                           f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
-                          f'<span class="card-text"><b>{e(p["name"])}</b><span>{e(p["tagline"][lang])}</span></span></a>')
+                          f'<span class="card-text"><b>{e(p["name"])}{beta(p, lang)}</b><span>{e(p["tagline"][lang])}</span></span></a>')
                 n += 1
             sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
                          f'<span class="meta">{sub}</span></div><div class="grid">{cards}</div></section>')
@@ -225,8 +236,9 @@ def build():
             feats = "".join(f'<li>{ink("dot", "dot")}<span>{e(f)}</span></li>' for f in p["features"][lang])
             body = (f'<a class="back" href="/{base}">← {t["all"]}</a>'
                     f'<section class="product"><img src="/{icons[p["id"]]}" alt="" width="144" height="144">'
-                    f'<div><h1>{e(p["name"])}</h1><p class="lead">{e(p["tagline"][lang])}</p></div></section>'
+                    f'<div><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead">{e(p["tagline"][lang])}</p></div></section>'
                     f'<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
+                    f'{beta_note(p, lang)}'
                     f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/"))
 
