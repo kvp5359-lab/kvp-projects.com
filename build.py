@@ -16,7 +16,7 @@ import pencil
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "docs")
 DOMAIN = "kvp-projects.com"
-RELEASES = "https://github.com/kvp5359-lab/updates/releases/download"
+RELEASES = "https://updates.kvp-projects.com/files"   # our server (docs/updates-server.md); GitHub Releases is the archive
 SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 
 T = {
