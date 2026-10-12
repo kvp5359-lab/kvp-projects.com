@@ -22,7 +22,8 @@
   сборок только под новые Mac: пишется после требования к системе («macOS 15+ · Apple silicon»). Новая платформа у продукта = ещё одна запись в `platforms`.
 - Кнопка «Скачать для Mac» появляется сама, когда в **закоммиченной** ленте `../updates/<feed>/appcast.xml` (у note-calc —
   `latest.json`; читается `git show HEAD:…`, чтобы не сослаться на файл, который `publish.sh` ещё не выложил) есть выпуск: ссылка
-  `https://github.com/kvp5359-lab/updates/releases/download/<feed>-<версия>/<file>-<версия>.dmg` (так называет файлы
+  `https://updates.kvp-projects.com/files/<feed>-<версия>/<file>-<версия>.dmg` (наш сервер; копия — в Releases
+  `kvp5359-lab/updates`) (так называет файлы
   `distribution/scripts/release.sh`). До выпуска — «Скоро». У расширений — ссылка `store` или «Скоро в Chrome Web Store».
 - Главная — разделы по платформам (Mac, браузер, дальше Windows / Android / iOS — появляются сами, когда у продукта есть
   такая платформа; пока их нет — строка «Скоро — …»).
