@@ -86,7 +86,7 @@ PRIVACY = {
                 "В отчёте — версия приложения и macOS, сведения о Mac (процессор, память, свободное место) и служебные записи о том, что происходило перед ошибкой. Твоих текстов, диктовок, файлов, снимков и ключей там нет; путь к твоей домашней папке заменяется на «~».",
                 "Отчёт идёт через мой сервер reports.kvp-projects.com в сервис Sentry (данные хранятся в ЕС). Мой сервер не передаёт дальше твой IP-адрес, а Sentry настроен IP-адреса не хранить."]),
             ("Обновления и лицензия", [
-                "Раз в день приложение проверяет, нет ли новой версии, и читает файл с правилами лицензий на updates.kvp-projects.com. Это обычное скачивание файла: о тебе и о том, как ты пользуешься приложением, ничего не отправляется. Как и любой сайт, сервер видит адрес, с которого пришёл запрос. Новая версия ставится только с твоего согласия, автоматическую проверку можно выключить в настройках. Сами файлы приложений скачиваются с GitHub.",
+                "Раз в день приложение проверяет, нет ли новой версии, и читает файл с правилами лицензий на updates.kvp-projects.com. Это обычное скачивание файла: о тебе и о том, как ты пользуешься приложением, ничего не отправляется. Как и любой сайт, сервер видит адрес, с которого пришёл запрос. Новая версия ставится только с твоего согласия, автоматическую проверку можно выключить в настройках. Сами файлы приложений скачиваются оттуда же — с моего сервера; журнал обращений к нему не ведётся.",
                 "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на Mac, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер."]),
             ("Что отправляют отдельные приложения", [
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
@@ -110,7 +110,7 @@ PRIVACY = {
                 "A report contains the app and macOS versions, details about the Mac (processor, memory, free space) and technical notes about what happened before the error. It never includes your texts, dictations, files, screenshots or keys; the path to your home folder is replaced with “~”.",
                 "Reports go through my server reports.kvp-projects.com to Sentry (data stored in the EU). My server doesn’t pass your IP address on, and Sentry is set not to store IP addresses."]),
             ("Updates and licenses", [
-                "Once a day an app checks for a new version and reads the license policy file on updates.kvp-projects.com. It’s a plain file download: nothing about you or how you use the app is sent. Like any website, the server sees the address the request came from. A new version is installed only with your consent, and automatic checks can be turned off in settings. The app files themselves are downloaded from GitHub.",
+                "Once a day an app checks for a new version and reads the license policy file on updates.kvp-projects.com. It’s a plain file download: nothing about you or how you use the app is sent. Like any website, the server sees the address the request came from. A new version is installed only with your consent, and automatic checks can be turned off in settings. The app files themselves come from there too — my own server, which keeps no access log.",
                 "A license key contains the email it was issued to and is checked right on your Mac, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server."]),
             ("What individual apps send", [
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
@@ -168,7 +168,7 @@ def inline(s):
 def latest_mac(feed):
     """The newest PUBLISHED version in the app's update feed: ../updates/<feed>/appcast.xml (or note-calc's latest.json)
     as committed in the updates repo (HEAD), not the working tree — release.sh writes feeds there before publish.sh
-    uploads the files, and the site must never link to a download that isn't on GitHub yet. None before the first release."""
+    uploads the files, and the site must never link to a download that isn't on the update server yet. None before the first release."""
     updates = os.path.join(ROOT, "..", "updates")
     def committed(name):
         r = subprocess.run(["git", "-C", updates, "show", f"HEAD:{feed}/{name}"], capture_output=True)
