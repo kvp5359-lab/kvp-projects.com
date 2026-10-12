@@ -44,6 +44,18 @@
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
+          },
+          "uninstall": {
+            "since": "0.5.0",
+            "removes": {
+              "ru": "Уберёт приложение, настройки, историю диктовок и записи, скачанные модели распознавания и API-ключи, разрешения в «Конфиденциальности» и автозапуск.",
+              "en": "Removes the app, its settings, dictation history and recordings, downloaded speech models and API keys, its Privacy permissions and the login item."
+            },
+            "keeps": {
+              "ru": "Остаётся только маленькая общая папка kvp-projects/licensing: она помнит, с какого дня ты с нами, и хранит ключ, если он есть, — для всех моих приложений сразу. Твоих текстов и файлов там нет.",
+              "en": "Only a small shared folder, kvp-projects/licensing, stays: it remembers since when you’ve been with us and keeps your key, if you have one — for all my apps at once. None of your texts or files are in it."
+            },
+            "command": "osascript -e 'quit app \"Dictum\"'; rm -rf /Applications/Dictum.app ~/Library/Application\\ Support/Dictum ~/Library/Application\\ Support/FluidAudio/Models/parakeet-tdt-0.6b-v3 ~/Library/Application\\ Support/FluidAudio/Models/silero-vad ~/Library/Logs/Dictum ~/Library/Caches/com.kvp.dictum ~/Library/Caches/Dictum ~/Library/HTTPStorages/com.kvp.dictum ~/Library/HTTPStorages/com.kvp.dictum.binarycookies ~/Library/WebKit/com.kvp.dictum ~/Library/Saved\\ Application\\ State/com.kvp.dictum.savedState; defaults delete com.kvp.dictum; while security delete-generic-password -s com.kvp.dictum.apikeys >/dev/null 2>&1; do :; done; tccutil reset All com.kvp.dictum"
           }
         }
       ],
@@ -93,6 +105,18 @@
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
+          },
+          "uninstall": {
+            "since": "0.5.0",
+            "removes": {
+              "ru": "Уберёт приложение, настройки, твои действия, сниппеты и API-ключ, разрешения в «Конфиденциальности» и автозапуск.",
+              "en": "Removes the app, its settings, your actions, snippets and API key, its Privacy permissions and the login item."
+            },
+            "keeps": {
+              "ru": "Остаётся только маленькая общая папка kvp-projects/licensing: она помнит, с какого дня ты с нами, и хранит ключ, если он есть, — для всех моих приложений сразу. Твоих текстов и файлов там нет.",
+              "en": "Only a small shared folder, kvp-projects/licensing, stays: it remembers since when you’ve been with us and keeps your key, if you have one — for all my apps at once. None of your texts or files are in it."
+            },
+            "command": "osascript -e 'quit app \"Textum\"'; rm -rf /Applications/Textum.app ~/Library/Application\\ Support/Textum ~/Library/Caches/Textum ~/Library/Caches/app.textum.mac ~/Library/Logs/Textum ~/Library/HTTPStorages/app.textum.mac ~/Library/HTTPStorages/app.textum.mac.binarycookies ~/Library/WebKit/app.textum.mac ~/Library/Saved\\ Application\\ State/app.textum.mac.savedState; defaults delete app.textum.mac; while security delete-generic-password -s app.textum.mac.api-keys >/dev/null 2>&1; do :; done; tccutil reset All app.textum.mac"
           }
         }
       ],
@@ -143,6 +167,22 @@
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
+          },
+          "uninstall": {
+            "since": "0.5.0",
+            "removes": {
+              "ru": "Уберёт историю буфера обмена, настройки и автозапуск. Убрать сам себя macOS ему не даёт, поэтому в конце откроется Finder — просто перетащи Cliplark в Корзину.",
+              "en": "Removes the clipboard history, settings and the login item. macOS doesn’t let Cliplark remove itself, so at the end Finder opens — just drag Cliplark to the Trash."
+            },
+            "keeps": {
+              "ru": "Остаётся только маленькая общая папка kvp-projects/licensing: она помнит, с какого дня ты с нами, и хранит ключ, если он есть, — для всех моих приложений сразу. Твоих текстов и файлов там нет.",
+              "en": "Only a small shared folder, kvp-projects/licensing, stays: it remembers since when you’ve been with us and keeps your key, if you have one — for all my apps at once. None of your texts or files are in it."
+            },
+            "manual_note": {
+              "ru": "macOS может спросить, разрешить ли Терминалу доступ к данным других приложений.",
+              "en": "macOS may ask whether Terminal can access other apps’ data."
+            },
+            "command": "osascript -e 'quit app \"Cliplark\"'; rm -rf /Applications/Cliplark.app ~/Library/Containers/app.cliplark.mac; tccutil reset All app.cliplark.mac"
           }
         }
       ],
@@ -194,6 +234,18 @@
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
+          },
+          "uninstall": {
+            "since": "0.14.0",
+            "removes": {
+              "ru": "Уберёт приложение, настройки, историю снимков и проекты редактора, разрешения в «Конфиденциальности» и автозапуск. Снимки, которые ты сохранил в свои папки, останутся.",
+              "en": "Removes the app, its settings, capture history and editor projects, its Privacy permissions and the login item. Captures you saved to your own folders stay."
+            },
+            "keeps": {
+              "ru": "Остаётся только маленькая общая папка kvp-projects/licensing: она помнит, с какого дня ты с нами, и хранит ключ, если он есть, — для всех моих приложений сразу. Твоих текстов и файлов там нет.",
+              "en": "Only a small shared folder, kvp-projects/licensing, stays: it remembers since when you’ve been with us and keeps your key, if you have one — for all my apps at once. None of your texts or files are in it."
+            },
+            "command": "osascript -e 'quit app \"Shotlark\"'; rm -rf /Applications/Shotlark.app ~/Library/Application\\ Support/screenshot-app ~/Library/Logs/Shotlark ~/Library/Caches/com.kvp5359.screenshotapp ~/Library/Caches/Shotlark ~/Library/HTTPStorages/com.kvp5359.screenshotapp ~/Library/HTTPStorages/com.kvp5359.screenshotapp.binarycookies ~/Library/WebKit/com.kvp5359.screenshotapp ~/Library/Saved\\ Application\\ State/com.kvp5359.screenshotapp.savedState; defaults delete com.kvp5359.screenshotapp; tccutil reset All com.kvp5359.screenshotapp"
           }
         }
       ],
@@ -245,6 +297,22 @@
           "license_path": {
             "ru": "Настройки → Справка → Лицензия",
             "en": "Settings → Help → License"
+          },
+          "uninstall": {
+            "since": "0.5.0",
+            "settings": {
+              "ru": "Настройки → Справка",
+              "en": "Settings → Help"
+            },
+            "keep_label": {
+              "ru": "Оставить мои данные",
+              "en": "Keep my data"
+            },
+            "removes": {
+              "ru": "Уберёт программу, её настройки и лицензию, доступ к папке «Документы». Заметки в Документы → Note Calc остаются — они твои.",
+              "en": "Removes the app, its settings and license, and its access to Documents. Your notes in Documents → Note Calc stay — they’re yours."
+            },
+            "command": "osascript -e 'quit app \"Note Calc\"'; sleep 1; rm -rf ~/Library/{WebKit,\"Application Support\",Caches,HTTPStorages,Logs}/com.kvp.notecalc ~/Library/HTTPStorages/com.kvp.notecalc.binarycookies ~/Library/Preferences/com.kvp.notecalc.plist ~/Library/\"Saved Application State\"/com.kvp.notecalc.savedState; defaults delete com.kvp.notecalc 2>/dev/null; tccutil reset All com.kvp.notecalc; mv \"/Applications/Note Calc.app\" ~/.Trash/"
           }
         }
       ],

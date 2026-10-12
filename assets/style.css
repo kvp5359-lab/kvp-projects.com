@@ -83,6 +83,16 @@ h1 .beta { font-size: 15px; margin-left: 14px; padding: 2px 10px; position: rela
 .release li { margin: 6px 0; }
 code { font: 14px ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--soft); padding: 1px 5px; border-radius: 5px; }
 details { margin-top: 24px; }
+
+.uninstall { margin-top: 64px; max-width: 760px; }
+.uninstall h2 { margin-bottom: 12px; }
+.uninstall p { margin: 0 0 12px; }
+.cmd { position: relative; margin: 8px 0 0; }
+.cmd pre { margin: 0; padding: 14px 16px 44px; background: var(--soft); border-radius: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cmd pre code { padding: 0; font-size: 13px; line-height: 1.5; }
+.copy { position: absolute; right: 10px; bottom: 10px; padding: 4px 12px; border: 1.5px solid var(--muted); border-radius: 99px;
+  background: var(--paper); color: var(--ink); font: 500 13px Geist, -apple-system, sans-serif; cursor: pointer; }
+.copy:hover { border-color: var(--ink); }
 summary { cursor: pointer; }
 
 .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 96px 0 48px; color: var(--muted); font-size: 14px; }

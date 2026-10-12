@@ -35,6 +35,13 @@ T = {
         "unknownApp": "Ссылка указывает на приложение, которого я не знаю. Выбери своё приложение ниже.",
         "paste": "Вручную: {path}", "downloadApp": "страница {name}",
         "uiRuOnly": "Интерфейс: только русский", "privacy": "Конфиденциальность",
+        "uninstall": "Как удалить", "uninstallMenu": "В приложении: меню {name} → «Удалить {name}…» (или {settings}).",
+        "uninstallSettings": "Настройки → О программе", "uninstallKeepLabel": "Оставить мои данные и настройки",
+        "uninstallKeep": "Собираешься вернуться — поставь галочку «{label}»: поставишь {name} снова, и всё будет на месте.",
+        "uninstallSince": "Эта кнопка есть в версиях новее {v}.", "uninstallFrom": "Эта кнопка есть с версии {v}.",
+        "uninstallManual": "Вручную (для старых версий)",
+        "uninstallManualLead": "Открой Терминал, вставь строку и нажми Return. Она закроет {name} и удалит его вместе с данными.",
+        "copyCmd": "Скопировать", "copiedCmd": "Скопировано",
         "sections": {"mac": ("Для Mac", "macOS"), "chrome": ("Для браузера", "Google Chrome"), "windows": ("Для Windows", ""),
                      "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
@@ -53,6 +60,13 @@ T = {
         "unknownApp": "This link points to an app I don’t know. Choose your app below.",
         "paste": "By hand: {path}", "downloadApp": "{name} page",
         "uiRuOnly": "Interface: Russian only", "privacy": "Privacy",
+        "uninstall": "How to uninstall", "uninstallMenu": "In the app: {name} menu → «Uninstall {name}…» (or {settings}).",
+        "uninstallSettings": "Settings → About", "uninstallKeepLabel": "Keep my data and settings",
+        "uninstallKeep": "Planning to come back? Tick «{label}» — install {name} again and everything will be there.",
+        "uninstallSince": "This is in versions newer than {v}.", "uninstallFrom": "This is in version {v} and later.",
+        "uninstallManual": "By hand (for older versions)",
+        "uninstallManualLead": "Open Terminal, paste the line and press Return. It quits {name} and deletes it along with its data.",
+        "copyCmd": "Copy", "copiedCmd": "Copied",
         "sections": {"mac": ("For Mac", "macOS"), "chrome": ("For the browser", "Google Chrome"), "windows": ("For Windows", ""),
                      "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
@@ -290,6 +304,36 @@ def changes(p, lang):
     return f'<section class="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{block(first)}{older}</section>'
 
 
+def uninstall(p, lang):
+    """«How to uninstall»: the in-app way first (mac-app-kit Uninstaller / Note Calc's own), then the Terminal line for
+    versions without it. Texts and the line — the Mac platform's `uninstall` in products.json, the line exactly as in
+    mac-app-kit/docs/UNINSTALL.md (Note Calc — note-calc/.claude/rules/infrastructure.md)."""
+    t = T[lang]
+    pl = next((pl for pl in p["platforms"] if pl["kind"] == "mac" and pl.get("uninstall")), None)
+    if not pl:
+        return ""
+    u, name = pl["uninstall"], p["name"]
+    num = lambda v: [int(x) for x in v.split(".")]
+    published = latest_mac(pl["feed"])
+    since = (t["uninstallSince"].format(v=published) if published and num(published) < num(u["since"])
+             else t["uninstallFrom"].format(v=u["since"]))
+    settings = u.get("settings", {}).get(lang) or t["uninstallSettings"]
+    keeps = f' {e(u["keeps"][lang])}' if u.get("keeps") else ""
+    note = f' {e(u["manual_note"][lang])}' if u.get("manual_note") else ""
+    return (f'<section class="uninstall"><h2>{t["uninstall"]}</h2>'
+            f'<p>{e(t["uninstallMenu"].format(name=name, settings=settings))} {e(u["removes"][lang])}{keeps}</p>'
+            f'<p>{e(t["uninstallKeep"].format(name=name, label=u.get("keep_label", {}).get(lang) or t["uninstallKeepLabel"]))}</p><p class="meta">{since}</p>'
+            f'<details><summary>{t["uninstallManual"]}</summary>'
+            f'<p>{e(t["uninstallManualLead"].format(name=name))}{note}</p>'
+            f'<div class="cmd"><pre><code>{e(u["command"])}</code></pre>'
+            f'<button class="copy" type="button" data-done="{t["copiedCmd"]}">{t["copyCmd"]}</button></div></details></section>'
+            # Copy the line; without clipboard access the line gets selected for ⌘C.
+            '<script>document.querySelectorAll(".cmd .copy").forEach(b => b.addEventListener("click", () => {'
+            ' const c = b.parentElement.querySelector("code"), done = () => { b.textContent = b.dataset.done; };'
+            ' const select = () => { const r = document.createRange(); r.selectNodeContents(c); getSelection().removeAllRanges(); getSelection().addRange(r); };'
+            ' navigator.clipboard ? navigator.clipboard.writeText(c.textContent).then(done, select) : select(); }));</script>')
+
+
 def build():
     data = json.load(open(os.path.join(ROOT, "products.json"), encoding="utf-8"))["products"]
     if os.path.exists(OUT):
@@ -328,7 +372,7 @@ def build():
                     f'<div><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead">{e(p["tagline"][lang])}</p></div></section>'
                     f'<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
                     f'{beta_note(p, lang)}'
-                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}')
+                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/", image=icons[p["id"]]))
 
     # The license activation page: the purchase email links here (license-tool issue prints the link); the key is in
