@@ -8,7 +8,7 @@ Paths in products.json are relative to this folder; the shelf ~/Проекты/m
 The look — the design on claude.ai (canvas «kvp-projects.com»): white paper, dark ink, pencil frames drawn like
 Dictum's pencil style (pencil.py).
 """
-import html, json, os, re, shutil, subprocess, sys, urllib.parse
+import datetime, email.utils, functools, html, json, os, re, shutil, subprocess, sys, urllib.parse
 import xml.etree.ElementTree as ET
 
 import pencil
@@ -21,8 +21,14 @@ SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 
 T = {
     "ru": {
-        "title": "kvp projects", "h1": "Приложения для Mac<br>и браузера",
-        "lead": "Диктовка, работа с текстом, буфер обмена, скриншоты, заметки-калькулятор и расширения для Chrome.",
+        "title": "kvp projects", "h1": "Маленькие программы,<br>которые экономят время",
+        "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac и браузера.",
+        "updates": "Обновления", "rss": "RSS", "fresh": "Свежие обновления", "allUpdates": "Все обновления →",
+        "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "gains": "Что даёт",
+        "updatesLead": "Что нового во всех программах — по датам. Обновления приходят сами: программа предложит их установить.",
+        "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
+        "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
+        "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac.",
         "download": "Скачать для Mac", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
@@ -46,13 +52,19 @@ T = {
                      "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
     "en": {
-        "title": "kvp projects", "h1": "Apps for Mac<br>and the browser",
-        "lead": "Dictation, text tools, clipboard history, screenshots, a calculator notepad and Chrome extensions.",
+        "title": "kvp projects", "h1": "Small apps<br>that save you time",
+        "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac and the browser.",
+        "updates": "Updates", "rss": "RSS", "fresh": "Latest updates", "allUpdates": "All updates →",
+        "updated": "Updated · {v}", "newIn": "New in {v}", "gains": "What you get",
+        "updatesLead": "What’s new in every app, by date. Updates arrive on their own: the app offers to install them.",
+        "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
+        "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
+        "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac.",
         "download": "Download for Mac", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
-        "all": "All apps", "noEn": "The change history is available in Russian.", "langSwitch": "Русский",
+        "all": "All apps", "noEn": "The change history is in Russian.", "langSwitch": "Русский",
         "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov", "contact": "Contact me",
         "activateTitle": "License activation", "activateLead": "Press the button — the app opens and the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or copy the key and paste it yourself.",
         "openIn": "Open {name}", "copy": "Copy Key", "copied": "Copied", "copyManually": "The key is selected — press ⌘C",
@@ -165,6 +177,7 @@ def inline(s):
     return re.sub(r"`(.+?)`", r"<code>\1</code>", s)
 
 
+@functools.lru_cache(maxsize=None)
 def latest_mac(feed):
     """The newest PUBLISHED version in the app's update feed: ../updates/<feed>/appcast.xml (or note-calc's latest.json)
     as committed in the updates repo (HEAD), not the working tree — release.sh writes feeds there before publish.sh
@@ -182,6 +195,78 @@ def latest_mac(feed):
     items = ET.fromstring(xml).findall("./channel/item")
     versions = [v for v in (i.findtext(SPARKLE + "shortVersionString") for i in items) if v]
     return max(versions, key=lambda v: [int(x) for x in v.split(".")]) if versions else None
+
+
+def num(v):
+    return [int(x) for x in v.split(".")]
+
+
+MONTHS = {"ru": ("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"),
+          "en": ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")}
+
+
+def day(iso, lang, short=False):
+    """2026-10-11 → «11 октября 2026» / «11 окт» (short), "October 11, 2026" / "Oct 11"."""
+    if not iso:
+        return ""
+    y, m, d = (int(x) for x in iso.split("-"))
+    month = MONTHS[lang][m - 1]
+    if lang == "ru":
+        return f"{d} {month[:3] if short and month != 'мая' else month}" + ("" if short else f" {y}")
+    return f"{month[:3]} {d}" if short else f"{month} {d}, {y}"
+
+
+def mac_platform(p):
+    return next((pl for pl in p.get("platforms", []) if pl["kind"] == "mac"), None)
+
+
+def releases(p, lang):
+    """The product's released versions, newest first, and whether they are the Russian log on an English page (no
+    changelog_en: shown in Russian, marked so — the same on the product page, /updates/ and the feed). A Mac app gets
+    only versions already published in its committed feed (latest_mac): the site never runs ahead of «Download»."""
+    log = parse_changelog(p.get("changelog_en")) if lang == "en" else None
+    ru_only = lang == "en" and log is None
+    if log is None:
+        log = parse_changelog(p.get("changelog"))
+    released = [r for r in (log or []) if r["version"]]
+    mac = mac_platform(p)
+    if mac:
+        published = latest_mac(mac["feed"])
+        released = [r for r in released if published and num(r["version"]) <= num(published)]
+    # Versions cut but never given to people (folded into the next one): `unpublished` in products.json.
+    skip = set(p.get("unpublished") or [])
+    released = [r for r in released if r["version"] not in skip]
+    return released, ru_only
+
+
+def items(r):
+    return [i for s in r["sections"] for i in s["items"]]
+
+
+def headline(p, r, lang, ru_only):
+    """One line of news for a release: the changelog's first item (CHANGELOG-RULES: the most notable comes first), or,
+    for versions released before that rule, `headlines` in products.json ({"0.4.0": {"ru": …, "en": …}}).
+    Returns (text, ru_only of that text)."""
+    h = (p.get("headlines") or {}).get(r["version"])
+    if h:
+        return (h.get(lang) or h["ru"]), (lang == "en" and not h.get("en"))
+    return items(r)[0], ru_only
+
+
+def feed(data, lang):
+    """Every published release of every Mac app, newest first: [(product, release, ru_only)]. Same day — products.json
+    order, then the newer version first."""
+    out = []
+    for idx, p in enumerate(data):
+        if mac_platform(p):
+            rs, ru_only = releases(p, lang)
+            out += [(idx, p, r, ru_only) for r in rs]
+    out.sort(key=lambda x: (x[2]["date"] or "", -x[0], num(x[2]["version"])), reverse=True)
+    return [(p, r, ru) for _, p, r, ru in out]
+
+
+def ru_attr(ru_only):
+    return ' lang="ru"' if ru_only else ""
 
 
 def make_icon(p):
@@ -209,10 +294,10 @@ def ink(shape, cls):
     return f'<svg class="{cls}" aria-hidden="true"><use href="/assets/ink.svg#{shape}"></use></svg>'
 
 
-def page(lang, title, description, body, path, image=None, noindex=False):
+def page(lang, title, description, body, path, image=None, noindex=False, current=None):
     """One page; links are from the site root (the site lives at the domain root). `path`: "" or "dictum/".
     `image`: a path from the site root for og:image (the app icon). `noindex`: no canonical / hreflang, kept out of
-    search (the activation page, 404)."""
+    search (the activation page, 404). `current`: "updates" marks that nav link as the current page."""
     other = "en" if lang == "ru" else "ru"
     switch = f"/en/{path}" if lang == "ru" else f"/{path}"
     home = "/en/" if lang == "en" else "/"
@@ -239,14 +324,16 @@ def page(lang, title, description, body, path, image=None, noindex=False):
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
+<link rel="alternate" type="application/rss+xml" title="{e(T[lang]['rssTitle'])}" href="{home}updates.xml">
+<script src="/assets/site.js" defer></script>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><a class="brand" href="{home}">kvp projects</a><a class="lang" href="{switch}" hreflang="{other}">{T[lang]['langSwitch']}</a></header>
+<header class="top"><a class="brand" href="{home}">kvp projects</a><nav class="nav"><a href="{home}updates/"{' aria-current="page"' if current == "updates" else ""}>{T[lang]['updates']}</a><a class="lang" href="{switch}" hreflang="{other}">{T[lang]['langSwitch']}</a></nav></header>
 <main>
 {body}
 </main>
-<footer class="foot"><span>© 2026 {T[lang]['author']}</span><span class="foot-links"><a href="{home}privacy/">{T[lang]['privacy']}</a><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">{T[lang]['contact']}</a></span></footer>
+<footer class="foot"><span>© 2026 {T[lang]['author']}</span><span class="foot-links"><span><a href="{home}updates/">{T[lang]['updates']}</a> · <a href="{home}updates.xml">{T[lang]['rss']}</a></span><a href="{home}privacy/">{T[lang]['privacy']}</a><a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">{T[lang]['contact']}</a></span></footer>
 <script>/* The address is put together on click: not in the page for spam bots. */
 document.querySelectorAll('a.mail').forEach(a => a.addEventListener('click', e => {{ e.preventDefault(); location.href = 'mailto:' + a.dataset.u + '@' + a.dataset.d; }}));</script>
 </div>
@@ -280,28 +367,111 @@ def actions(p, lang):
 
 
 def changes(p, lang):
+    """«What's new» (id="changes"): the newest release open, older ones folded; each release has id="v<version>" — the
+    feed and /updates/ link there (assets/site.js unfolds an older one)."""
     t = T[lang]
-    log = parse_changelog(p.get("changelog_en")) if lang == "en" else parse_changelog(p.get("changelog"))
-    if log is None:
-        return f'<p class="meta">{t["noEn"]}</p>' if t["noEn"] else ""
-    released = [r for r in log if r["version"]]
-    # Never ahead of the Download button: a Mac app shows only versions already published in its feed.
-    feeds = [pl["feed"] for pl in p.get("platforms", []) if pl["kind"] == "mac"]
-    if feeds:
-        published = latest_mac(feeds[0])
-        num = lambda v: [int(x) for x in v.split(".")]
-        released = [r for r in released if published and num(r["version"]) <= num(published)]
+    released, ru_only = releases(p, lang)
     if not released:
         return ""
 
     def block(r):
         secs = "".join(f'<h4>{e(s["title"])}</h4><ul>{"".join(f"<li>{inline(i)}</li>" for i in s["items"])}</ul>'
                        for s in r["sections"] if s["items"])
-        return f'<section class="release"><h3>{t["version"].format(v=r["version"])}<span class="meta"> · {r["date"] or ""}</span></h3>{secs}</section>'
+        return (f'<section class="release" id="v{e(r["version"])}"{ru_attr(ru_only)}><h3>{t["version"].format(v=r["version"])}'
+                f'<span class="meta"> · {day(r["date"], lang)}</span></h3>{secs}</section>')
 
     first, rest = released[0], released[1:]
+    note = f'<p class="meta">{t["noEn"]}</p>' if ru_only else ""
     older = f'<details><summary>{t["older"]}</summary>{"".join(block(r) for r in rest)}</details>' if rest else ""
-    return f'<section class="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{block(first)}{older}</section>'
+    more = (f'<p class="app-updates"><a href="/{"en/" if lang == "en" else ""}updates/#{p["id"]}">{t["appUpdates"].format(name=e(p["name"]))}</a></p>'
+            if mac_platform(p) else "")
+    return f'<section class="changes" id="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{note}{block(first)}{older}{more}</section>'
+
+
+def news(p, lang):
+    """The «New in x.y.z» plate under a Mac app's header: the published version's first item, links to #changes."""
+    if not mac_platform(p):
+        return ""
+    released, ru_only = releases(p, lang)
+    if not released:
+        return ""
+    r = released[0]
+    return (f'<a class="news" href="#changes"><span class="pulse" aria-hidden="true"></span>'
+            f'<b>{T[lang]["newIn"].format(v=e(r["version"]))}</b><span class="news-text"{ru_attr(headline(p, r, lang, ru_only)[1])}>{inline(headline(p, r, lang, ru_only)[0])}</span>'
+            f'<span class="news-date">{day(r["date"], lang, short=True)} →</span></a>')
+
+
+def fresh_badge(p, lang):
+    """«Обновлено · x.y.z» next to a Mac app's name: hidden; assets/site.js shows it while the latest PUBLISHED release
+    is at most 14 days old (the site is rebuilt only on publish, so the date is checked in the browser). No JS — no badge."""
+    if not mac_platform(p):
+        return ""
+    released, _ = releases(p, lang)
+    if not released or not released[0]["date"]:
+        return ""
+    r = released[0]
+    return f' <span class="fresh" data-released="{r["date"]}" hidden>{T[lang]["updated"].format(v=e(r["version"]))}</span>'
+
+
+def gains(p, lang):
+    """«What you get» — three gains {title, text} (products.json `gains`); none (the Chrome extensions) — no section."""
+    g = p.get("gains", {}).get(lang)
+    if not g:
+        return ""
+    cells = "".join(f'<div class="gain">{ink("dot", "gain-mark")}<b>{e(x["title"])}</b><span>{e(x["text"])}</span></div>' for x in g)
+    return f'<section class="gains"><h2>{T[lang]["gains"]}</h2><div class="gains-grid">{cells}</div></section>'
+
+
+def updates_page(data, icons, lang):
+    """/updates/: all published releases of all Mac apps by date, filter chips (assets/site.js; no JS — all shown)."""
+    t, base = T[lang], ("en/" if lang == "en" else "")
+    macs = [p for p in data if mac_platform(p)]
+    chips = (f'<div class="chips" role="group" aria-label="{t["filter"]}" hidden>'
+             f'<button type="button" class="chip" data-app="all" aria-pressed="true">{t["allChip"]}</button>'
+             + "".join(f'<button type="button" class="chip" data-app="{p["id"]}" aria-pressed="false">{e(p["name"])}</button>' for p in macs)
+             + '</div>')
+    rows = ""
+    for p, r, ru_only in feed(data, lang):
+        its, href = items(r), f'/{base}{p["id"]}/'
+        anchor = f'{href}#v{e(r["version"])}'
+        more = f'<a class="more" href="{anchor}">{t["more"].format(n=len(its) - 3)}</a>' if len(its) > 3 else ""
+        ru = f'<span class="meta"> · {t["inRu"]}</span>' if ru_only else ""
+        rows += (f'<li class="entry" data-app="{p["id"]}"><img src="/{icons[p["id"]]}" alt="" width="48" height="48">'
+                 f'<div class="entry-body"><div class="entry-head"><a class="entry-title" href="{anchor}">{e(p["name"])} {e(r["version"])}</a>'
+                 f'<span class="meta">{day(r["date"], lang)}</span>{ru}</div>'
+                 f'<ul{ru_attr(ru_only)}>{"".join(f"<li>{inline(i)}</li>" for i in its[:3])}</ul>{more}'
+                 f'<a class="entry-link" href="{href}">{t["details"]}</a></div></li>')
+    return (f'<section class="hero hero-small"><h1>{t["updates"]}</h1>{ink("under", "under")}<p class="lead">{t["updatesLead"]}</p>'
+            f'<p class="subscribe"><a href="/{base}updates.xml">{t["subscribe"]}</a></p></section>'
+            f'{chips}<ol class="entries">{rows}</ol>')
+
+
+def rss(data, lang):
+    """/updates.xml (ru), /en/updates.xml (en): RSS 2.0, one item per published release, newest first."""
+    t, base = T[lang], ("en/" if lang == "en" else "")
+    x = lambda v: html.escape(v, quote=False)
+    def date(iso):
+        y, m, d = (int(v) for v in iso.split("-"))
+        return email.utils.format_datetime(datetime.datetime(y, m, d, 12, tzinfo=datetime.timezone.utc))
+    out, rows = [], feed(data, lang)
+    for p, r, ru_only in rows:
+        secs = "".join((f'<p><b>{e(s["title"])}</b></p>' if s["title"] else "") + "<ul>" + "".join(f"<li>{inline(i)}</li>" for i in s["items"]) + "</ul>"
+                       for s in r["sections"] if s["items"])
+        if ru_only:
+            secs = f'<p><i>{t["noEn"]}</i></p>' + secs
+        link = f'https://{DOMAIN}/{base}{p["id"]}/#v{r["version"]}'
+        out.append(f'<item><title>{x(p["name"])} {x(r["version"])}</title><link>{x(link)}</link>'
+                   f'<guid isPermaLink="false">{x(p["id"])}-{x(r["version"])}</guid>'
+                   + (f'<pubDate>{date(r["date"])}</pubDate>' if r["date"] else "")
+                   + f'<description>{x(secs)}</description></item>')
+    # lastBuildDate = the newest release, not the build time: the same feed on every build until there is a new release.
+    newest = next((r["date"] for _, r, _ in rows if r["date"]), None)
+    self_url = f"https://{DOMAIN}/{base}updates.xml"
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+            f'<title>{x(t["rssTitle"])}</title><link>https://{DOMAIN}/{base}updates/</link><description>{x(t["rssDesc"])}</description>'
+            f'<language>{lang}</language><atom:link href="{self_url}" rel="self" type="application/rss+xml"/>'
+            + (f'<lastBuildDate>{date(newest)}</lastBuildDate>' if newest else "")
+            + "\n" + "\n".join(out) + "\n</channel></rss>\n")
 
 
 def uninstall(p, lang):
@@ -313,7 +483,6 @@ def uninstall(p, lang):
     if not pl:
         return ""
     u, name = pl["uninstall"], p["name"]
-    num = lambda v: [int(x) for x in v.split(".")]
     published = latest_mac(pl["feed"])
     since = (t["uninstallSince"].format(v=published) if published and num(published) < num(u["since"])
              else t["uninstallFrom"].format(v=u["since"]))
@@ -339,7 +508,7 @@ def build():
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     os.makedirs(os.path.join(OUT, "assets", "icons"))
-    for name in ("style.css", "favicon.svg", "activate.js"):
+    for name in ("style.css", "favicon.svg", "activate.js", "site.js"):
         shutil.copy(os.path.join(ROOT, "assets", name), os.path.join(OUT, "assets"))
     shutil.copytree(os.path.join(ROOT, "assets", "fonts"), os.path.join(OUT, "assets", "fonts"))
     open(os.path.join(OUT, "assets", "ink.svg"), "w").write(pencil.sprite())
@@ -355,23 +524,36 @@ def build():
             title, sub = t["sections"][kind]
             cards = ""
             for p in (p for p in data if any(pl["kind"] == kind for pl in p["platforms"])):
+                # The name leads; under it — what the app gives you (`benefit`), not what it is.
                 cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
                           f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
-                          f'<span class="card-text"><b>{e(p["name"])}{beta(p, lang)}</b><span>{e(p["tagline"][lang])}</span></span></a>')
+                          f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
+                          f'<span class="benefit">{e(p["benefit"][lang])}</span></span></a>')
                 n += 1
             sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
                          f'<span class="meta">{sub}</span></div><div class="grid">{cards}</div></section>')
         nxt = f'<p class="meta next">{t["next"].format(list=", ".join(PLATFORM[k] for k in later))}</p>' if later else ""
-        body = f'<section class="hero"><h1>{t["h1"]}</h1>{ink("under", "under")}<p class="lead">{t["lead"]}</p></section>{sections}{nxt}'
+        # «Latest updates»: the newest published release of each Mac app, the three most recent (one line per app — a
+        # busy app doesn't push the others out).
+        latest = [x for i, x in enumerate(feed(data, lang)) if x[0]["id"] not in {y[0]["id"] for y in feed(data, lang)[:i]}]
+        fresh = "".join(f'<li><a class="feed-row" href="/{base}{p["id"]}/#v{e(r["version"])}"><img src="/{icons[p["id"]]}" alt="" width="32" height="32">'
+                        f'<b>{e(p["name"])} {e(r["version"])}</b><span class="feed-text"{ru_attr(headline(p, r, lang, ru)[1])}>{inline(headline(p, r, lang, ru)[0])}</span>'
+                        f'<span class="feed-date">{day(r["date"], lang, short=True)}</span></a></li>' for p, r, ru in latest[:3])
+        fresh = (f'<section class="fresh-box" aria-labelledby="fresh"><div class="fresh-head"><h2 id="fresh">{t["fresh"]}</h2>'
+                 f'<a href="/{base}updates/">{t["allUpdates"]}</a></div><ul>{fresh}</ul></section>') if fresh else ""
+        body = f'<section class="hero"><h1>{t["h1"]}</h1>{ink("under", "under")}<p class="lead">{t["lead"]}</p></section>{fresh}{sections}{nxt}'
         write(base + "index.html", page(lang, t["title"], t["lead"], body, ""))
+        write(base + "updates/index.html", page(lang, f'{t["updates"]} — kvp projects', t["updatesLead"], updates_page(data, icons, lang),
+                                                "updates/", current="updates"))
+        write(base + "updates.xml", rss(data, lang))
 
         for p in data:
             feats = "".join(f'<li>{ink("dot", "dot")}<span>{e(f)}</span></li>' for f in p["features"][lang])
             body = (f'<a class="back" href="/{base}">← {t["all"]}</a>'
                     f'<section class="product"><img src="/{icons[p["id"]]}" alt="" width="144" height="144">'
-                    f'<div><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead">{e(p["tagline"][lang])}</p></div></section>'
-                    f'<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
-                    f'{beta_note(p, lang)}'
+                    f'<div class="product-head"><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead benefit-lead">{e(p["benefit"][lang])}</p></div></section>'
+                    f'{news(p, lang)}<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
+                    f'{beta_note(p, lang)}{gains(p, lang)}'
                     f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/", image=icons[p["id"]]))
 
@@ -405,7 +587,7 @@ def build():
     write("404.html", page("ru", T["ru"]["notFound"], "", f'<section class="hero"><h1>{T["ru"]["notFound"]}</h1>'
                            f'<p class="lead"><a href="/">{T["ru"]["home"]}</a> · <a href="/en/">Home</a></p></section>', "", noindex=True))
     # Search engines: every indexable page in both languages (not /activate/ and 404 — they are noindex).
-    paths = [""] + [p["id"] + "/" for p in data] + ["privacy/"]
+    paths = [""] + [p["id"] + "/" for p in data] + ["updates/", "privacy/"]
     urls = "".join(f"<url><loc>https://{DOMAIN}/{pre}{path}</loc></url>\n" for path in paths for pre in ("", "en/"))
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")

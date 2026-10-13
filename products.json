@@ -1,5 +1,5 @@
 {
-  "_comment": "The catalog of kvp-projects.com. A product = one entry; a new platform = one more item in its platforms (kind: mac, chrome, windows, linux, ios, android). build.py makes the pages from this file and the products' changelogs. A Mac platform's «scheme» is the app's URL scheme: the license activation page opens <scheme>://activate?key=…. «license_path» — where the License section is in the app's settings (ru/en), shown on the activation page. «ui_langs» — the app's interface languages; an English page says «Russian only» when en is missing.",
+  "_comment": "The catalog of kvp-projects.com. A product = one entry; a new platform = one more item in its platforms (kind: mac, chrome, windows, linux, ios, android). build.py makes the pages from this file and the products' changelogs. A Mac platform's «scheme» is the app's URL scheme: the license activation page opens <scheme>://activate?key=…. «license_path» — where the License section is in the app's settings (ru/en), shown on the activation page. «ui_langs» — the app's interface languages; an English page says «Russian only» when en is missing. «benefit» — what the app gives you, one line under the name on cards and the product page; «gains» — three {title, text} for «Что даёт» on a Mac app's page (no gains — no section).",
   "products": [
     {
       "id": "dictum",
@@ -12,6 +12,40 @@
       "tagline": {
         "ru": "Диктовка в любое приложение",
         "en": "Dictation into any app"
+      },
+      "benefit": {
+        "ru": "Говоришь — и текст сразу там, где стоит курсор",
+        "en": "Speak, and the text appears right where your cursor is"
+      },
+      "gains": {
+        "ru": [
+          {
+            "title": "Говорить быстрее, чем печатать",
+            "text": "Письма, заметки, сообщения — голосом, в любой программе, без переключения окон."
+          },
+          {
+            "title": "Текст сразу чистый",
+            "text": "ИИ убирает «э-э», расставляет знаки и может переписать надиктованное под нужный тон."
+          },
+          {
+            "title": "Голос не уходит с Mac",
+            "text": "Распознавание прямо на твоём Mac, без интернета. Облако — только если выберешь его в настройках."
+          }
+        ],
+        "en": [
+          {
+            "title": "Speak faster than you type",
+            "text": "Emails, notes, messages — by voice, in any app, without switching windows."
+          },
+          {
+            "title": "Clean text right away",
+            "text": "AI drops the “um”s, adds punctuation and can rewrite what you said in the tone you need."
+          },
+          {
+            "title": "Your voice stays on your Mac",
+            "text": "Recognition runs right on your Mac, no internet needed. The cloud only if you pick it in settings."
+          }
+        ]
       },
       "summary": {
         "ru": "Нажал клавишу, сказал — текст появился там, где стоит курсор. Распознавание прямо на Mac или в облаке по своему ключу, с обработкой текста ИИ.",
@@ -65,7 +99,17 @@
       ],
       "ui_langs": [
         "ru"
-      ]
+      ],
+      "headlines": {
+        "0.4.0": {
+          "ru": "Основная модель стала в 2,5 раза меньше и готовится быстрее",
+          "en": "The main model is 2.5 times smaller and gets ready faster"
+        },
+        "0.3.0": {
+          "ru": "Обновления приходят сами",
+          "en": "Updates arrive on their own"
+        }
+      }
     },
     {
       "id": "textum",
@@ -78,6 +122,40 @@
       "tagline": {
         "ru": "Всё для текста — у курсора",
         "en": "Everything for text, at your cursor"
+      },
+      "benefit": {
+        "ru": "Исправить, перевести или переписать — не уходя из текста",
+        "en": "Fix, translate or rewrite — without leaving your text"
+      },
+      "gains": {
+        "ru": [
+          {
+            "title": "Действия — там, где ты пишешь",
+            "text": "Одна клавиша открывает панель у курсора: перевести, исправить или переписать выделенное, не переключаясь в другое окно."
+          },
+          {
+            "title": "Кнопки под то, что выделено",
+            "text": "Ссылка, почта, телефон, адрес, выражение или сумма в валюте — Textum сам предложит подходящее действие."
+          },
+          {
+            "title": "Меньше набирать заново",
+            "text": "Переключатель раскладки исправит «ghbdtn» на «привет», а сниппеты развернут короткое слово в готовый текст в любом приложении."
+          }
+        ],
+        "en": [
+          {
+            "title": "Actions where you type",
+            "text": "One key opens a panel at your cursor: translate, fix or rewrite the selection without switching windows."
+          },
+          {
+            "title": "Buttons for what you selected",
+            "text": "A link, an email, a phone number, an address, an expression or an amount in a currency — Textum offers the right action."
+          },
+          {
+            "title": "Less retyping",
+            "text": "Text typed in the wrong keyboard layout gets fixed, and snippets expand a short keyword into ready text in any app."
+          }
+        ]
       },
       "summary": {
         "ru": "Одна клавиша — и у курсора панель действий: ИИ, умные кнопки под тип текста, сниппеты, эмодзи и исправление текста, набранного не в той раскладке.",
@@ -130,7 +208,17 @@
       ],
       "ui_langs": [
         "ru"
-      ]
+      ],
+      "headlines": {
+        "0.4.0": {
+          "ru": "Мелкие исправления и улучшения стабильности",
+          "en": "Small fixes and stability improvements"
+        },
+        "0.3.0": {
+          "ru": "Обновления приходят сами",
+          "en": "Updates arrive on their own"
+        }
+      }
     },
     {
       "id": "cliplark",
@@ -143,6 +231,40 @@
       "tagline": {
         "ru": "Всё, что ты копируешь, — под рукой",
         "en": "Everything you copy, one shortcut away"
+      },
+      "benefit": {
+        "ru": "Скопированное неделю назад — в два нажатия",
+        "en": "What you copied a week ago, in two keystrokes"
+      },
+      "gains": {
+        "ru": [
+          {
+            "title": "Скопированное не теряется",
+            "text": "Тексты, ссылки, картинки, файлы и цвета копятся в истории — найди поиском и вставь по ⇧⌘V."
+          },
+          {
+            "title": "Нужное всегда под рукой",
+            "text": "Сохраняй в списки то, что вставляешь часто, и перетаскивай прямо в другие приложения."
+          },
+          {
+            "title": "Пароли — мимо истории",
+            "text": "Пароли из менеджеров паролей не сохраняются, а история живёт только на твоём Mac и не попадает в Time Machine."
+          }
+        ],
+        "en": [
+          {
+            "title": "Nothing you copy gets lost",
+            "text": "Texts, links, images, files and colors pile up in the history — search and paste with ⇧⌘V."
+          },
+          {
+            "title": "What you need, always at hand",
+            "text": "Keep what you paste often in lists and drag it straight into other apps."
+          },
+          {
+            "title": "Passwords skip the history",
+            "text": "Passwords from password managers are never saved, and the history lives only on your Mac, out of Time Machine."
+          }
+        ]
       },
       "summary": {
         "ru": "История буфера обмена: тексты, ссылки, картинки, файлы и цвета хранятся на твоём Mac и вставляются по ⇧⌘V.",
@@ -197,7 +319,17 @@
       "ui_langs": [
         "en",
         "ru"
-      ]
+      ],
+      "headlines": {
+        "0.4.0": {
+          "ru": "Мелкие исправления и улучшения стабильности",
+          "en": "Small fixes and stability improvements"
+        },
+        "0.3.0": {
+          "ru": "Обновления приходят сами",
+          "en": "Updates arrive on their own"
+        }
+      }
     },
     {
       "id": "shotlark",
@@ -210,6 +342,40 @@
       "tagline": {
         "ru": "Скриншоты и запись экрана",
         "en": "Screenshots and screen recording"
+      },
+      "benefit": {
+        "ru": "Снимок, длинный скриншот или видео — и сразу подписать",
+        "en": "A screenshot, a scrolling capture or a video — marked up right away"
+      },
+      "gains": {
+        "ru": [
+          {
+            "title": "Снять что угодно",
+            "text": "Область, окно, весь экран или длинную страницу с прокруткой — одной картинкой."
+          },
+          {
+            "title": "Сразу объяснить на снимке",
+            "text": "Стрелки, текст, шаги, размытие лишнего и обрезка — в редакторе, без отдельной программы."
+          },
+          {
+            "title": "Показать, а не расписывать",
+            "text": "Запись экрана в видео или GIF со звуком и кликами, а текст со снимка можно распознать и скопировать."
+          }
+        ],
+        "en": [
+          {
+            "title": "Capture anything",
+            "text": "An area, a window, the whole screen or a long scrolling page — as one image."
+          },
+          {
+            "title": "Explain it on the capture",
+            "text": "Arrows, text, steps, blurring and cropping — in the editor, no extra app needed."
+          },
+          {
+            "title": "Show instead of telling",
+            "text": "Record the screen to video or GIF with sound and clicks, and copy text right out of a capture."
+          }
+        ]
       },
       "summary": {
         "ru": "Снимки области, окна и экрана, длинные снимки с прокруткой, пометки, распознавание текста и запись экрана в видео или GIF.",
@@ -264,7 +430,17 @@
       "ui_langs": [
         "en",
         "ru"
-      ]
+      ],
+      "headlines": {
+        "0.13.0": {
+          "ru": "Разрешение на запись экрана — в одну кнопку",
+          "en": "Screen Recording permission in one click"
+        },
+        "0.12.0": {
+          "ru": "Новое имя — Shotlark, и обновления приходят сами",
+          "en": "A new name — Shotlark, and updates arrive on their own"
+        }
+      }
     },
     {
       "id": "note-calc",
@@ -278,6 +454,40 @@
       "tagline": {
         "ru": "Заметки, которые считают сами",
         "en": "Notes that do the math"
+      },
+      "benefit": {
+        "ru": "Пишешь заметку — она сама считает",
+        "en": "Write a note, and it does the math"
+      },
+      "gains": {
+        "ru": [
+          {
+            "title": "Считать прямо в тексте",
+            "text": "Пишешь как в блокноте, а строки с расчётами сразу показывают результат — без отдельного калькулятора."
+          },
+          {
+            "title": "Валюты, проценты и даты",
+            "text": "Курсы валют на сегодня, проценты, налоги, даты и мини-таблицы с итогами — словами, по-русски или по-английски."
+          },
+          {
+            "title": "Заметки остаются твоими",
+            "text": "Это обычные файлы Markdown в «Документах»: открываются где угодно и не заперты в приложении."
+          }
+        ],
+        "en": [
+          {
+            "title": "Do the math right in the text",
+            "text": "Write as in a notepad, and lines with calculations show the result at once — no separate calculator."
+          },
+          {
+            "title": "Currencies, percentages and dates",
+            "text": "Today’s exchange rates, percentages, taxes, dates and mini tables with totals — in plain words, in English or Russian."
+          },
+          {
+            "title": "Your notes stay yours",
+            "text": "They are plain Markdown files in Documents: they open anywhere and aren’t locked into the app."
+          }
+        ]
       },
       "summary": {
         "ru": "Пишешь как в блокноте, а строки с расчётами сразу показывают результат: переменные, валюты с курсами дня, проценты, даты и мини-таблицы.",
@@ -335,6 +545,19 @@
       "ui_langs": [
         "en",
         "ru"
+      ],
+      "headlines": {
+        "0.5.2": {
+          "ru": "Закреплённое окно видно на всех рабочих столах и поверх полноэкранных программ",
+          "en": "A pinned window stays on every desktop and over full-screen apps"
+        },
+        "0.4.0": {
+          "ru": "Теперь нужна macOS 15 или новее; мелкие исправления",
+          "en": "Now needs macOS 15 or later; small fixes"
+        }
+      },
+      "unpublished": [
+        "0.5.1"
       ]
     },
     {
@@ -347,6 +570,10 @@
       "tagline": {
         "ru": "Двойные субтитры на YouTube",
         "en": "Dual subtitles for YouTube"
+      },
+      "benefit": {
+        "ru": "Смотреть YouTube с субтитрами на двух языках сразу",
+        "en": "Watch YouTube with subtitles in two languages at once"
       },
       "summary": {
         "ru": "Оригинал и перевод одновременно — на паузе или всегда. Субтитры можно выделить, скопировать и сохранить в файл.",
@@ -386,6 +613,10 @@
         "ru": "Скорость видео, которая не слетает",
         "en": "Video speed that stays put"
       },
+      "benefit": {
+        "ru": "Скорость видео больше не сбрасывается на 1×",
+        "en": "Video speed no longer snaps back to 1×"
+      },
       "summary": {
         "ru": "Скорость видео на любом сайте: не сбрасывается после паузы и перемотки, запоминается для каждого сайта.",
         "en": "Video speed on any site: it doesn't reset after pausing or seeking and is remembered per site."
@@ -421,6 +652,10 @@
       "tagline": {
         "ru": "Очистка данных одного сайта",
         "en": "Clear data for one site"
+      },
+      "benefit": {
+        "ru": "Сбросить один сайт, не трогая остальные",
+        "en": "Reset one site without touching the rest"
       },
       "summary": {
         "ru": "Кэш, куки и хранилища только у сайта в текущей вкладке — остальные сайты не трогаются.",
