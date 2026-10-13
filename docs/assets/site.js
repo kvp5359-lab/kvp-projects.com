@@ -28,6 +28,8 @@
     });
     chips.hidden = false;
     pick(hash() || 'all');
+    // Back/forward or a link to /updates/#textum on this page: the address changes, the filter follows.
+    addEventListener('hashchange', () => pick(hash() || 'all'));
   }
 
   // A link to an older version (#v0.3.0) unfolds «Предыдущие версии».

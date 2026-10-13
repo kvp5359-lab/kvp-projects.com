@@ -7,12 +7,13 @@
 :root {
   --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6b66; --soft: #f3f3f0;
   --text2: #4a4a45; --panel: #f7f7f4; --hover: #ecece7; --line: #ecece7;
+  --border: #86867f; /* control borders: ≥3:1 against --paper and --hover */
   --ease: cubic-bezier(.3, .7, .4, 1); --spring: cubic-bezier(.3, 1.6, .5, 1);
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
   :root { --paper: #151514; --ink: #ecebe6; --muted: #9c9b94; --soft: #23231f;
-    --text2: #c4c3bc; --panel: #1d1d1b; --hover: #2a2a26; --line: #2a2a26; }
+    --text2: #c4c3bc; --panel: #1d1d1b; --hover: #2a2a26; --line: #2a2a26; --border: #7a7a74; }
 }
 [hidden] { display: none !important; }
 * { box-sizing: border-box; }
@@ -170,15 +171,14 @@ summary { cursor: pointer; }
 .hero-small .lead { margin-top: 22px; font-size: 19px; }
 .subscribe { margin: 12px 0 0; font-size: 15px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px 0 8px; }
-.chip { min-height: 40px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); color: var(--ink);
+.chip { min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 99px; background: var(--paper); color: var(--ink);
   font: inherit; font-size: 15px; cursor: pointer; transition: transform .15s var(--spring), background .15s, color .15s; }
 .chip:hover { background: var(--hover); }
 .chip:active { transform: scale(.94); }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .chip:focus-visible { border-radius: 99px; }
 .entries { list-style: none; margin: 0; padding: 0; }
-.entry { display: flex; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--line); transition: transform .2s var(--ease); }
-.entry:hover { transform: translateX(4px); }
+.entry { display: flex; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--line); }
 .entry img { flex: none; width: 48px; height: 48px; }
 .entry-body { flex: 1 1 auto; min-width: 0; }
 .entry-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
@@ -213,7 +213,9 @@ summary { cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) {
   .pulse { animation: none; }
-  .card, .card .frame, .card img, a.button, button.button, .button .frame, .news, .chip, .entry, .feed-row { transition: none; }
-  .card:hover, .card:active, .card:hover img, .card:active img, .card:active .frame, .entry:hover, .chip:active, .news:active,
-  a.button:hover, a.button:active, button.button:hover, button.button:active, .button:hover .frame, .button:active .frame { transform: none; }
+  .card, .card .frame, .card img, a.button, button.button, .button .frame, .news, .chip, .feed-row { transition: none; }
+  /* Same specificity as the rules they undo (a.button:hover .frame beats .button:hover .frame). */
+  .card:hover, .card:active, .card:hover img, .card:active img, .card:active .frame, .chip:active, .news:active,
+  a.button:hover, a.button:active, button.button:hover, button.button:active,
+  a.button:hover .frame, a.button:active .frame, button.button:hover .frame, button.button:active .frame { transform: none; }
 }

@@ -48,7 +48,7 @@
         ]
       },
       "summary": {
-        "ru": "Нажал клавишу, сказал — текст появился там, где стоит курсор. Распознавание прямо на Mac или в облаке по своему ключу, с обработкой текста ИИ.",
+        "ru": "Нажми клавишу, скажи — и текст появится там, где стоит курсор. Распознавание прямо на Mac или в облаке по своему ключу, с обработкой текста ИИ.",
         "en": "Press a key, speak, and the text appears where your cursor is. Speech recognition right on your Mac or in the cloud with your own key, with AI text cleanup."
       },
       "features": {
@@ -211,8 +211,8 @@
       ],
       "headlines": {
         "0.4.0": {
-          "ru": "Мелкие исправления и улучшения стабильности",
-          "en": "Small fixes and stability improvements"
+          "ru": "Отчёты об ошибках доходят из любой страны",
+          "en": "Error reports arrive from any country"
         },
         "0.3.0": {
           "ru": "Обновления приходят сами",
@@ -233,8 +233,8 @@
         "en": "Everything you copy, one shortcut away"
       },
       "benefit": {
-        "ru": "Скопированное неделю назад — в два нажатия",
-        "en": "What you copied a week ago, in two keystrokes"
+        "ru": "Скопированное неделю назад — найдётся за секунды",
+        "en": "Find what you copied a week ago in seconds"
       },
       "gains": {
         "ru": [
@@ -322,8 +322,8 @@
       ],
       "headlines": {
         "0.4.0": {
-          "ru": "Мелкие исправления и улучшения стабильности",
-          "en": "Small fixes and stability improvements"
+          "ru": "Отчёты об ошибках доходят из любой страны",
+          "en": "Error reports arrive from any country"
         },
         "0.3.0": {
           "ru": "Обновления приходят сами",
@@ -359,7 +359,7 @@
           },
           {
             "title": "Показать, а не расписывать",
-            "text": "Запись экрана в видео или GIF со звуком и кликами, а текст со снимка можно распознать и скопировать."
+            "text": "Запись экрана в видео со звуком или в GIF, с курсором и кликами, а текст со снимка можно распознать и скопировать."
           }
         ],
         "en": [
@@ -373,7 +373,7 @@
           },
           {
             "title": "Show instead of telling",
-            "text": "Record the screen to video or GIF with sound and clicks, and copy text right out of a capture."
+            "text": "Record the screen to video with sound or to GIF, with the cursor and clicks, and copy text right out of a capture."
           }
         ]
       },
@@ -387,14 +387,14 @@
           "Снимок с прокруткой — одна длинная картинка",
           "Редактор: стрелки, фигуры, текст, шаги, размытие, обрезка",
           "Распознавание текста и QR-кодов на снимке",
-          "Запись экрана в видео или GIF со звуком и кликами"
+          "Запись экрана в видео со звуком или в GIF, с курсором и кликами"
         ],
         "en": [
           "Captures with a timer, frozen screen, crosshair and magnifier",
           "Scrolling capture — one long image",
           "Editor: arrows, shapes, text, steps, blur, crop",
           "Text and QR code recognition in captures",
-          "Screen recording to video or GIF with sound and clicks"
+          "Screen recording to video with sound or to GIF, with the cursor and clicks"
         ]
       },
       "platforms": [
@@ -412,7 +412,7 @@
           "uninstall": {
             "since": "0.14.0",
             "removes": {
-              "ru": "Уберёт приложение, настройки, историю снимков и проекты редактора, разрешения в «Конфиденциальности» и автозапуск. Снимки, которые ты сохранил в свои папки, останутся.",
+              "ru": "Уберёт приложение, настройки, историю снимков и проекты редактора, разрешения в «Конфиденциальности» и автозапуск. Снимки, сохранённые в твои папки, останутся.",
               "en": "Removes the app, its settings, capture history and editor projects, its Privacy permissions and the login item. Captures you saved to your own folders stay."
             },
             "keeps": {
@@ -538,7 +538,7 @@
               "ru": "Строка для zsh/bash (стандартный Терминал). Приложение уйдёт в Корзину через Finder — macOS один раз спросит, разрешить ли Терминалу управлять Finder.",
               "en": "The line is for zsh/bash (the standard Terminal). The app goes to the Trash via Finder — macOS asks once whether Terminal may control Finder."
             },
-            "command": "osascript -e 'quit app \"Note Calc\"' 2>/dev/null; sleep 2; rm -rf ~/Library/{WebKit,\"Application Support\",Caches,HTTPStorages,Logs}/com.kvp.notecalc ~/Library/HTTPStorages/com.kvp.notecalc.binarycookies ~/Library/Preferences/com.kvp.notecalc.plist ~/Library/\"Saved Application State\"/com.kvp.notecalc.savedState; defaults delete com.kvp.notecalc 2>/dev/null; tccutil reset All com.kvp.notecalc; osascript -e 'tell application \"Finder\" to delete POSIX file \"/Applications/Note Calc.app\"' >/dev/null"
+            "command": "osascript -e 'quit app \"Note Calc\"' 2>/dev/null; sleep 2; rm -rf ~/Library/{WebKit,\"Application Support\",Caches,HTTPStorages,Logs}/com.kvp.notecalc ~/Library/HTTPStorages/com.kvp.notecalc.binarycookies ~/Library/Preferences/com.kvp.notecalc.plist ~/Library/\"Saved Application State\"/com.kvp.notecalc.savedState; defaults delete com.kvp.notecalc 2>/dev/null; tccutil reset All com.kvp.notecalc; osascript -e 'tell application \"Finder\" to delete POSIX file \"/Applications/Note Calc.app\"' >/dev/null 2>&1 || echo \"Перетащи Note Calc в Корзину вручную\""
           }
         }
       ],
@@ -555,10 +555,7 @@
           "ru": "Теперь нужна macOS 15 или новее; мелкие исправления",
           "en": "Now needs macOS 15 or later; small fixes"
         }
-      },
-      "unpublished": [
-        "0.5.1"
-      ]
+      }
     },
     {
       "id": "subtitle-tools",

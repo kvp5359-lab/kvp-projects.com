@@ -197,6 +197,28 @@ def latest_mac(feed):
     return max(versions, key=lambda v: [int(x) for x in v.split(".")]) if versions else None
 
 
+@functools.lru_cache(maxsize=None)
+def feed_history(feed):
+    """Every version that ever appeared in the app's COMMITTED feed (the updates repo's git history, not the working
+    tree): {version: when it first appeared — that commit's time, UTC}. One `git log -p` per feed; only that makes a
+    version published (release.sh may write a feed that publish.sh never commits)."""
+    updates = os.path.join(ROOT, "..", "updates")
+    for name, pattern in (("latest.json", r'"version"\s*:\s*"([^"]+)"'),          # note-calc: Tauri's updater feed
+                          ("appcast.xml", r"<sparkle:shortVersionString>([^<]+)<")):
+        r = subprocess.run(["git", "-C", updates, "log", "--reverse", "-p", "--format=\x01%ct", "--", f"{feed}/{name}"],
+                           capture_output=True, text=True)
+        out, when = {}, None
+        for line in (r.stdout if r.returncode == 0 else "").splitlines():
+            if line.startswith("\x01"):
+                when = datetime.datetime.fromtimestamp(int(line[1:]), datetime.timezone.utc)
+            elif line.startswith("+") and not line.startswith("+++"):
+                for v in re.findall(pattern, line):
+                    out.setdefault(v.strip(), when)
+        if out:
+            return out
+    return {}
+
+
 def num(v):
     return [int(x) for x in v.split(".")]
 
@@ -220,10 +242,33 @@ def mac_platform(p):
     return next((pl for pl in p.get("platforms", []) if pl["kind"] == "mac"), None)
 
 
+def fold(release, older):
+    """`release` with the items of `older` (versions never published, newest first) added: same section title — appended
+    to it, a new title — a new section at the end. People got all of it at once, with this version."""
+    secs = [{"title": s["title"], "items": list(s["items"])} for s in release["sections"]]
+    for o in older:
+        for s in o["sections"]:
+            same = next((x for x in secs if x["title"] == s["title"]), None)
+            if same:
+                same["items"] += s["items"]
+            else:
+                secs.append({"title": s["title"], "items": list(s["items"])})
+    return {**release, "sections": secs}
+
+
+_releases = {}
+
+
 def releases(p, lang):
     """The product's released versions, newest first, and whether they are the Russian log on an English page (no
-    changelog_en: shown in Russian, marked so — the same on the product page, /updates/ and the feed). A Mac app gets
-    only versions already published in its committed feed (latest_mac): the site never runs ahead of «Download»."""
+    changelog_en: shown in Russian, marked so — the same on the product page, /updates/ and the feed).
+    A Mac app: a version counts only if it ever appeared in its committed feed history (feed_history) — the site never
+    runs ahead of «Download». A version that never did (cut, but not given to people) isn't shown on its own: its items
+    fold into the next published version; versions after the newest published one wait. Each release of a Mac app
+    gets `published` — when it first appeared in the feed (the RSS pubDate)."""
+    key = (p["id"], lang)
+    if key in _releases:
+        return _releases[key]
     log = parse_changelog(p.get("changelog_en")) if lang == "en" else None
     ru_only = lang == "en" and log is None
     if log is None:
@@ -231,12 +276,16 @@ def releases(p, lang):
     released = [r for r in (log or []) if r["version"]]
     mac = mac_platform(p)
     if mac:
-        published = latest_mac(mac["feed"])
-        released = [r for r in released if published and num(r["version"]) <= num(published)]
-    # Versions cut but never given to people (folded into the next one): `unpublished` in products.json.
-    skip = set(p.get("unpublished") or [])
-    released = [r for r in released if r["version"] not in skip]
-    return released, ru_only
+        history, out, pending = feed_history(mac["feed"]), [], []
+        for r in reversed(released):                      # oldest first
+            if r["version"] in history:
+                out.append({**fold(r, pending[::-1]), "published": history[r["version"]]})
+                pending = []
+            else:
+                pending.append(r)
+        released = out[::-1]
+    _releases[key] = (released, ru_only)
+    return _releases[key]
 
 
 def items(r):
@@ -422,38 +471,39 @@ def gains(p, lang):
     return f'<section class="gains"><h2>{T[lang]["gains"]}</h2><div class="gains-grid">{cells}</div></section>'
 
 
-def updates_page(data, icons, lang):
-    """/updates/: all published releases of all Mac apps by date, filter chips (assets/site.js; no JS — all shown)."""
+def updates_page(data, rows, icons, lang):
+    """/updates/: all published releases of all Mac apps by date (`rows` — feed()), filter chips (assets/site.js; no JS — all shown)."""
     t, base = T[lang], ("en/" if lang == "en" else "")
     macs = [p for p in data if mac_platform(p)]
     chips = (f'<div class="chips" role="group" aria-label="{t["filter"]}" hidden>'
              f'<button type="button" class="chip" data-app="all" aria-pressed="true">{t["allChip"]}</button>'
              + "".join(f'<button type="button" class="chip" data-app="{p["id"]}" aria-pressed="false">{e(p["name"])}</button>' for p in macs)
              + '</div>')
-    rows = ""
-    for p, r, ru_only in feed(data, lang):
+    html_rows = ""
+    for p, r, ru_only in rows:
         its, href = items(r), f'/{base}{p["id"]}/'
         anchor = f'{href}#v{e(r["version"])}'
         more = f'<a class="more" href="{anchor}">{t["more"].format(n=len(its) - 3)}</a>' if len(its) > 3 else ""
         ru = f'<span class="meta"> · {t["inRu"]}</span>' if ru_only else ""
-        rows += (f'<li class="entry" data-app="{p["id"]}"><img src="/{icons[p["id"]]}" alt="" width="48" height="48">'
+        html_rows += (f'<li class="entry" data-app="{p["id"]}"><img src="/{icons[p["id"]]}" alt="" width="48" height="48">'
                  f'<div class="entry-body"><div class="entry-head"><a class="entry-title" href="{anchor}">{e(p["name"])} {e(r["version"])}</a>'
                  f'<span class="meta">{day(r["date"], lang)}</span>{ru}</div>'
                  f'<ul{ru_attr(ru_only)}>{"".join(f"<li>{inline(i)}</li>" for i in its[:3])}</ul>{more}'
                  f'<a class="entry-link" href="{href}">{t["details"]}</a></div></li>')
     return (f'<section class="hero hero-small"><h1>{t["updates"]}</h1>{ink("under", "under")}<p class="lead">{t["updatesLead"]}</p>'
             f'<p class="subscribe"><a href="/{base}updates.xml">{t["subscribe"]}</a></p></section>'
-            f'{chips}<ol class="entries">{rows}</ol>')
+            f'{chips}<ol class="entries">{html_rows}</ol>')
 
 
-def rss(data, lang):
-    """/updates.xml (ru), /en/updates.xml (en): RSS 2.0, one item per published release, newest first."""
+def rss(rows, lang):
+    """/updates.xml (ru), /en/updates.xml (en): RSS 2.0, one item per published release (`rows` — feed()), newest
+    first. pubDate — when the version first appeared in its committed feed (feed_history), not the changelog date."""
     t, base = T[lang], ("en/" if lang == "en" else "")
     x = lambda v: html.escape(v, quote=False)
-    def date(iso):
-        y, m, d = (int(v) for v in iso.split("-"))
-        return email.utils.format_datetime(datetime.datetime(y, m, d, 12, tzinfo=datetime.timezone.utc))
-    out, rows = [], feed(data, lang)
+    date = lambda when: email.utils.format_datetime(when)
+    # Newest first by that time (a version can reach the feed a day after its changelog date).
+    rows = sorted(rows, key=lambda x: x[1].get("published") or datetime.datetime.min.replace(tzinfo=datetime.timezone.utc), reverse=True)
+    out = []
     for p, r, ru_only in rows:
         secs = "".join((f'<p><b>{e(s["title"])}</b></p>' if s["title"] else "") + "<ul>" + "".join(f"<li>{inline(i)}</li>" for i in s["items"]) + "</ul>"
                        for s in r["sections"] if s["items"])
@@ -462,16 +512,27 @@ def rss(data, lang):
         link = f'https://{DOMAIN}/{base}{p["id"]}/#v{r["version"]}'
         out.append(f'<item><title>{x(p["name"])} {x(r["version"])}</title><link>{x(link)}</link>'
                    f'<guid isPermaLink="false">{x(p["id"])}-{x(r["version"])}</guid>'
-                   + (f'<pubDate>{date(r["date"])}</pubDate>' if r["date"] else "")
+                   + (f'<pubDate>{date(r["published"])}</pubDate>' if r.get("published") else "")
                    + f'<description>{x(secs)}</description></item>')
-    # lastBuildDate = the newest release, not the build time: the same feed on every build until there is a new release.
-    newest = next((r["date"] for _, r, _ in rows if r["date"]), None)
+    # lastBuildDate = the newest release's time in the feed, not the build time: the same file until a new release.
+    newest = max((r["published"] for _, r, _ in rows if r.get("published")), default=None)
     self_url = f"https://{DOMAIN}/{base}updates.xml"
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
             f'<title>{x(t["rssTitle"])}</title><link>https://{DOMAIN}/{base}updates/</link><description>{x(t["rssDesc"])}</description>'
             f'<language>{lang}</language><atom:link href="{self_url}" rel="self" type="application/rss+xml"/>'
             + (f'<lastBuildDate>{date(newest)}</lastBuildDate>' if newest else "")
             + "\n" + "\n".join(out) + "\n</channel></rss>\n")
+
+
+def command(line, lang):
+    """The Terminal line for a language: products.json keeps it exactly as in UNINSTALL.md (Russian «Перетащи <App> в
+    Корзину вручную» when Finder can't trash the app); an English page prints that message in English."""
+    if lang == "ru":
+        return line
+    out, n = re.subn(r'echo "Перетащи (.+?) в Корзину вручную"', r'echo "Drag \1 to the Trash yourself"', line)
+    if n != 1 or re.search("[А-Яа-яЁё]", out):
+        sys.exit(f"❌ строка удаления: не нашёл текст для английской страницы: {line[:60]}…")
+    return out
 
 
 def uninstall(p, lang):
@@ -494,7 +555,7 @@ def uninstall(p, lang):
             f'<p>{e(t["uninstallKeep"].format(name=name, label=u.get("keep_label", {}).get(lang) or t["uninstallKeepLabel"]))}</p><p class="meta">{since}</p>'
             f'<details><summary>{t["uninstallManual"]}</summary>'
             f'<p>{e(t["uninstallManualLead"].format(name=name))}{note}</p>'
-            f'<div class="cmd"><pre><code>{e(u["command"])}</code></pre>'
+            f'<div class="cmd"><pre><code>{e(command(u["command"], lang))}</code></pre>'
             f'<button class="copy" type="button" data-done="{t["copiedCmd"]}">{t["copyCmd"]}</button></div></details></section>'
             # Copy the line; without clipboard access the line gets selected for ⌘C.
             '<script>document.querySelectorAll(".cmd .copy").forEach(b => b.addEventListener("click", () => {'
@@ -535,7 +596,11 @@ def build():
         nxt = f'<p class="meta next">{t["next"].format(list=", ".join(PLATFORM[k] for k in later))}</p>' if later else ""
         # «Latest updates»: the newest published release of each Mac app, the three most recent (one line per app — a
         # busy app doesn't push the others out).
-        latest = [x for i, x in enumerate(feed(data, lang)) if x[0]["id"] not in {y[0]["id"] for y in feed(data, lang)[:i]}]
+        rows, seen, latest = feed(data, lang), set(), []
+        for x in rows:
+            if x[0]["id"] not in seen:
+                seen.add(x[0]["id"])
+                latest.append(x)
         fresh = "".join(f'<li><a class="feed-row" href="/{base}{p["id"]}/#v{e(r["version"])}"><img src="/{icons[p["id"]]}" alt="" width="32" height="32">'
                         f'<b>{e(p["name"])} {e(r["version"])}</b><span class="feed-text"{ru_attr(headline(p, r, lang, ru)[1])}>{inline(headline(p, r, lang, ru)[0])}</span>'
                         f'<span class="feed-date">{day(r["date"], lang, short=True)}</span></a></li>' for p, r, ru in latest[:3])
@@ -543,9 +608,9 @@ def build():
                  f'<a href="/{base}updates/">{t["allUpdates"]}</a></div><ul>{fresh}</ul></section>') if fresh else ""
         body = f'<section class="hero"><h1>{t["h1"]}</h1>{ink("under", "under")}<p class="lead">{t["lead"]}</p></section>{fresh}{sections}{nxt}'
         write(base + "index.html", page(lang, t["title"], t["lead"], body, ""))
-        write(base + "updates/index.html", page(lang, f'{t["updates"]} — kvp projects', t["updatesLead"], updates_page(data, icons, lang),
+        write(base + "updates/index.html", page(lang, f'{t["updates"]} — kvp projects', t["updatesLead"], updates_page(data, rows, icons, lang),
                                                 "updates/", current="updates"))
-        write(base + "updates.xml", rss(data, lang))
+        write(base + "updates.xml", rss(rows, lang))
 
         for p in data:
             feats = "".join(f'<li>{ink("dot", "dot")}<span>{e(f)}</span></li>' for f in p["features"][lang])
