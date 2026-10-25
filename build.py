@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 import pencil
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(ROOT, "docs")
+OUT = os.environ.get("SITE_OUT") or os.path.join(ROOT, "docs")   # SITE_OUT: a scratch build (publish.sh checks first)
 DOMAIN = "kvp-projects.com"
 RELEASES = "https://updates.kvp-projects.com/files"   # our server (docs/updates-server.md); GitHub Releases is the archive
 SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
@@ -572,10 +572,16 @@ def merge_registry(data):
     import registry
     reg = registry.load()
     for p in data:
+        if p["id"] not in reg:
+            sys.exit(f"❌ сайт: продукта «{p['id']}» из content.json нет в реестре core/spec/products.json")
         rp = reg[p["id"]]
         root = registry.product_root(p["id"], rp)
         for pl in p["platforms"]:
-            name, rpl = next((n, x) for n, x in rp["platforms"].items() if x.get("site") == pl["kind"])
+            found = next(((n, x) for n, x in rp["platforms"].items() if x.get("site") == pl["kind"]), None)
+            if found is None:
+                sys.exit(f"❌ сайт: у «{p['id']}» в content.json есть платформа «{pl['kind']}», а в реестре — нет "
+                         "(поле site у платформы в core/spec/products.json)")
+            name, rpl = found
             for key in ("feed", "file", "scheme"):
                 if rpl.get(key):
                     pl[key] = rpl[key]
