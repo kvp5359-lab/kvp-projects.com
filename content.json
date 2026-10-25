@@ -1,14 +1,12 @@
 {
-  "_comment": "The catalog of kvp-projects.com. A product = one entry; a new platform = one more item in its platforms (kind: mac, chrome, windows, linux, ios, android). build.py makes the pages from this file and the products' changelogs. A Mac platform's «scheme» is the app's URL scheme: the license activation page opens <scheme>://activate?key=…. «license_path» — where the License section is in the app's settings (ru/en), shown on the activation page. «ui_langs» — the app's interface languages; an English page says «Russian only» when en is missing. «benefit» — what the app gives you, one line under the name on cards and the product page; «gains» — three {title, text} for «Что даёт» on a Mac app's page (no gains — no section).",
+  "_comment": "Тексты сайта kvp-projects.com по продуктам (карточки, страницы, «Как удалить»). Опознавательные поля — id ленты, схема ссылок, минимальная система, архитектура, пути к журналам и значкам — берутся из реестра core/spec/products.json (build.py, merge_registry). Здесь — только то, что пишется для людей. The catalog of kvp-projects.com. A product = one entry; a new platform = one more item in its platforms (kind: mac, chrome, windows, linux, ios, android). build.py makes the pages from this file and the products' changelogs. A Mac platform's «scheme» is the app's URL scheme: the license activation page opens <scheme>://activate?key=…. «license_path» — where the License section is in the app's settings (ru/en), shown on the activation page. «ui_langs» — the app's interface languages; an English page says «Russian only» when en is missing. «benefit» — what the app gives you, one line under the name on cards and the product page; «gains» — three {title, text} for «Что даёт» on a Mac app's page (no gains — no section).",
   "products": [
     {
       "id": "dictum",
       "name": "Dictum",
       "icon": {
-        "icns": "/Applications/Dictum.app/Contents/Resources/AppIcon.icns",
-        "fallback": "../transcribe-app/Resources/AppIcon.icns"
+        "icns": "/Applications/Dictum.app/Contents/Resources/AppIcon.icns"
       },
-      "changelog": "../transcribe-app/CHANGELOG.md",
       "tagline": {
         "ru": "Диктовка в любое приложение",
         "en": "Dictation into any app"
@@ -70,11 +68,6 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 15",
-          "arch": "Apple silicon",
-          "feed": "dictum",
-          "file": "Dictum",
-          "scheme": "dictum",
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
@@ -115,10 +108,8 @@
       "id": "textum",
       "name": "Textum",
       "icon": {
-        "icns": "/Applications/Textum.app/Contents/Resources/AppIcon.icns",
-        "fallback": "../textum/App/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"
+        "icns": "/Applications/Textum.app/Contents/Resources/AppIcon.icns"
       },
-      "changelog": "../textum/CHANGELOG.md",
       "tagline": {
         "ru": "Всё для текста — у курсора",
         "en": "Everything for text, at your cursor"
@@ -180,10 +171,6 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 15",
-          "feed": "textum",
-          "file": "Textum",
-          "scheme": "textum",
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
@@ -223,11 +210,6 @@
     {
       "id": "cliplark",
       "name": "Cliplark",
-      "icon": {
-        "png": "../clipboard-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"
-      },
-      "changelog": "../clipboard-app/CHANGELOG.md",
-      "changelog_en": "../clipboard-app/CHANGELOG.en.md",
       "tagline": {
         "ru": "Всё, что ты копируешь, — под рукой",
         "en": "Everything you copy, one shortcut away"
@@ -289,11 +271,6 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 26",
-          "arch": "Apple silicon",
-          "feed": "cliplark",
-          "file": "Cliplark",
-          "scheme": "cliplark",
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
@@ -334,11 +311,6 @@
     {
       "id": "shotlark",
       "name": "Shotlark",
-      "icon": {
-        "png": "../screenshot-app/App/Resources/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png"
-      },
-      "changelog": "../screenshot-app/CHANGELOG.md",
-      "changelog_en": "../screenshot-app/CHANGELOG.en.md",
       "tagline": {
         "ru": "Скриншоты и запись экрана",
         "en": "Screenshots and screen recording"
@@ -400,11 +372,6 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 26",
-          "arch": "Apple silicon",
-          "feed": "shotlark",
-          "file": "Shotlark",
-          "scheme": "shotlark",
           "license_path": {
             "ru": "Настройки → О программе → Лицензия",
             "en": "Settings → About → License"
@@ -446,11 +413,8 @@
       "id": "note-calc",
       "name": "Note Calc",
       "icon": {
-        "icns": "/Applications/Note Calc.app/Contents/Resources/icon.icns",
-        "fallback": "../note-calc/src-tauri/icons/128x128@2x.png"
+        "icns": "/Applications/Note Calc.app/Contents/Resources/icon.icns"
       },
-      "changelog": "../note-calc/CHANGELOG.md",
-      "changelog_en": "../note-calc/CHANGELOG.en.md",
       "tagline": {
         "ru": "Заметки, которые считают сами",
         "en": "Notes that do the math"
@@ -512,10 +476,6 @@
       "platforms": [
         {
           "kind": "mac",
-          "min": "macOS 15",
-          "feed": "note-calc",
-          "file": "Note-Calc",
-          "scheme": "notecalc",
           "license_path": {
             "ru": "Настройки → Справка → Лицензия",
             "en": "Settings → Help → License"
@@ -560,10 +520,6 @@
     {
       "id": "subtitle-tools",
       "name": "Subtitle Tools",
-      "icon": {
-        "png": "../../chrome-extentions/subtitles2/icons/icon128.png"
-      },
-      "changelog": "../../chrome-extentions/subtitles2/CHANGELOG.md",
       "tagline": {
         "ru": "Двойные субтитры на YouTube",
         "en": "Dual subtitles for YouTube"
@@ -602,10 +558,6 @@
     {
       "id": "steady-speed",
       "name": "Steady Speed",
-      "icon": {
-        "png": "../../chrome-extentions/steady-speed/public/icons/128.png"
-      },
-      "changelog": "../../chrome-extentions/steady-speed/CHANGELOG.md",
       "tagline": {
         "ru": "Скорость видео, которая не слетает",
         "en": "Video speed that stays put"
@@ -642,10 +594,6 @@
     {
       "id": "clear-site-data",
       "name": "Clear Site Data",
-      "icon": {
-        "png": "../../chrome-extentions/clear-cache/extension/icons/icon128.png"
-      },
-      "changelog": "../../chrome-extentions/clear-cache/CHANGELOG.md",
       "tagline": {
         "ru": "Очистка данных одного сайта",
         "en": "Clear data for one site"

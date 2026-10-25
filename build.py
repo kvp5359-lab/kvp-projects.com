@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Builds kvp-projects.com into docs/ (GitHub Pages serves that folder).
 
-Reads products.json, each product's CHANGELOG.md (and CHANGELOG.en.md when it has one) and the update feeds in
-../updates (the newest released version → the download link). Run after a release or a change in products.json:
+Reads content.json (texts) and the kvp registry ../spec/products.json (ids, feeds, paths), each product's CHANGELOG.md (and CHANGELOG.en.md when it has one) and the update feeds in
+../updates (the newest released version → the download link). Run after a release or a change in content.json:
     python3 build.py
-Paths in products.json are relative to this folder; the shelf ~/Проекты/mac-apps must be next to it.
+Products are found through the registry: ~/Проекты/kvp/<product>/<platform>/ (this folder is kvp/core/site).
 The look — the design on claude.ai (canvas «kvp-projects.com»): white paper, dark ink, pencil frames drawn like
 Dictum's pencil style (pencil.py).
 """
@@ -294,7 +294,7 @@ def items(r):
 
 def headline(p, r, lang, ru_only):
     """One line of news for a release: the changelog's first item (CHANGELOG-RULES: the most notable comes first), or,
-    for versions released before that rule, `headlines` in products.json ({"0.4.0": {"ru": …, "en": …}}).
+    for versions released before that rule, `headlines` in content.json ({"0.4.0": {"ru": …, "en": …}}).
     Returns (text, ru_only of that text)."""
     h = (p.get("headlines") or {}).get(r["version"])
     if h:
@@ -303,7 +303,7 @@ def headline(p, r, lang, ru_only):
 
 
 def feed(data, lang):
-    """Every published release of every Mac app, newest first: [(product, release, ru_only)]. Same day — products.json
+    """Every published release of every Mac app, newest first: [(product, release, ru_only)]. Same day — content.json
     order, then the newer version first."""
     out = []
     for idx, p in enumerate(data):
@@ -330,7 +330,7 @@ def make_icon(p):
 
 
 def beta(p, lang):
-    """The «Бета» mark: every product until products.json says "beta": false (a 1.0 release)."""
+    """The «Бета» mark: every product until content.json says "beta": false (a 1.0 release)."""
     return f' <span class="beta">{T[lang]["beta"]}</span>' if p.get("beta", True) else ""
 
 
@@ -463,7 +463,7 @@ def fresh_badge(p, lang):
 
 
 def gains(p, lang):
-    """«What you get» — three gains {title, text} (products.json `gains`); none (the Chrome extensions) — no section."""
+    """«What you get» — three gains {title, text} (content.json `gains`); none (the Chrome extensions) — no section."""
     g = p.get("gains", {}).get(lang)
     if not g:
         return ""
@@ -525,7 +525,7 @@ def rss(rows, lang):
 
 
 def command(line, lang):
-    """The Terminal line for a language: products.json keeps it exactly as in UNINSTALL.md (Russian «Перетащи <App> в
+    """The Terminal line for a language: content.json keeps it exactly as in UNINSTALL.md (Russian «Перетащи <App> в
     Корзину вручную» when Finder can't trash the app); an English page prints that message in English."""
     if lang == "ru":
         return line
@@ -537,7 +537,7 @@ def command(line, lang):
 
 def uninstall(p, lang):
     """«How to uninstall»: the in-app way first (mac-app-kit Uninstaller / Note Calc's own), then the Terminal line for
-    versions without it. Texts and the line — the Mac platform's `uninstall` in products.json, the line exactly as in
+    versions without it. Texts and the line — the Mac platform's `uninstall` in content.json, the line exactly as in
     mac-app-kit/docs/UNINSTALL.md (Note Calc — note-calc/.claude/rules/infrastructure.md)."""
     t = T[lang]
     pl = next((pl for pl in p["platforms"] if pl["kind"] == "mac" and pl.get("uninstall")), None)
@@ -564,8 +564,38 @@ def uninstall(p, lang):
             ' navigator.clipboard ? navigator.clipboard.writeText(c.textContent).then(done, select) : select(); }));</script>')
 
 
+def merge_registry(data):
+    """Identity fields come from the kvp registry (core/spec/products.json): per site platform the feed, file name,
+    link scheme, minimum macOS and «Apple silicon» for arm64-only builds; per product the changelogs (in the platform
+    folder) and the icon (in the product's brand/). content.json keeps only what is written for people."""
+    sys.path.insert(0, os.path.join(ROOT, "..", "release", "shared"))
+    import registry
+    reg = registry.load()
+    for p in data:
+        rp = reg[p["id"]]
+        root = registry.product_root(p["id"], rp)
+        for pl in p["platforms"]:
+            name, rpl = next((n, x) for n, x in rp["platforms"].items() if x.get("site") == pl["kind"])
+            for key in ("feed", "file", "scheme"):
+                if rpl.get(key):
+                    pl[key] = rpl[key]
+            if rpl.get("minOS"):
+                pl["min"] = f"macOS {rpl['minOS']}"
+            if rpl.get("arch") == ["arm64"]:
+                pl["arch"] = "Apple silicon"
+            folder = os.path.join(root, rpl["dir"])
+            if "changelog" not in p:
+                p["changelog"] = os.path.join(folder, "CHANGELOG.md")
+                if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
+                    p["changelog_en"] = os.path.join(folder, "CHANGELOG.en.md")
+        if rp.get("icon"):
+            icon = p.setdefault("icon", {})
+            icon["fallback" if "icns" in icon else "png"] = os.path.join(root, rp["icon"])
+    return data
+
+
 def build():
-    data = json.load(open(os.path.join(ROOT, "products.json"), encoding="utf-8"))["products"]
+    data = merge_registry(json.load(open(os.path.join(ROOT, "content.json"), encoding="utf-8"))["products"])
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     os.makedirs(os.path.join(OUT, "assets", "icons"))
