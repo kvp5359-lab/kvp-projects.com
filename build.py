@@ -110,7 +110,8 @@ PRIVACY = {
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
                 "<b>Textum.</b> ИИ-действия отправляют выделенный текст и команду в Anthropic (Claude) с твоим собственным ключом — или обрабатывают его моделью Apple прямо на Mac. Для пересчёта валют загружаются курсы с open.er-api.com — без твоих данных.",
                 "<b>Note Calc.</b> Для валют загружает курсы с open.er-api.com — без твоих данных.",
-                "<b>Cliplark и Shotlark</b> кроме описанного выше в интернет ничего не отправляют."]),
+                "<b>Shotlark.</b> Имя файла по содержимому скриншота придумывает модель Apple прямо на Mac. Если её нет и ты ввёл свой ключ Anthropic, уменьшенная копия скриншота и названия приложения и окна отправляются в Anthropic (Claude) — только чтобы придумать имя; без ключа ничего не отправляется.",
+                "<b>Cliplark</b> кроме описанного выше в интернет ничего не отправляет."]),
             ("Этот сайт", [
                 "Без аналитики, рекламы и cookies; шрифты загружаются с самого сайта. Сайт размещён на GitHub Pages — GitHub, как любой хостинг, видит технические данные запросов, например IP-адрес."]),
             ("Вопросы", ["Если что-то непонятно или хочешь, чтобы я удалил отчёты, связанные с тобой, — {contact}."]),
@@ -134,7 +135,8 @@ PRIVACY = {
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
                 "<b>Textum.</b> AI actions send the selected text and the command to Anthropic (Claude) with your own key — or process it with Apple’s model right on your Mac. Currency conversion downloads exchange rates from open.er-api.com, without any of your data.",
                 "<b>Note Calc.</b> Downloads exchange rates for currencies from open.er-api.com, without any of your data.",
-                "<b>Cliplark and Shotlark</b> send nothing beyond what is described above."]),
+                "<b>Shotlark.</b> A file name from the screenshot’s content is made by Apple’s model right on your Mac. Without it, and only if you entered your own Anthropic key, a small copy of the screenshot and the app and window names go to Anthropic (Claude) — just to name the file; without a key nothing is sent.",
+                "<b>Cliplark</b> sends nothing beyond what is described above."]),
             ("This website", [
                 "No analytics, ads or cookies; fonts are served by the site itself. The site is hosted on GitHub Pages — like any host, GitHub sees technical request data such as the IP address."]),
             ("Questions", ["If something is unclear, or you’d like me to delete reports related to you, {contact}."]),
