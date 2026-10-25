@@ -1,4 +1,4 @@
-"""Pencil ink shapes as SVG paths, after Dictum's PencilPaths (transcribe-app/Sources/Dictum/Overlay/Styles/Pencil): a hand-drawn centre line (slight bow), the ink width
+"""Pencil ink shapes as SVG paths, after Dictum's PencilPaths (dictum/mac/Sources/Dictum/Overlay/Styles/Pencil): a hand-drawn centre line (slight bow), the ink width
 swelling slowly, filled (never stroked)."""
 import math, random, sys, json
 

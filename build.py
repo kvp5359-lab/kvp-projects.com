@@ -538,7 +538,7 @@ def command(line, lang):
 def uninstall(p, lang):
     """«How to uninstall»: the in-app way first (mac-app-kit Uninstaller / Note Calc's own), then the Terminal line for
     versions without it. Texts and the line — the Mac platform's `uninstall` in content.json, the line exactly as in
-    mac-app-kit/docs/UNINSTALL.md (Note Calc — note-calc/.claude/rules/infrastructure.md)."""
+    core/kits/apple-kit/docs/UNINSTALL.md (Note Calc — note-calc/.claude/rules/infrastructure.md)."""
     t = T[lang]
     pl = next((pl for pl in p["platforms"] if pl["kind"] == "mac" and pl.get("uninstall")), None)
     if not pl:
