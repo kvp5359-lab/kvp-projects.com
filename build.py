@@ -16,7 +16,7 @@ import pencil
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get("SITE_OUT") or os.path.join(ROOT, "docs")   # SITE_OUT: a scratch build (publish.sh checks first)
 DOMAIN = "kvp-projects.com"
-RELEASES = "https://updates.kvp-projects.com/files"   # our server (docs/updates-server.md); GitHub Releases is the archive
+RELEASES = "https://updates.kvp-projects.com/files"   # our server (core/server/updates-server.md); GitHub Releases is the archive
 SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 
 T = {
@@ -27,7 +27,6 @@ T = {
         "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "gains": "Что даёт",
         "pricing": "Бесплатно и Pro", "freeList": "Бесплатно — всегда", "proList": "В Pro", "perMonth": "{p} в месяц",
         "perYear": "{p} в год", "buyPro": "Купить Pro", "inBundle": "Входит в набор «{name}»", "proFrom": "Pro от {p} в месяц",
-        "bundleOf": "{apps} — одной подпиской",
         "updatesLead": "Что нового во всех программах — по датам. Обновления приходят сами: программа предложит их установить.",
         "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
@@ -61,7 +60,6 @@ T = {
         "updated": "Updated · {v}", "newIn": "New in {v}", "gains": "What you get",
         "pricing": "Free and Pro", "freeList": "Free — always", "proList": "In Pro", "perMonth": "{p} a month",
         "perYear": "{p} a year", "buyPro": "Buy Pro", "inBundle": "Part of the «{name}» bundle", "proFrom": "Pro from {p} a month",
-        "bundleOf": "{apps} — one subscription",
         "updatesLead": "What’s new in every app, by date. Updates arrive on their own: the app offers to install them.",
         "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
@@ -110,7 +108,7 @@ PRIVACY = {
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
                 "<b>Textum.</b> ИИ-действия отправляют выделенный текст и команду в Anthropic (Claude) с твоим собственным ключом — или обрабатывают его моделью Apple прямо на Mac. Для пересчёта валют загружаются курсы с open.er-api.com — без твоих данных.",
                 "<b>Note Calc.</b> Для валют загружает курсы с open.er-api.com — без твоих данных.",
-                "<b>Shotlark.</b> Имя файла по содержимому скриншота придумывает модель Apple прямо на Mac. Если её нет и ты ввёл свой ключ Anthropic, уменьшенная копия скриншота и названия приложения и окна отправляются в Anthropic (Claude) — только чтобы придумать имя; без ключа ничего не отправляется.",
+                "<b>Shotlark.</b> Имя файла по содержимому скриншота придумывает модель Apple прямо на Mac. Если ты сам включил в настройках имена от Claude и ввёл свой ключ Anthropic, а модели Apple нет или она не ответила, в Anthropic (Claude) отправляются уменьшенная копия скриншота, названия приложения и окна и распознанный на скриншоте текст — только чтобы придумать имя. Без этой настройки или без ключа ничего не отправляется.",
                 "<b>Cliplark</b> кроме описанного выше в интернет ничего не отправляет."]),
             ("Этот сайт", [
                 "Без аналитики, рекламы и cookies; шрифты загружаются с самого сайта. Сайт размещён на GitHub Pages — GitHub, как любой хостинг, видит технические данные запросов, например IP-адрес."]),
@@ -135,7 +133,7 @@ PRIVACY = {
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
                 "<b>Textum.</b> AI actions send the selected text and the command to Anthropic (Claude) with your own key — or process it with Apple’s model right on your Mac. Currency conversion downloads exchange rates from open.er-api.com, without any of your data.",
                 "<b>Note Calc.</b> Downloads exchange rates for currencies from open.er-api.com, without any of your data.",
-                "<b>Shotlark.</b> A file name from the screenshot’s content is made by Apple’s model right on your Mac. Without it, and only if you entered your own Anthropic key, a small copy of the screenshot and the app and window names go to Anthropic (Claude) — just to name the file; without a key nothing is sent.",
+                "<b>Shotlark.</b> A file name from the screenshot’s content is made by Apple’s model right on your Mac. Only if you turned on names from Claude in Settings and entered your own Anthropic key, and Apple’s model is missing or gave no answer, a small copy of the screenshot, the app and window names and the text recognized on it go to Anthropic (Claude) — just to name the file. Without that setting or a key nothing is sent.",
                 "<b>Cliplark</b> sends nothing beyond what is described above."]),
             ("This website", [
                 "No analytics, ads or cookies; fonts are served by the site itself. The site is hosted on GitHub Pages — like any host, GitHub sees technical request data such as the IP address."]),
@@ -485,7 +483,8 @@ CURRENCY = {"EUR": "€", "USD": "$", "GBP": "£"}
 def money(amount, currency, lang):
     """3 € (ru) / €3 (en)."""
     sym = CURRENCY.get(currency, currency)
-    n = f"{amount:g}".replace(".", ",") if lang == "ru" else f"{amount:g}"
+    n = f"{amount:.2f}".removesuffix(".00")   # 3 → «3», 4.9 → «4.90»
+    n = n.replace(".", ",") if lang == "ru" else n
     return f"{n} {sym}" if lang == "ru" else f"{sym}{n}"
 
 
@@ -496,6 +495,13 @@ def plan_price(plan, lang):
     parts = [t["perMonth"].format(p=money(price["month"], cur, lang))] if "month" in price else []
     parts += [t["perYear"].format(p=money(price["year"], cur, lang))] if "year" in price else []
     return " · ".join(parts)
+
+
+def sellable(plan):
+    """On sale on the site: status «active» with a monthly price in numbers and a buy link (kvp doctor checks the same)."""
+    price = plan.get("price")
+    return (plan.get("status") == "active" and isinstance(price, dict) and isinstance(price.get("month"), (int, float))
+            and str(plan.get("buyURL", "")).startswith("https://"))
 
 
 def plan_name(plan, lang):
@@ -638,7 +644,7 @@ def merge_registry(data):
     reg = registry.load()
     # Subscriptions on sale (status «active»); KVP_PLANS — another plans.json, to preview the blocks before a launch.
     plans_path = os.environ.get("KVP_PLANS") or os.path.join(ROOT, "..", "spec", "plans.json")
-    plans = {k: v for k, v in json.load(open(plans_path, encoding="utf-8"))["plans"].items() if v.get("status") == "active"}
+    plans = {k: v for k, v in json.load(open(plans_path, encoding="utf-8"))["plans"].items() if sellable(v)}
     for p in data:
         if p["id"] not in reg:
             sys.exit(f"❌ сайт: продукта «{p['id']}» из content.json нет в реестре core/spec/products.json")
