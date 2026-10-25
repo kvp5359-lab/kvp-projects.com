@@ -25,6 +25,9 @@ T = {
         "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac и браузера.",
         "updates": "Обновления", "rss": "RSS", "fresh": "Свежие обновления", "allUpdates": "Все обновления →",
         "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "gains": "Что даёт",
+        "pricing": "Бесплатно и Pro", "freeList": "Бесплатно — всегда", "proList": "В Pro", "perMonth": "{p} в месяц",
+        "perYear": "{p} в год", "buyPro": "Купить Pro", "inBundle": "Входит в набор «{name}»", "proFrom": "Pro от {p} в месяц",
+        "bundleOf": "{apps} — одной подпиской",
         "updatesLead": "Что нового во всех программах — по датам. Обновления приходят сами: программа предложит их установить.",
         "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
@@ -56,6 +59,9 @@ T = {
         "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac and the browser.",
         "updates": "Updates", "rss": "RSS", "fresh": "Latest updates", "allUpdates": "All updates →",
         "updated": "Updated · {v}", "newIn": "New in {v}", "gains": "What you get",
+        "pricing": "Free and Pro", "freeList": "Free — always", "proList": "In Pro", "perMonth": "{p} a month",
+        "perYear": "{p} a year", "buyPro": "Buy Pro", "inBundle": "Part of the «{name}» bundle", "proFrom": "Pro from {p} a month",
+        "bundleOf": "{apps} — one subscription",
         "updatesLead": "What’s new in every app, by date. Updates arrive on their own: the app offers to install them.",
         "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
@@ -471,6 +477,63 @@ def gains(p, lang):
     return f'<section class="gains"><h2>{T[lang]["gains"]}</h2><div class="gains-grid">{cells}</div></section>'
 
 
+CURRENCY = {"EUR": "€", "USD": "$", "GBP": "£"}
+
+
+def money(amount, currency, lang):
+    """3 € (ru) / €3 (en)."""
+    sym = CURRENCY.get(currency, currency)
+    n = f"{amount:g}".replace(".", ",") if lang == "ru" else f"{amount:g}"
+    return f"{n} {sym}" if lang == "ru" else f"{sym}{n}"
+
+
+def plan_price(plan, lang):
+    """«3 € в месяц · 24 € в год» from a plan's `price` ({currency, month, year}); empty without a price."""
+    price = plan.get("price") or {}
+    t, cur = T[lang], price.get("currency", "EUR")
+    parts = [t["perMonth"].format(p=money(price["month"], cur, lang))] if "month" in price else []
+    parts += [t["perYear"].format(p=money(price["year"], cur, lang))] if "year" in price else []
+    return " · ".join(parts)
+
+
+def plan_name(plan, lang):
+    name = plan.get("name", "")
+    return name.get(lang, name.get("ru", "")) if isinstance(name, dict) else name
+
+
+def pricing(p, lang):
+    """«Free and Pro» on a product page — only when the product's own subscription or a bundle with it is on sale
+    (status «active» in core/spec/plans.json). Lists: content.json `pro` ({free: {ru, en}, pro: {ru, en}}); prices and
+    the buy links — plans.json (`price`, `buyURL`). Nothing on sale — no section (the beta pages stay as they are)."""
+    own, bundles = p.get("_plans", {}).get("own"), p.get("_plans", {}).get("bundles", [])
+    if not own and not bundles:
+        return ""
+    t, texts = T[lang], p.get("pro", {})
+    lists = ""
+    for key, title in (("free", t["freeList"]), ("pro", t["proList"])):
+        items = texts.get(key, {}).get(lang) or []
+        if items:
+            lists += (f'<div class="plan-list"><h3>{title}</h3><ul>'
+                      + "".join(f'<li>{ink("dot", "dot")}<span>{e(x)}</span></li>' for x in items) + '</ul></div>')
+    offer = ""
+    if own:
+        buy = f'<a class="button" href="{e(own["buyURL"])}">{ink("btn", "frame")}<span>{t["buyPro"]}</span></a>' if own.get("buyURL") else ""
+        offer += f'<div class="plan-offer"><span class="plan-price">{e(plan_price(own, lang))}</span>{buy}</div>'
+    for b in bundles:
+        link = f' <a href="{e(b["buyURL"])}">{e(plan_price(b, lang))}</a>' if b.get("buyURL") else f' {e(plan_price(b, lang))}'
+        offer += f'<p class="meta plan-bundle">{t["inBundle"].format(name=e(plan_name(b, lang)))} —{link}</p>'
+    return f'<section class="pricing"><h2>{t["pricing"]}</h2><div class="plan-lists">{lists}</div>{offer}</section>'
+
+
+def price_tag(p, lang):
+    """On a card: «Pro from 3 € a month» when the product's own subscription is on sale."""
+    own = p.get("_plans", {}).get("own")
+    price = (own or {}).get("price") or {}
+    if "month" not in price:
+        return ""
+    return f'<span class="price-tag">{T[lang]["proFrom"].format(p=money(price["month"], price.get("currency", "EUR"), lang))}</span>'
+
+
 def updates_page(data, rows, icons, lang):
     """/updates/: all published releases of all Mac apps by date (`rows` — feed()), filter chips (assets/site.js; no JS — all shown)."""
     t, base = T[lang], ("en/" if lang == "en" else "")
@@ -571,6 +634,9 @@ def merge_registry(data):
     sys.path.insert(0, os.path.join(ROOT, "..", "release", "shared"))
     import registry
     reg = registry.load()
+    # Subscriptions on sale (status «active»); KVP_PLANS — another plans.json, to preview the blocks before a launch.
+    plans_path = os.environ.get("KVP_PLANS") or os.path.join(ROOT, "..", "spec", "plans.json")
+    plans = {k: v for k, v in json.load(open(plans_path, encoding="utf-8"))["plans"].items() if v.get("status") == "active"}
     for p in data:
         if p["id"] not in reg:
             sys.exit(f"❌ сайт: продукта «{p['id']}» из content.json нет в реестре core/spec/products.json")
@@ -594,6 +660,8 @@ def merge_registry(data):
                 p["changelog"] = os.path.join(folder, "CHANGELOG.md")
                 if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
                     p["changelog_en"] = os.path.join(folder, "CHANGELOG.en.md")
+        p["_plans"] = {"own": plans.get(f'{p["id"]}-pro'),
+                       "bundles": [b for b in plans.values() if b.get("kind") == "bundle" and p["id"] in b.get("apps", [])]}
         if rp.get("icon"):
             icon = p.setdefault("icon", {})
             icon["fallback" if "icns" in icon else "png"] = os.path.join(root, rp["icon"])
@@ -625,7 +693,7 @@ def build():
                 cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
                           f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
                           f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
-                          f'<span class="benefit">{e(p["benefit"][lang])}</span></span></a>')
+                          f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span></a>')
                 n += 1
             sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
                          f'<span class="meta">{sub}</span></div><div class="grid">{cards}</div></section>')
@@ -654,7 +722,7 @@ def build():
                     f'<section class="product"><img src="/{icons[p["id"]]}" alt="" width="144" height="144">'
                     f'<div class="product-head"><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead benefit-lead">{e(p["benefit"][lang])}</p></div></section>'
                     f'{news(p, lang)}<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
-                    f'{beta_note(p, lang)}{gains(p, lang)}'
+                    f'{beta_note(p, lang)}{gains(p, lang)}{pricing(p, lang)}'
                     f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/", image=icons[p["id"]]))
 
