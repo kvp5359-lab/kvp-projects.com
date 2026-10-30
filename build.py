@@ -88,6 +88,18 @@ T = {
     },
 }
 WINDOWS_NAMES = {"10.0.19041": "Windows 10 2004"}
+WINDOWS_HELP = {
+    "ru": {"title": "{name} для Windows", "changes": "Что нового в версии для Windows",
+           "warning": "При первой установке Windows может показать синее окно «Система Windows защитила ваш компьютер»: программа новая, и у неё пока нет сертификата издателя. Нажми «Подробнее», проверь, что файл называется {file}-…-setup.exe и скачан с этого сайта, затем нажми «Выполнить в любом случае». Обновления приходят из самой программы, и каждое она сама проверяет по подписи.",
+           "license": "Лицензия: {path}.",
+           "remove": "Как удалить: Параметры → Приложения → Установленные приложения → {name} → Удалить. {keeps}",
+           "problem": "Если что-то пошло не так: Настройки → О программе → Журнал → «Открыть папку» (или {log}). Пришли файл журнала и версию Windows на почту, указанную на странице конфиденциальности: снимков и текстов в журнале нет."},
+    "en": {"title": "{name} for Windows", "changes": "What’s new on Windows",
+           "warning": "On first install Windows may show a blue “Windows protected your PC” window: the app is new and has no publisher certificate yet. Press “More info”, check that the file is named {file}-…-setup.exe and came from this site, then press “Run anyway”. Updates come from within the app, and it checks each one’s signature itself.",
+           "license": "License: {path}.",
+           "remove": "To uninstall: Settings → Apps → Installed apps → {name} → Uninstall. {keeps}",
+           "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to the address on the privacy page: it holds no captures or texts."},
+}
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
 
 # The privacy page (/privacy/, /en/privacy/). Keep it true to the code: every network request the apps make is here.
@@ -104,7 +116,8 @@ PRIVACY = {
                 "Отчёт идёт через мой сервер reports.kvp-projects.com в сервис Sentry (данные хранятся в ЕС). Мой сервер не передаёт дальше твой IP-адрес, а Sentry настроен IP-адреса не хранить."]),
             ("Обновления и лицензия", [
                 "Раз в день приложение проверяет, нет ли новой версии, и читает файл с правилами лицензий на updates.kvp-projects.com. Это обычное скачивание файла: о тебе и о том, как ты пользуешься приложением, ничего не отправляется. Как и любой сайт, сервер видит адрес, с которого пришёл запрос. Новая версия ставится только с твоего согласия, автоматическую проверку можно выключить в настройках. Сами файлы приложений скачиваются оттуда же — с моего сервера; журнал обращений к нему не ведётся.",
-                "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на Mac, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер."]),
+                "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на Mac, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер.",
+                "Версии для Windows устроены так же: данные хранятся на компьютере, отчёты об ошибках отправляются только с твоего согласия (в них версия Windows и сведения о компьютере, без снимков, текстов и имён файлов), а обновления проверяются и скачиваются с того же сервера. Подпись обновления программа проверяет сама перед установкой."]),
             ("Что отправляют отдельные приложения", [
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
                 "<b>Textum.</b> ИИ-действия отправляют выделенный текст и команду в Anthropic (Claude) с твоим собственным ключом — или обрабатывают его моделью Apple прямо на Mac. Для пересчёта валют загружаются курсы с open.er-api.com — без твоих данных.",
@@ -129,7 +142,8 @@ PRIVACY = {
                 "Reports go through my server reports.kvp-projects.com to Sentry (data stored in the EU). My server doesn’t pass your IP address on, and Sentry is set not to store IP addresses."]),
             ("Updates and licenses", [
                 "Once a day an app checks for a new version and reads the license policy file on updates.kvp-projects.com. It’s a plain file download: nothing about you or how you use the app is sent. Like any website, the server sees the address the request came from. A new version is installed only with your consent, and automatic checks can be turned off in settings. The app files themselves come from there too — my own server, which keeps no access log.",
-                "A license key contains the email it was issued to and is checked right on your Mac, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server."]),
+                "A license key contains the email it was issued to and is checked right on your Mac, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server.",
+                "The Windows versions work the same way: your data stays on the computer, error reports go only with your consent (they carry the Windows version and computer details, never captures, texts or file names), and updates are checked and downloaded from the same server. The app verifies each update’s signature itself before installing it."]),
             ("What individual apps send", [
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
                 "<b>Textum.</b> AI actions send the selected text and the command to Anthropic (Claude) with your own key — or process it with Apple’s model right on your Mac. Currency conversion downloads exchange rates from open.er-api.com, without any of your data.",
@@ -249,6 +263,15 @@ def mac_platform(p):
     return next((pl for pl in p.get("platforms", []) if pl["kind"] == "mac"), None)
 
 
+def windows_log(p):
+    """The product's Windows journal as a product of its own for releases(): same page and icon, its own feed and anchors. None without a Windows platform."""
+    pl = next((pl for pl in p.get("platforms", []) if pl["kind"] == "windows"), None)
+    if not pl:
+        return None
+    return {"id": p["id"], "_key": p["id"] + "-windows", "_anchor": "vw", "name": f'{p["name"]} (Windows)', "changelog": pl["changelog"], "changelog_en": pl.get("changelog_en"),
+            "headlines": {}, "platforms": [{"kind": "mac", "feed": pl["feed"]}]}
+
+
 def fold(release, older):
     """`release` with the items of `older` (versions never published, newest first) added: same section title — appended
     to it, a new title — a new section at the end. People got all of it at once, with this version."""
@@ -273,7 +296,7 @@ def releases(p, lang):
     runs ahead of «Download». A version that never did (cut, but not given to people) isn't shown on its own: its items
     fold into the next published version; versions after the newest published one wait. Each release of a Mac app
     gets `published` — when it first appeared in the feed (the RSS pubDate)."""
-    key = (p["id"], lang)
+    key = (p.get("_key", p["id"]), lang)
     if key in _releases:
         return _releases[key]
     log = parse_changelog(p.get("changelog_en")) if lang == "en" else None
@@ -314,9 +337,10 @@ def feed(data, lang):
     order, then the newer version first."""
     out = []
     for idx, p in enumerate(data):
-        if mac_platform(p):
-            rs, ru_only = releases(p, lang)
-            out += [(idx, p, r, ru_only) for r in rs]
+        for q in (p, windows_log(p)):
+            if q and mac_platform(q):
+                rs, ru_only = releases(q, lang)
+                out += [(idx, q, r, ru_only) for r in rs]
     out.sort(key=lambda x: (x[2]["date"] or "", -x[0], num(x[2]["version"])), reverse=True)
     return [(p, r, ru) for _, p, r, ru in out]
 
@@ -431,6 +455,24 @@ def actions(p, lang):
     return "".join(f'<div class="action">{a}</div>' for a in out)
 
 
+def windows_help(p, lang):
+    """What a Windows page has to say besides the button: the SmartScreen window, the license, uninstalling, what to do when something breaks."""
+    pl = next((pl for pl in p["platforms"] if pl["kind"] == "windows"), None)
+    if not pl:
+        return ""
+    h = WINDOWS_HELP[lang]
+    return (f'<section class="uninstall"><h2>{e(h["title"].format(name=p["name"]))}</h2>'
+            f'<p>{e(h["warning"].format(file=pl["file"]))}</p>'
+            f'<p>{e(h["license"].format(path=pl["license_path"][lang]))}</p>'
+            f'<p>{e(h["remove"].format(name=p["name"], keeps=pl["keeps"][lang]))}</p>'
+            f'<p>{e(h["problem"].format(log=pl["log"]))}</p></section>')
+
+
+def windows_changes(p, lang):
+    w = windows_log(p)
+    return changes(w, lang) if w else ""
+
+
 def changes(p, lang):
     """«What's new» (id="changes"): the newest release open, older ones folded; each release has id="v<version>" — the
     feed and /updates/ link there (assets/site.js unfolds an older one)."""
@@ -442,14 +484,16 @@ def changes(p, lang):
     def block(r):
         secs = "".join(f'<h4>{e(s["title"])}</h4><ul>{"".join(f"<li>{inline(i)}</li>" for i in s["items"])}</ul>'
                        for s in r["sections"] if s["items"])
-        return (f'<section class="release" id="v{e(r["version"])}"{ru_attr(ru_only)}><h3>{t["version"].format(v=r["version"])}'
+        return (f'<section class="release" id="{p.get("_anchor", "v")}{e(r["version"])}"{ru_attr(ru_only)}><h3>{t["version"].format(v=r["version"])}'
                 f'<span class="meta"> · {day(r["date"], lang)}</span></h3>{secs}</section>')
 
     first, rest = released[0], released[1:]
     note = f'<p class="meta">{t["noEn"]}</p>' if ru_only else ""
     older = f'<details><summary>{t["older"]}</summary>{"".join(block(r) for r in rest)}</details>' if rest else ""
     more = (f'<p class="app-updates"><a href="/{"en/" if lang == "en" else ""}updates/#{p["id"]}">{t["appUpdates"].format(name=e(p["name"]))}</a></p>'
-            if mac_platform(p) else "")
+            if mac_platform(p) and "_key" not in p else "")
+    if "_key" in p:
+        return f'<section class="changes" id="changes-windows"><h2>{WINDOWS_HELP[lang]["changes"]}</h2>{note}{block(first)}{older}</section>'
     return f'<section class="changes" id="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{note}{block(first)}{older}{more}</section>'
 
 
@@ -563,7 +607,7 @@ def updates_page(data, rows, icons, lang):
     html_rows = ""
     for p, r, ru_only in rows:
         its, href = items(r), f'/{base}{p["id"]}/'
-        anchor = f'{href}#v{e(r["version"])}'
+        anchor = f'{href}#{p.get("_anchor", "v")}{e(r["version"])}'
         more = f'<a class="more" href="{anchor}">{t["more"].format(n=len(its) - 3)}</a>' if len(its) > 3 else ""
         ru = f'<span class="meta"> · {t["inRu"]}</span>' if ru_only else ""
         html_rows += (f'<li class="entry" data-app="{p["id"]}"><img src="/{icons[p["id"]]}" alt="" width="48" height="48">'
@@ -590,9 +634,9 @@ def rss(rows, lang):
                        for s in r["sections"] if s["items"])
         if ru_only:
             secs = f'<p><i>{t["noEn"]}</i></p>' + secs
-        link = f'https://{DOMAIN}/{base}{p["id"]}/#v{r["version"]}'
+        link = f'https://{DOMAIN}/{base}{p["id"]}/#{p.get("_anchor", "v")}{r["version"]}'
         out.append(f'<item><title>{x(p["name"])} {x(r["version"])}</title><link>{x(link)}</link>'
-                   f'<guid isPermaLink="false">{x(p["id"])}-{x(r["version"])}</guid>'
+                   f'<guid isPermaLink="false">{x(p.get("_key", p["id"]))}-{x(r["version"])}</guid>'
                    + (f'<pubDate>{date(r["published"])}</pubDate>' if r.get("published") else "")
                    + f'<description>{x(secs)}</description></item>')
     # lastBuildDate = the newest release's time in the feed, not the build time: the same file until a new release.
@@ -660,17 +704,28 @@ def merge_registry(data):
             sys.exit(f"❌ сайт: продукта «{p['id']}» из content.json нет в реестре core/spec/products.json")
         rp = reg[p["id"]]
         root = registry.product_root(p["id"], rp)
+        hidden = []
         for pl in p["platforms"]:
             found = next(((n, x) for n, x in rp["platforms"].items() if x.get("site") == pl["kind"]), None)
             if found is None:
                 sys.exit(f"❌ сайт: у «{p['id']}» в content.json есть платформа «{pl['kind']}», а в реестре — нет "
                          "(поле site у платформы в core/spec/products.json)")
             name, rpl = found
+            # A Windows platform isn't on the site until it is public: no «soon» and no section (KVP_SITE_SHOW_WINDOWS: to preview it, never in a real build).
+            if pl["kind"] == "windows" and rpl.get("status") != "public" and not os.environ.get("KVP_SITE_SHOW_WINDOWS"):
+                hidden.append(pl)
+                continue
             for key in ("feed", "file", "scheme", "status"):
                 if rpl.get(key):
                     pl[key] = rpl[key]
             if pl["kind"] == "windows":
                 pl["min"] = WINDOWS_NAMES[rpl["minOS"]]   # from the registry: a new minimum must get its name here
+                pl["status"] = "public"   # here only public ones, or KVP_SITE_SHOW_WINDOWS
+                folder = os.path.join(root, rpl["dir"])
+                pl["changelog"] = os.path.join(folder, "CHANGELOG.md")
+                if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
+                    pl["changelog_en"] = os.path.join(folder, "CHANGELOG.en.md")
+                continue
             elif rpl.get("minOS"):
                 pl["min"] = f"macOS {rpl['minOS']}"
             if rpl.get("arch") == ["arm64"]:
@@ -680,6 +735,7 @@ def merge_registry(data):
                 p["changelog"] = os.path.join(folder, "CHANGELOG.md")
                 if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
                     p["changelog_en"] = os.path.join(folder, "CHANGELOG.en.md")
+        p["platforms"] = [pl for pl in p["platforms"] if not any(pl is h for h in hidden)]
         p["_plans"] = {"own": plans.get(f'{p["id"]}-pro'),
                        "bundles": [b for b in plans.values() if b.get("kind") == "bundle" and p["id"] in b.get("apps", [])]}
         if rp.get("icon"):
@@ -743,7 +799,7 @@ def build():
                     f'<div class="product-head"><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead benefit-lead">{e(p["benefit"][lang])}</p></div></section>'
                     f'{news(p, lang)}<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
                     f'{beta_note(p, lang)}{gains(p, lang)}{pricing(p, lang)}'
-                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}')
+                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}{windows_changes(p, lang)}{windows_help(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/", image=icons[p["id"]]))
 
     # The license activation page: the purchase email links here (license-tool issue prints the link); the key is in
@@ -753,7 +809,7 @@ def build():
         base = "en/" if lang == "en" else ""
         apps = [{"id": p["id"], "name": p["name"], "scheme": pl["scheme"], "page": f"/{base}{p['id']}/",
                  "path": pl.get("license_path", {}).get(lang, "")}
-                for p in data for pl in p["platforms"] if pl.get("scheme")]
+                for p in data for pl in p["platforms"] if pl.get("scheme") and pl["kind"] != "windows"]
         texts = {k: t[k] for k in ("openIn", "noKey", "copied", "copyManually", "unknownApp", "paste")}
         texts["download"] = t["downloadApp"]
         payload = json.dumps({"apps": apps, "texts": texts}, ensure_ascii=False).replace("</", "<\\/")

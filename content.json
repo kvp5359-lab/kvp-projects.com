@@ -392,6 +392,18 @@
             },
             "command": "osascript -e 'if application \"Shotlark\" is running then tell application \"Shotlark\" to quit'; sleep 2; osascript -e 'tell application \"Finder\" to delete POSIX file \"/Applications/Shotlark.app\"' >/dev/null 2>&1 || echo \"Перетащи Shotlark в Корзину вручную\"; rm -rf ~/Library/Application\\ Support/screenshot-app ~/Library/Logs/Shotlark ~/Library/Caches/com.kvp5359.screenshotapp ~/Library/Caches/Shotlark ~/Library/Caches/SentryCrash/Shotlark ~/Library/Caches/io.sentry/1307402e76817b842cc5779c4cb7f9f3c1c5706a ~/Library/HTTPStorages/com.kvp5359.screenshotapp ~/Library/HTTPStorages/com.kvp5359.screenshotapp.binarycookies ~/Library/WebKit/com.kvp5359.screenshotapp ~/Library/Saved\\ Application\\ State/com.kvp5359.screenshotapp.savedState; rmdir ~/Library/Caches/SentryCrash ~/Library/Caches/io.sentry 2>/dev/null; defaults delete com.kvp5359.screenshotapp 2>/dev/null; tccutil reset All com.kvp5359.screenshotapp"
           }
+        },
+        {
+          "kind": "windows",
+          "license_path": {
+            "ru": "Настройки → О программе → Лицензия",
+            "en": "Settings → About → License"
+          },
+          "keeps": {
+            "ru": "Снимки, настройки и лицензия останутся на компьютере.",
+            "en": "Your captures, settings and license stay on the computer."
+          },
+          "log": "%LOCALAPPDATA%\\Shotlark\\Logs"
         }
       ],
       "ui_langs": [
