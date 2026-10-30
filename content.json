@@ -230,7 +230,7 @@
           },
           {
             "title": "Пароли — мимо истории",
-            "text": "Пароли из менеджеров паролей не сохраняются, а история живёт только на твоём Mac и не попадает в Time Machine."
+            "text": "Пароли из менеджеров паролей не сохраняются, история живёт только на твоём Mac, а из Time Machine её можно убрать одной настройкой."
           }
         ],
         "en": [
@@ -244,7 +244,7 @@
           },
           {
             "title": "Passwords skip the history",
-            "text": "Passwords from password managers are never saved, and the history lives only on your Mac, out of Time Machine."
+            "text": "Passwords from password managers are never saved, the history lives only on your Mac, and one setting keeps it out of Time Machine."
           }
         ]
       },
@@ -257,14 +257,14 @@
           "Панель с карточками и превью, поиск, вставка без форматирования",
           "Списки: сохраняй нужное навсегда и перетаскивай в другие приложения",
           "Paste Stack: скопируй несколько, и каждое ⌘V вставит следующее",
-          "Пароли из менеджеров паролей не сохраняются, история вне Time Machine",
+          "Пароли из менеджеров паролей не сохраняются, историю можно убрать из Time Machine",
           "Ограничения истории по сроку, количеству и месту"
         ],
         "en": [
           "A panel of cards with previews, search, paste without formatting",
           "Lists: keep what you need forever and drag it into other apps",
           "Paste Stack: copy several items, and each ⌘V pastes the next",
-          "Passwords from password managers are never saved, history kept out of Time Machine",
+          "Passwords from password managers are never saved, history can be kept out of Time Machine",
           "History limits by age, count and disk space"
         ]
       },
