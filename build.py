@@ -31,7 +31,7 @@ T = {
         "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
         "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac.",
-        "download": "Скачать для Mac", "soon": "Скоро", "store": "Установить из Chrome Web Store",
+        "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
@@ -64,7 +64,7 @@ T = {
         "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
         "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac.",
-        "download": "Download for Mac", "soon": "Coming soon", "store": "Add from Chrome Web Store",
+        "download": "Download for Mac", "downloadWindows": "Download for Windows", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
@@ -411,6 +411,15 @@ def actions(p, lang):
                            f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{arch}{ui}</span>')
             else:
                 out.append(f'<span class="button is-off">{t["soon"]}</span><span class="meta">{t["requires"].format(min=pl["min"])}{arch}{ui}</span>')
+        elif pl["kind"] == "windows":
+            # Only a public platform has a button: preview has a feed, but isn't advertised (core/spec/rules/NEW-PLATFORM.md).
+            v = latest_mac(pl["feed"]) if pl.get("status") == "public" else None
+            if v:
+                url = f"{RELEASES}/{pl['feed']}-{v}/{urllib.parse.quote(pl['file'])}-{v}-setup.exe"
+                out.append(f'<a class="button" href="{url}">{ink("btn", "frame")}<span>{t["downloadWindows"]}</span></a>'
+                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{ui} · {t["windowsUnsigned"]}</span>')
+            else:
+                out.append(f'<span class="button is-off">{PLATFORM[pl["kind"]]} — {t["soon"]}</span>')
         elif pl["kind"] == "chrome":
             if pl.get("store"):
                 out.append(f'<a class="button is-wide" href="{e(pl["store"])}">{ink("btn", "frame")}<span>{t["store"]}</span></a>')
@@ -656,10 +665,12 @@ def merge_registry(data):
                 sys.exit(f"❌ сайт: у «{p['id']}» в content.json есть платформа «{pl['kind']}», а в реестре — нет "
                          "(поле site у платформы в core/spec/products.json)")
             name, rpl = found
-            for key in ("feed", "file", "scheme"):
+            for key in ("feed", "file", "scheme", "status"):
                 if rpl.get(key):
                     pl[key] = rpl[key]
-            if rpl.get("minOS"):
+            if pl["kind"] == "windows":
+                pl["min"] = "Windows 10 2004"
+            elif rpl.get("minOS"):
                 pl["min"] = f"macOS {rpl['minOS']}"
             if rpl.get("arch") == ["arm64"]:
                 pl["arch"] = "Apple silicon"
