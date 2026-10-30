@@ -28,7 +28,7 @@ T = {
         "pricing": "Бесплатно и Pro", "freeList": "Бесплатно — всегда", "proList": "В Pro", "perMonth": "{p} в месяц",
         "perYear": "{p} в год", "buyPro": "Купить Pro", "inBundle": "Входит в набор «{name}»", "proFrom": "Pro от {p} в месяц",
         "updatesLead": "Что нового во всех программах — по датам. Обновления приходят сами: программа предложит их установить.",
-        "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
+        "subscribe": "Подписаться через RSS", "manualUpdate": "Как обновиться вручную", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
         "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac и Windows.",
         "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
@@ -61,7 +61,7 @@ T = {
         "pricing": "Free and Pro", "freeList": "Free — always", "proList": "In Pro", "perMonth": "{p} a month",
         "perYear": "{p} a year", "buyPro": "Buy Pro", "inBundle": "Part of the «{name}» bundle", "proFrom": "Pro from {p} a month",
         "updatesLead": "What’s new in every app, by date. Updates arrive on their own: the app offers to install them.",
-        "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
+        "subscribe": "Subscribe via RSS", "manualUpdate": "How to update by hand", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
         "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac and Windows.",
         "download": "Download for Mac", "downloadWindows": "Download for Windows", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
@@ -94,12 +94,46 @@ WINDOWS_HELP = {
            "warning": "При первой установке Windows может показать синее окно «Система Windows защитила ваш компьютер»: программа новая, и у неё пока нет сертификата издателя. Нажми «Подробнее», проверь, что файл называется {file}-…-setup.exe и скачан с этого сайта, затем нажми «Выполнить в любом случае». Обновления приходят из самой программы, и каждое она сама проверяет по подписи.",
            "license": "Лицензия: {path}.",
            "remove": "Как удалить: Параметры → Приложения → Установленные приложения → {name} → Удалить. {keeps}",
-           "problem": "Если что-то пошло не так: Настройки → О программе → Журнал → «Открыть папку» (или {log}). Пришли файл журнала и версию Windows на {mail}: снимков и текстов в журнале нет."},
+           "problem": "Если что-то пошло не так: Настройки → О программе → Журнал → «Открыть папку» (или {log}). Пришли файл журнала и версию Windows на {mail}: снимков и текстов в журнале нет.",
+           "update": "Обновление не приходит само: {link}."},
     "en": {"title": "{name} for Windows", "changes": "What’s new on Windows",
            "warning": "On first install Windows may show a blue “Windows protected your PC” window: the app is new and has no publisher certificate yet. Press “More info”, check that the file is named {file}-…-setup.exe and came from this site, then press “Run anyway”. Updates come from within the app, and it checks each one’s signature itself.",
            "license": "License: {path}.",
            "remove": "To uninstall: Settings → Apps → Installed apps → {name} → Uninstall. {keeps}",
-           "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to {mail}: it holds no captures or texts."},
+           "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to {mail}: it holds no captures or texts.",
+           "update": "No update coming on its own? {link}."},
+}
+# The manual update page (/update/, /en/update/). Mac: the app is one bundle, its data lives elsewhere. Windows: core/release/windows/installer/kvp-installer.nsh
+# swaps only the app's folder, data and the license are outside it (%LOCALAPPDATA%\\<App>, %APPDATA%\\<App>, %LOCALAPPDATA%\\kvp-projects).
+UPDATE_HELP = {
+    "ru": {
+        "title": "Как обновиться вручную",
+        "lead": "Обычно программа сама предлагает новую версию. Если этого не происходит или обновление не ставится, поставь новую версию поверх старой: твои данные и лицензия останутся на месте.",
+        "where": ("Где взять новую версию", ["Открой страницу своей программы и нажми кнопку «Скачать»: там всегда последняя версия. {apps}",
+                                             "<b>Старую версию сначала не удаляй:</b> кнопка «Удалить» в программе может убрать и твои данные."]),
+        "mac": ("На Mac", ["Закрой программу.", "Открой скачанный файл .dmg.", "Перетащи значок программы в папку «Программы» и нажми «Заменить»."],
+                "Настройки, данные и лицензия лежат отдельно от самой программы, поэтому никуда не денутся. Разрешения macOS тоже останутся: подпись у новой версии та же. Если система всё же спросит, разреши снова."),
+        "windows": ("На Windows", ["Запусти скачанный файл …-setup.exe. Права администратора не нужны.",
+                                   "Если появится синее окно «Система Windows защитила ваш компьютер»: нажми «Подробнее», проверь, что файл скачан с этого сайта и его имя заканчивается на -setup.exe, затем нажми «Выполнить в любом случае». У программы пока нет сертификата издателя, поэтому Windows предупреждает.",
+                                   "Установщик сам закроет программу и поставит новую версию на место старой."],
+                    "Данные, настройки и лицензия лежат в другой папке, поэтому останутся. Если установить не получилось, установщик скажет об этом, а прежняя версия продолжит работать."),
+        "chrome": ("Расширения для браузера", ["Их обновляет сам Chrome, ничего скачивать не нужно."]),
+        "help": ("Не получилось", ["Напиши мне: {mail}. Укажи программу, её версию и систему."]),
+    },
+    "en": {
+        "title": "How to update by hand",
+        "lead": "Normally an app offers the new version by itself. If it doesn’t, or the update won’t install, put the new version over the old one: your data and license stay where they are.",
+        "where": ("Where to get the new version", ["Open your app’s page and press the download button: it’s always the latest version. {apps}",
+                                                   "<b>Don’t uninstall the old version first:</b> the app’s Uninstall button can remove your data too."]),
+        "mac": ("On a Mac", ["Quit the app.", "Open the downloaded .dmg file.", "Drag the app’s icon to the Applications folder and press “Replace”."],
+                "Settings, data and the license are kept apart from the app itself, so they stay. macOS permissions stay too: the new version has the same signature. If the system asks anyway, allow it again."),
+        "windows": ("On Windows", ["Run the downloaded …-setup.exe file. No administrator rights needed.",
+                                   "If a blue “Windows protected your PC” window appears: press “More info”, check that the file came from this site and its name ends in -setup.exe, then press “Run anyway”. The app has no publisher certificate yet, so Windows warns about it.",
+                                   "The installer closes the app by itself and puts the new version in place of the old one."],
+                    "Data, settings and the license live in another folder, so they stay. If installing fails, the installer says so and the previous version keeps working."),
+        "chrome": ("Browser extensions", ["Chrome updates them by itself, there’s nothing to download."]),
+        "help": ("Didn’t work", ["Write to me: {mail}. Mention the app, its version and your system."]),
+    },
 }
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
 
@@ -132,6 +166,14 @@ PRIVACY = {
                 "<b>Steady Speed</b> и <b>Clear Site Data</b> в интернет ничего не отправляют."]),
             ("Этот сайт", [
                 "Без аналитики, рекламы и cookies; шрифты загружаются с самого сайта. Сайт размещён на GitHub Pages — GitHub, как любой хостинг, видит технические данные запросов, например IP-адрес."]),
+            ("Сроки и удаление", [
+                "<b>На твоём компьютере</b> данные лежат, пока ты их не удалишь. Как удалить программу вместе с ними и что останется, написано на странице каждой программы.",
+                "<b>На моём сервере</b> (api.kvp-projects.com) хранятся только те, чей ключ выдан или куплен через него. Продажи Pro пока нет: сейчас это ключи, которые я выдаю сам, например для vpn-app. Хранятся почта, на которую выдан ключ, номер лицензии, планы и до какого дня они оплачены, счётчики расхода по месяцам; для vpn-app ещё id и имя устройства, когда оно подключалось первый и последний раз, и имя человека, если я его записал; служебный журнал этих действий. Автоматического срока нет: всё это лежит, пока я не удалю запись по твоей просьбе. В панели VPN запись заведена без имени и почты.",
+                "<b>В Supabase</b> мой сервер копирует почту и список твоих прав с датами: по ним будет открываться синхронизация. Сама синхронизация в выпущенных программах пока выключена.",
+                "<b>Копии базы.</b> Каждую ночь сервер делает копию этой базы и хранит 14 последних там же, на сервере. Копии не правятся: удалённая запись исчезает из них, когда они стираются по очереди, обычно за 14 дней.",
+                "<b>Журналы сервера.</b> Журнал обращений не ведётся на адресах updates., reports., api. и sync.kvp-projects.com. Служба пишет только вид ошибки, без ключей и почты; этот журнал не больше 30 МБ, старые записи стираются сами.",
+                "<b>Отчёты об ошибках</b> хранятся в Sentry по настройке Sentry: своего срока я не задавал.",
+                "<b>Как удалить.</b> Хочешь, чтобы я удалил данные о тебе, {contact} Я удалю с сервера почту, планы, расход, устройства и журнал по тебе, сниму твои права в Supabase и выключу доступ в панели VPN (там останется выключенная запись без имени и почты). Выданный ключ я отзову, чтобы он перестал открывать программы; после этого на сервере не останется ничего, кроме копий из предыдущего абзаца, пока они не сотрутся."]),
             ("Вопросы", ["Если что-то непонятно или хочешь, чтобы я удалил отчёты, связанные с тобой, — {contact}."]),
         ],
         "contact": "напиши мне:",
@@ -163,6 +205,14 @@ PRIVACY = {
                 "<b>Steady Speed</b> and <b>Clear Site Data</b> send nothing over the internet."]),
             ("This website", [
                 "No analytics, ads or cookies; fonts are served by the site itself. The site is hosted on GitHub Pages — like any host, GitHub sees technical request data such as the IP address."]),
+            ("How long data is kept, and deleting it", [
+                "<b>On your computer</b> data stays until you delete it. How to remove an app along with it, and what stays, is on each app’s page.",
+                "<b>On my server</b> (api.kvp-projects.com) only people whose key was issued or bought through it are stored. Pro isn’t on sale yet: for now these are keys I issue myself, for vpn-app for example. Stored: the email the key is issued to, the license number, plans and the day they’re paid through, usage counters by month; for vpn-app also a device’s id and name, when it first and last connected, and a person’s name if I noted it; a service log of these actions. There’s no automatic deadline: it all stays until I delete the record at your request. The VPN panel’s record has no name or email.",
+                "<b>In Supabase</b> my server keeps a copy of your email and your rights with their dates: sync will open by them. Sync itself is still off in released apps.",
+                "<b>Copies of the database.</b> Every night the server copies this database and keeps the last 14, on the same server. Copies aren’t edited: a deleted record leaves them as they’re erased in turn, normally within 14 days.",
+                "<b>Server logs.</b> No access log is kept at updates., reports., api. and sync.kvp-projects.com. The service writes only the kind of an error, without keys or emails; this log is at most 30 MB, and old entries are erased by themselves.",
+                "<b>Error reports</b> are kept in Sentry according to Sentry’s settings: I haven’t set a period of my own.",
+                "<b>How to delete.</b> If you’d like me to delete data about you, {contact} I’ll delete your email, plans, usage, devices and log entries from the server, take away your rights in Supabase and switch off your access in the VPN panel (a switched-off record without a name or email stays there). I’ll revoke the issued key so that it stops opening the apps; after that nothing stays on the server except the copies from the paragraph above, until they’re erased."]),
             ("Questions", ["If something is unclear, or you’d like me to delete reports related to you, {contact}."]),
         ],
         "contact": "write to me:",
@@ -483,6 +533,10 @@ def mail_address(lang):
     return f'<a class="mail" href="#" data-show data-u="kvp5359" data-d="gmail.com">kvp5359 {MAIL_AT[lang]} gmail.com</a>'
 
 
+def update_link(lang):
+    return f'<a href="/{"en/" if lang == "en" else ""}update/">{T[lang]["manualUpdate"]}</a>'
+
+
 def windows_help(p, lang):
     """What a Windows page has to say besides the button: the SmartScreen window, the license, uninstalling, what to do when something breaks."""
     pl = next((pl for pl in p["platforms"] if pl["kind"] == "windows"), None)
@@ -493,7 +547,8 @@ def windows_help(p, lang):
             f'<p>{e(h["warning"].format(file=pl["file"]))}</p>'
             f'<p>{e(h["license"].format(path=pl["license_path"][lang]))}</p>'
             f'<p>{e(h["remove"].format(name=p["name"], keeps=pl["keeps"][lang]))}</p>'
-            f'<p>{e(h["problem"].format(log=pl["log"], mail="{mail}")).replace("{mail}", mail_address(lang))}</p></section>')
+            f'<p>{e(h["problem"].format(log=pl["log"], mail="{mail}")).replace("{mail}", mail_address(lang))}</p>'
+            f'<p>{e(h["update"].format(link="{link}")).replace("{link}", update_link(lang))}</p></section>')
 
 
 def windows_changes(p, lang):
@@ -647,7 +702,7 @@ def updates_page(data, rows, icons, lang):
                  f'<ul{ru_attr(ru_only)}>{"".join(f"<li>{inline(i)}</li>" for i in its[:3])}</ul>{more}'
                  f'<a class="entry-link" href="{href}">{t["details"]}</a></div></li>')
     return (f'<section class="hero hero-small"><h1>{t["updates"]}</h1>{ink("under", "under")}<p class="lead">{t["updatesLead"]}</p>'
-            f'<p class="subscribe"><a href="/{base}updates.xml">{t["subscribe"]}</a></p></section>'
+            f'<p class="subscribe"><a href="/{base}updates.xml">{t["subscribe"]}</a> · {update_link(lang)}</p></section>'
             f'{chips}<ol class="entries">{html_rows}</ol>')
 
 
@@ -877,16 +932,37 @@ def build():
                 f'<section class="prose">{secs}</section>')
         write(f"{base}privacy/index.html", page(lang, f'{pv["title"]} — kvp projects', pv["lead"], body, "privacy/"))
 
+    for lang in ("ru", "en"):
+        write(f'{"en/" if lang == "en" else ""}update/index.html', update_page(data, lang))
+
     write("404.html", page("ru", T["ru"]["notFound"], "", f'<section class="hero"><h1>{T["ru"]["notFound"]}</h1>'
                            f'<p class="lead"><a href="/">{T["ru"]["home"]}</a> · <a href="/en/">Home</a></p></section>', "", noindex=True))
     # Search engines: every indexable page in both languages (not /activate/ and 404 — they are noindex).
-    paths = [""] + [p["id"] + "/" for p in data] + ["updates/", "privacy/"]
+    paths = [""] + [p["id"] + "/" for p in data] + ["updates/", "update/", "privacy/"]
     urls = "".join(f"<url><loc>https://{DOMAIN}/{pre}{path}</loc></url>\n" for path in paths for pre in ("", "en/"))
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n")
     write("CNAME", DOMAIN + "\n")
     write(".nojekyll", "")
     print(f"✅ {DOMAIN}: {len(data)} продуктов → docs/")
+
+
+def update_page(data, lang):
+    """/update/: installing the new version over the old one by hand, for when an app doesn't update by itself."""
+    h, base = UPDATE_HELP[lang], ("en/" if lang == "en" else "")
+    # Only apps with a button on their page right now.
+    def downloadable(p):
+        return any(pl["kind"] == "mac" and latest_mac(pl["feed"]) or pl["kind"] == "windows" and pl.get("status") == "public" and latest_mac(pl["feed"])
+                   for pl in p["platforms"])
+    apps = ", ".join(f'<a href="/{base}{p["id"]}/">{e(p["name"])}</a>' for p in data if downloadable(p))
+    steps = lambda items: "<ol>" + "".join(f"<li>{e(i)}</li>" for i in items) + "</ol>"
+    body = (f'<section class="hero hero-small"><h1>{h["title"]}</h1>{ink("under", "under")}<p class="lead">{h["lead"]}</p></section><section class="prose">'
+            f'<h2>{h["where"][0]}</h2>' + "".join(f'<p>{x.replace("{apps}", apps)}</p>' for x in h["where"][1])
+            + f'<h2>{h["mac"][0]}</h2>{steps(h["mac"][1])}<p>{h["mac"][2]}</p>'
+            f'<h2>{h["windows"][0]}</h2>{steps(h["windows"][1])}<p>{h["windows"][2]}</p>'
+            f'<h2>{h["chrome"][0]}</h2><p>{h["chrome"][1][0]}</p>'
+            f'<h2>{h["help"][0]}</h2><p>{h["help"][1][0].replace("{mail}", mail_address(lang))}</p></section>')
+    return page(lang, f'{h["title"]} — kvp projects', h["lead"], body, "update/")
 
 
 def write(path, text):
