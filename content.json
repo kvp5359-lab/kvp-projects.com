@@ -548,6 +548,7 @@
         "ru": [
           "У каждого языка свой режим: выкл, на паузе или всегда",
           "Перевод из субтитров автора, автоперевода YouTube или переводчика Chrome",
+          "По желанию — перевод нейросетью Claude по твоему ключу Anthropic",
           "Подсветка произносимого слова",
           "Сохранение субтитров в .txt и .srt",
           "Интерфейс на русском, английском и испанском"
@@ -555,6 +556,7 @@
         "en": [
           "Each language has its own mode: off, on pause or always",
           "Translation from the author's subtitles, YouTube auto-translate or Chrome's translator",
+          "Optional translation with Claude on your own Anthropic key",
           "The spoken word is highlighted",
           "Save subtitles as .txt and .srt",
           "Interface in English, Russian and Spanish"

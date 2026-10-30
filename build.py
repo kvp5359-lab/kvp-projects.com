@@ -22,28 +22,28 @@ SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 T = {
     "ru": {
         "title": "kvp projects", "h1": "Маленькие программы,<br>которые экономят время",
-        "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac и браузера.",
+        "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac, Windows и браузера.",
         "updates": "Обновления", "rss": "RSS", "fresh": "Свежие обновления", "allUpdates": "Все обновления →",
-        "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "gains": "Что даёт",
+        "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "newInMac": "Новое в {v} для Mac", "gains": "Что даёт",
         "pricing": "Бесплатно и Pro", "freeList": "Бесплатно — всегда", "proList": "В Pro", "perMonth": "{p} в месяц",
         "perYear": "{p} в год", "buyPro": "Купить Pro", "inBundle": "Входит в набор «{name}»", "proFrom": "Pro от {p} в месяц",
         "updatesLead": "Что нового во всех программах — по датам. Обновления приходят сами: программа предложит их установить.",
         "subscribe": "Подписаться через RSS", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
-        "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac.",
+        "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac и Windows.",
         "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
-        "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "older": "Предыдущие версии",
+        "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "changesMac": "Что нового в версии для Mac", "older": "Предыдущие версии",
         "all": "Все программы", "noEn": "", "langSwitch": "English", "next": "Скоро — {list}.",
         "notFound": "Такой страницы нет", "home": "На главную", "author": "Кирилл Прудников", "contact": "Написать мне",
-        "activateTitle": "Активация лицензии", "activateLead": "Нажми кнопку — приложение откроется, и ключ вставится сам. Если приложения на этом Mac нет, скачай его и нажми кнопку ещё раз или скопируй ключ и вставь вручную.",
-        "openIn": "Открыть {name}", "copy": "Скопировать ключ", "copied": "Скопировано", "copyManually": "Ключ выделен — нажми ⌘C",
+        "activateTitle": "Активация лицензии", "activateLead": "Нажми кнопку — приложение откроется, и ключ вставится сам. Если приложения на этом компьютере нет, скачай его и нажми кнопку ещё раз или скопируй ключ и вставь вручную.",
+        "openIn": "Открыть {name}", "copy": "Скопировать ключ", "copied": "Скопировано", "copyManually": "Ключ выделен — нажми {shortcut}",
         "noKey": "В ссылке нет ключа или он повреждён — открой ссылку из письма ещё раз.",
         "unknownApp": "Ссылка указывает на приложение, которого я не знаю. Выбери своё приложение ниже.",
         "paste": "Вручную: {path}", "downloadApp": "страница {name}",
         "uiRuOnly": "Интерфейс: только русский", "privacy": "Конфиденциальность",
-        "uninstall": "Как удалить", "uninstallMenu": "В приложении: меню {name} → «Удалить {name}…» (или {settings}).",
+        "uninstall": "Как удалить", "uninstallMac": "Как удалить версию для Mac", "uninstallMenu": "В приложении: меню {name} → «Удалить {name}…» (или {settings}).",
         "uninstallSettings": "Настройки → О программе", "uninstallKeepLabel": "Оставить мои данные и настройки",
         "uninstallKeep": "Собираешься вернуться — поставь галочку «{label}»: поставишь {name} снова, и всё будет на месте.",
         "uninstallSince": "Эта кнопка есть в версиях новее {v}.", "uninstallFrom": "Эта кнопка есть с версии {v}.",
@@ -55,28 +55,28 @@ T = {
     },
     "en": {
         "title": "kvp projects", "h1": "Small apps<br>that save you time",
-        "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac and the browser.",
+        "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac, Windows and the browser.",
         "updates": "Updates", "rss": "RSS", "fresh": "Latest updates", "allUpdates": "All updates →",
-        "updated": "Updated · {v}", "newIn": "New in {v}", "gains": "What you get",
+        "updated": "Updated · {v}", "newIn": "New in {v}", "newInMac": "New in {v} for Mac", "gains": "What you get",
         "pricing": "Free and Pro", "freeList": "Free — always", "proList": "In Pro", "perMonth": "{p} a month",
         "perYear": "{p} a year", "buyPro": "Buy Pro", "inBundle": "Part of the «{name}» bundle", "proFrom": "Pro from {p} a month",
         "updatesLead": "What’s new in every app, by date. Updates arrive on their own: the app offers to install them.",
         "subscribe": "Subscribe via RSS", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
-        "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac.",
+        "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac and Windows.",
         "download": "Download for Mac", "downloadWindows": "Download for Windows", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
-        "version": "Version {v}", "features": "Features", "changes": "What’s new", "older": "Earlier versions",
+        "version": "Version {v}", "features": "Features", "changes": "What’s new", "changesMac": "What’s new on Mac", "older": "Earlier versions",
         "all": "All apps", "noEn": "The change history is in Russian.", "langSwitch": "Русский",
         "next": "Coming next: {list}.", "notFound": "Page not found", "home": "Home", "author": "Kirill Prudnikov", "contact": "Contact me",
-        "activateTitle": "License activation", "activateLead": "Press the button — the app opens and the key goes in by itself. If the app isn’t on this Mac, download it and press the button again, or copy the key and paste it yourself.",
-        "openIn": "Open {name}", "copy": "Copy Key", "copied": "Copied", "copyManually": "The key is selected — press ⌘C",
+        "activateTitle": "License activation", "activateLead": "Press the button — the app opens and the key goes in by itself. If the app isn’t on this computer, download it and press the button again, or copy the key and paste it yourself.",
+        "openIn": "Open {name}", "copy": "Copy Key", "copied": "Copied", "copyManually": "The key is selected — press {shortcut}",
         "noKey": "There’s no key in this link, or it’s damaged — open the link from the email again.",
         "unknownApp": "This link points to an app I don’t know. Choose your app below.",
         "paste": "By hand: {path}", "downloadApp": "{name} page",
         "uiRuOnly": "Interface: Russian only", "privacy": "Privacy",
-        "uninstall": "How to uninstall", "uninstallMenu": "In the app: {name} menu → «Uninstall {name}…» (or {settings}).",
+        "uninstall": "How to uninstall", "uninstallMac": "How to uninstall on Mac", "uninstallMenu": "In the app: {name} menu → «Uninstall {name}…» (or {settings}).",
         "uninstallSettings": "Settings → About", "uninstallKeepLabel": "Keep my data and settings",
         "uninstallKeep": "Planning to come back? Tick «{label}» — install {name} again and everything will be there.",
         "uninstallSince": "This is in versions newer than {v}.", "uninstallFrom": "This is in version {v} and later.",
@@ -88,17 +88,18 @@ T = {
     },
 }
 WINDOWS_NAMES = {"10.0.19041": "Windows 10 2004"}
+MAIL_AT = {"ru": "собака", "en": "at"}   # the address without JavaScript; with it assets/site.js writes the real one
 WINDOWS_HELP = {
     "ru": {"title": "{name} для Windows", "changes": "Что нового в версии для Windows",
            "warning": "При первой установке Windows может показать синее окно «Система Windows защитила ваш компьютер»: программа новая, и у неё пока нет сертификата издателя. Нажми «Подробнее», проверь, что файл называется {file}-…-setup.exe и скачан с этого сайта, затем нажми «Выполнить в любом случае». Обновления приходят из самой программы, и каждое она сама проверяет по подписи.",
            "license": "Лицензия: {path}.",
            "remove": "Как удалить: Параметры → Приложения → Установленные приложения → {name} → Удалить. {keeps}",
-           "problem": "Если что-то пошло не так: Настройки → О программе → Журнал → «Открыть папку» (или {log}). Пришли файл журнала и версию Windows на почту, указанную на странице конфиденциальности: снимков и текстов в журнале нет."},
+           "problem": "Если что-то пошло не так: Настройки → О программе → Журнал → «Открыть папку» (или {log}). Пришли файл журнала и версию Windows на {mail}: снимков и текстов в журнале нет."},
     "en": {"title": "{name} for Windows", "changes": "What’s new on Windows",
            "warning": "On first install Windows may show a blue “Windows protected your PC” window: the app is new and has no publisher certificate yet. Press “More info”, check that the file is named {file}-…-setup.exe and came from this site, then press “Run anyway”. Updates come from within the app, and it checks each one’s signature itself.",
            "license": "License: {path}.",
            "remove": "To uninstall: Settings → Apps → Installed apps → {name} → Uninstall. {keeps}",
-           "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to the address on the privacy page: it holds no captures or texts."},
+           "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to {mail}: it holds no captures or texts."},
 }
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
 
@@ -106,55 +107,65 @@ PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "
 PRIVACY = {
     "ru": {
         "title": "Конфиденциальность",
-        "lead": "Коротко: мои приложения работают на твоём Mac и ничего о тебе не собирают. Ниже — всё, что они отправляют в интернет, и зачем.",
+        "lead": "Коротко: мои приложения работают на твоём компьютере и ничего о тебе не собирают. Ниже — всё, что они отправляют в интернет, и зачем.",
         "sections": [
-            ("Твои данные остаются на Mac", [
+            ("Твои данные остаются на компьютере", [
                 "Заметки, история буфера обмена, снимки и записи экрана, диктовки, тексты и настройки хранятся только на твоём компьютере. Я их не вижу и никуда не загружаю."]),
             ("Отчёты об ошибках — по желанию", [
                 "Если в приложении что-то сломалось, оно может отправить отчёт, чтобы я нашёл и исправил ошибку. Отчёты отправляются только с твоего согласия: приложение спрашивает об этом при первом запуске, а выключить их можно в настройках в любой момент.",
-                "В отчёте — версия приложения и macOS, сведения о Mac (процессор, память, свободное место) и служебные записи о том, что происходило перед ошибкой. Твоих текстов, диктовок, файлов, снимков и ключей там нет; путь к твоей домашней папке заменяется на «~».",
+                "На Mac в отчёте — версия приложения и macOS, сведения о Mac (процессор, память, свободное место) и служебные записи о том, что происходило перед ошибкой. Твоих текстов, диктовок, файлов, снимков и ключей там нет; путь к твоей домашней папке заменяется на «~».",
                 "Отчёт идёт через мой сервер reports.kvp-projects.com в сервис Sentry (данные хранятся в ЕС). Мой сервер не передаёт дальше твой IP-адрес, а Sentry настроен IP-адреса не хранить."]),
             ("Обновления и лицензия", [
                 "Раз в день приложение проверяет, нет ли новой версии, и читает файл с правилами лицензий на updates.kvp-projects.com. Это обычное скачивание файла: о тебе и о том, как ты пользуешься приложением, ничего не отправляется. Как и любой сайт, сервер видит адрес, с которого пришёл запрос. Новая версия ставится только с твоего согласия, автоматическую проверку можно выключить в настройках. Сами файлы приложений скачиваются оттуда же — с моего сервера; журнал обращений к нему не ведётся.",
-                "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на Mac, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер.",
+                "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на компьютере, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер.",
                 "Версии для Windows устроены так же: данные хранятся на компьютере, отчёты об ошибках отправляются только с твоего согласия (в них версия Windows и сведения о компьютере, без снимков, текстов и имён файлов), а обновления проверяются и скачиваются с того же сервера. Подпись обновления программа проверяет сама перед установкой."]),
             ("Что отправляют отдельные приложения", [
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
                 "<b>Textum.</b> ИИ-действия отправляют выделенный текст и команду в Anthropic (Claude) с твоим собственным ключом — или обрабатывают его моделью Apple прямо на Mac. Для пересчёта валют загружаются курсы с open.er-api.com — без твоих данных.",
                 "<b>Note Calc.</b> Для валют загружает курсы с open.er-api.com — без твоих данных.",
-                "<b>Shotlark.</b> Имя файла по содержимому скриншота придумывает модель Apple прямо на Mac. Если ты сам включил в настройках имена от Claude и ввёл свой ключ Anthropic, а модели Apple нет или она не ответила, в Anthropic (Claude) отправляются уменьшенная копия скриншота, названия приложения и окна и распознанный на скриншоте текст — только чтобы придумать имя. Без этой настройки или без ключа ничего не отправляется.",
+                "<b>Shotlark для Mac.</b> Имя файла по содержимому скриншота придумывает модель Apple прямо на Mac. Если ты сам включил в настройках имена от Claude и ввёл свой ключ Anthropic, а модели Apple нет или она не ответила, в Anthropic (Claude) отправляются уменьшенная копия скриншота, названия приложения и окна и распознанный на скриншоте текст — только чтобы придумать имя. Без этой настройки или без ключа ничего не отправляется.",
+                "<b>Shotlark для Windows.</b> Имя файла по содержимому снимка составляется прямо на компьютере. Если ты сам включил в настройках «Спрашивать имя у Claude» и ввёл свой ключ Anthropic, в Anthropic (Claude) отправляются уменьшенная копия снимка (JPEG до 1024 пикселей), названия приложения и окна и распознанный на снимке текст — только чтобы придумать имя. Без этой настройки или без ключа ничего не отправляется.",
                 "<b>Cliplark</b> кроме описанного выше в интернет ничего не отправляет."]),
+            ("Расширения для браузера", [
+                "В расширениях на этом сайте нет отчётов об ошибках и аналитики. Настройки хранятся средствами самого Chrome; у Subtitle Tools и Steady Speed, если в Chrome включена синхронизация, он сам переносит их между твоими устройствами через аккаунт Google.",
+                "<b>Subtitle Tools.</b> Субтитры берёт у самого сайта с видео (YouTube или kino.watch). Перевод нейросетью Claude выключен по умолчанию. Если ты сам его включил и ввёл свой ключ Anthropic, текст субтитров и название видео уходят в Anthropic (Claude) с твоим ключом и по его правилам. Ключ и готовые переводы хранятся только в этом браузере. Встроенный переводчик Chrome — часть самого браузера и работает по правилам Chrome.",
+                "<b>Steady Speed</b> и <b>Clear Site Data</b> в интернет ничего не отправляют."]),
             ("Этот сайт", [
                 "Без аналитики, рекламы и cookies; шрифты загружаются с самого сайта. Сайт размещён на GitHub Pages — GitHub, как любой хостинг, видит технические данные запросов, например IP-адрес."]),
             ("Вопросы", ["Если что-то непонятно или хочешь, чтобы я удалил отчёты, связанные с тобой, — {contact}."]),
         ],
-        "contact": "напиши мне",
+        "contact": "напиши мне:",
     },
     "en": {
         "title": "Privacy",
-        "lead": "In short: my apps work on your Mac and don’t collect anything about you. Below is everything they send over the internet, and why.",
+        "lead": "In short: my apps work on your computer and don’t collect anything about you. Below is everything they send over the internet, and why.",
         "sections": [
-            ("Your data stays on your Mac", [
+            ("Your data stays on your computer", [
                 "Notes, clipboard history, screenshots and screen recordings, dictations, texts and settings are kept only on your computer. I can’t see them and don’t upload them anywhere."]),
             ("Error reports — if you want", [
                 "When something breaks, an app can send a report so I can find and fix the bug. Reports are sent only with your consent: the app asks on first launch, and you can turn them off in its settings at any time.",
-                "A report contains the app and macOS versions, details about the Mac (processor, memory, free space) and technical notes about what happened before the error. It never includes your texts, dictations, files, screenshots or keys; the path to your home folder is replaced with “~”.",
+                "On a Mac, a report contains the app and macOS versions, details about the Mac (processor, memory, free space) and technical notes about what happened before the error. It never includes your texts, dictations, files, screenshots or keys; the path to your home folder is replaced with “~”.",
                 "Reports go through my server reports.kvp-projects.com to Sentry (data stored in the EU). My server doesn’t pass your IP address on, and Sentry is set not to store IP addresses."]),
             ("Updates and licenses", [
                 "Once a day an app checks for a new version and reads the license policy file on updates.kvp-projects.com. It’s a plain file download: nothing about you or how you use the app is sent. Like any website, the server sees the address the request came from. A new version is installed only with your consent, and automatic checks can be turned off in settings. The app files themselves come from there too — my own server, which keeps no access log.",
-                "A license key contains the email it was issued to and is checked right on your Mac, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server.",
+                "A license key contains the email it was issued to and is checked right on your computer, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server.",
                 "The Windows versions work the same way: your data stays on the computer, error reports go only with your consent (they carry the Windows version and computer details, never captures, texts or file names), and updates are checked and downloaded from the same server. The app verifies each update’s signature itself before installing it."]),
             ("What individual apps send", [
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
                 "<b>Textum.</b> AI actions send the selected text and the command to Anthropic (Claude) with your own key — or process it with Apple’s model right on your Mac. Currency conversion downloads exchange rates from open.er-api.com, without any of your data.",
                 "<b>Note Calc.</b> Downloads exchange rates for currencies from open.er-api.com, without any of your data.",
-                "<b>Shotlark.</b> A file name from the screenshot’s content is made by Apple’s model right on your Mac. Only if you turned on names from Claude in Settings and entered your own Anthropic key, and Apple’s model is missing or gave no answer, a small copy of the screenshot, the app and window names and the text recognized on it go to Anthropic (Claude) — just to name the file. Without that setting or a key nothing is sent.",
+                "<b>Shotlark for Mac.</b> A file name from the screenshot’s content is made by Apple’s model right on your Mac. Only if you turned on names from Claude in Settings and entered your own Anthropic key, and Apple’s model is missing or gave no answer, a small copy of the screenshot, the app and window names and the text recognized on it go to Anthropic (Claude) — just to name the file. Without that setting or a key nothing is sent.",
+                "<b>Shotlark for Windows.</b> A file name from the capture’s content is made right on your computer. Only if you turned on “Ask Claude for the name” in Settings and entered your own Anthropic key, a small copy of the capture (a JPEG of up to 1024 pixels), the app and window names and the text recognized on it go to Anthropic (Claude) — just to name the file. Without that setting or a key nothing is sent.",
                 "<b>Cliplark</b> sends nothing beyond what is described above."]),
+            ("Browser extensions", [
+                "The extensions on this site have no error reports and no analytics. Settings are kept by Chrome itself; for Subtitle Tools and Steady Speed, if sync is on in Chrome, Chrome carries them between your devices through your Google account.",
+                "<b>Subtitle Tools.</b> Subtitles come from the video site itself (YouTube or kino.watch). Translation with Claude is off by default. Only if you turned it on and entered your own Anthropic key, the subtitle text and the video title go to Anthropic (Claude), with your key and under its terms. The key and finished translations are kept only in this browser. Chrome’s built-in translator is part of the browser and works under Chrome’s terms.",
+                "<b>Steady Speed</b> and <b>Clear Site Data</b> send nothing over the internet."]),
             ("This website", [
                 "No analytics, ads or cookies; fonts are served by the site itself. The site is hosted on GitHub Pages — like any host, GitHub sees technical request data such as the IP address."]),
             ("Questions", ["If something is unclear, or you’d like me to delete reports related to you, {contact}."]),
         ],
-        "contact": "write to me",
+        "contact": "write to me:",
     },
 }
 
@@ -199,23 +210,35 @@ def inline(s):
 
 
 @functools.lru_cache(maxsize=None)
-def latest_mac(feed):
-    """The newest PUBLISHED version in the app's update feed: ../updates/<feed>/appcast.xml (or note-calc's latest.json)
+def feed_now(feed):
+    """The versions in the app's update feed: ../updates/<feed>/appcast.xml (or note-calc's latest.json, one version)
     as committed in the updates repo (HEAD), not the working tree — release.sh writes feeds there before publish.sh
-    uploads the files, and the site must never link to a download that isn't on the update server yet. None before the first release."""
+    uploads the files, and the site must never link to a download that isn't on the update server yet."""
     updates = os.path.join(ROOT, "..", "updates")
     def committed(name):
         r = subprocess.run(["git", "-C", updates, "show", f"HEAD:{feed}/{name}"], capture_output=True)
         return r.stdout if r.returncode == 0 else None
     tauri = committed("latest.json")   # note-calc: Tauri's updater feed
     if tauri is not None:
-        return json.loads(tauri).get("version")
+        v = json.loads(tauri).get("version")
+        return [v] if v else []
     xml = committed("appcast.xml")
     if xml is None:
-        return None
+        return []
     items = ET.fromstring(xml).findall("./channel/item")
-    versions = [v for v in (i.findtext(SPARKLE + "shortVersionString") for i in items) if v]
-    return max(versions, key=lambda v: [int(x) for x in v.split(".")]) if versions else None
+    return [v for v in (i.findtext(SPARKLE + "shortVersionString") for i in items) if v]
+
+
+def latest_mac(feed):
+    """The newest PUBLISHED version of the feed. None before the first release."""
+    return max(feed_now(feed), key=lambda v: [int(x) for x in v.split(".")], default=None)
+
+
+def withdrawn(version, now):
+    """Pulled from the feed (pull-release.sh), going by the versions in it now: gone from it while an older one is
+    still there, or nothing is left. A version older than all of `now` is only history: Note Calc's latest.json holds
+    one version, and a feed may drop its oldest items."""
+    return version not in now and (not now or any(num(v) < num(version) for v in now))
 
 
 @functools.lru_cache(maxsize=None)
@@ -294,8 +317,8 @@ def releases(p, lang):
     changelog_en: shown in Russian, marked so — the same on the product page, /updates/ and the feed).
     A Mac app: a version counts only if it ever appeared in its committed feed history (feed_history) — the site never
     runs ahead of «Download». A version that never did (cut, but not given to people) isn't shown on its own: its items
-    fold into the next published version; versions after the newest published one wait. Each release of a Mac app
-    gets `published` — when it first appeared in the feed (the RSS pubDate)."""
+    fold into the next published version, and so do the items of a version pulled from the feed (withdrawn); versions
+    after the newest published one wait. Each release of a Mac app gets `published` — when it first appeared in the feed (the RSS pubDate)."""
     key = (p.get("_key", p["id"]), lang)
     if key in _releases:
         return _releases[key]
@@ -306,9 +329,9 @@ def releases(p, lang):
     released = [r for r in (log or []) if r["version"]]
     mac = mac_platform(p)
     if mac:
-        history, out, pending = feed_history(mac["feed"]), [], []
+        history, now, out, pending = feed_history(mac["feed"]), feed_now(mac["feed"]), [], []
         for r in reversed(released):                      # oldest first
-            if r["version"] in history:
+            if r["version"] in history and not withdrawn(r["version"], now):
                 out.append({**fold(r, pending[::-1]), "published": history[r["version"]]})
                 pending = []
             else:
@@ -442,7 +465,7 @@ def actions(p, lang):
             if v:
                 url = f"{RELEASES}/{pl['feed']}-{v}/{urllib.parse.quote(pl['file'])}-{v}-setup.exe"
                 out.append(f'<a class="button" href="{url}">{ink("btn", "frame")}<span>{t["downloadWindows"]}</span></a>'
-                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{ui} · {t["windowsUnsigned"]}</span>')
+                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])} · {pl["arch"]}{ui} · {t["windowsUnsigned"]}</span>')
             else:
                 out.append(f'<span class="button is-off">{PLATFORM[pl["kind"]]} — {t["soon"]}</span>')
         elif pl["kind"] == "chrome":
@@ -455,6 +478,11 @@ def actions(p, lang):
     return "".join(f'<div class="action">{a}</div>' for a in out)
 
 
+def mail_address(lang):
+    """The support address as text, for whoever has no mail program to open: assets/site.js puts it together (not in the page for spam bots), a click still opens mail."""
+    return f'<a class="mail" href="#" data-show data-u="kvp5359" data-d="gmail.com">kvp5359 {MAIL_AT[lang]} gmail.com</a>'
+
+
 def windows_help(p, lang):
     """What a Windows page has to say besides the button: the SmartScreen window, the license, uninstalling, what to do when something breaks."""
     pl = next((pl for pl in p["platforms"] if pl["kind"] == "windows"), None)
@@ -465,7 +493,7 @@ def windows_help(p, lang):
             f'<p>{e(h["warning"].format(file=pl["file"]))}</p>'
             f'<p>{e(h["license"].format(path=pl["license_path"][lang]))}</p>'
             f'<p>{e(h["remove"].format(name=p["name"], keeps=pl["keeps"][lang]))}</p>'
-            f'<p>{e(h["problem"].format(log=pl["log"]))}</p></section>')
+            f'<p>{e(h["problem"].format(log=pl["log"], mail="{mail}")).replace("{mail}", mail_address(lang))}</p></section>')
 
 
 def windows_changes(p, lang):
@@ -494,7 +522,8 @@ def changes(p, lang):
             if mac_platform(p) and "_key" not in p else "")
     if "_key" in p:
         return f'<section class="changes" id="changes-windows"><h2>{WINDOWS_HELP[lang]["changes"]}</h2>{note}{block(first)}{older}</section>'
-    return f'<section class="changes" id="changes"><h2>{t["changes"]}</h2>{ink("under", "under")}{note}{block(first)}{older}{more}</section>'
+    title = t["changesMac"] if windows_log(p) else t["changes"]   # a page with Windows too: say which one this is
+    return f'<section class="changes" id="changes"><h2>{title}</h2>{ink("under", "under")}{note}{block(first)}{older}{more}</section>'
 
 
 def news(p, lang):
@@ -506,16 +535,17 @@ def news(p, lang):
         return ""
     r = released[0]
     return (f'<a class="news" href="#changes"><span class="pulse" aria-hidden="true"></span>'
-            f'<b>{T[lang]["newIn"].format(v=e(r["version"]))}</b><span class="news-text"{ru_attr(headline(p, r, lang, ru_only)[1])}>{inline(headline(p, r, lang, ru_only)[0])}</span>'
+            f'<b>{T[lang]["newInMac" if windows_log(p) else "newIn"].format(v=e(r["version"]))}</b><span class="news-text"{ru_attr(headline(p, r, lang, ru_only)[1])}>{inline(headline(p, r, lang, ru_only)[0])}</span>'
             f'<span class="news-date">{day(r["date"], lang, short=True)} →</span></a>')
 
 
-def fresh_badge(p, lang):
-    """«Обновлено · x.y.z» next to a Mac app's name: hidden; assets/site.js shows it while the latest PUBLISHED release
-    is at most 14 days old (the site is rebuilt only on publish, so the date is checked in the browser). No JS — no badge."""
-    if not mac_platform(p):
+def fresh_badge(p, lang, kind):
+    """«Обновлено · x.y.z» next to the name on a card of section `kind`, from that platform's journal: hidden; assets/site.js
+    shows it while the latest PUBLISHED release is at most 14 days old (the site is rebuilt only on publish, so the date is checked in the browser). No JS — no badge."""
+    q = windows_log(p) if kind == "windows" else p if kind == "mac" else None
+    if not q or not mac_platform(q):
         return ""
-    released, _ = releases(p, lang)
+    released, _ = releases(q, lang)
     if not released or not released[0]["date"]:
         return ""
     r = released[0]
@@ -584,7 +614,8 @@ def pricing(p, lang):
     for b in bundles:
         link = f' <a href="{e(b["buyURL"])}">{e(plan_price(b, lang))}</a>' if b.get("buyURL") else f' {e(plan_price(b, lang))}'
         offer += f'<p class="meta plan-bundle">{t["inBundle"].format(name=e(plan_name(b, lang)))} —{link}</p>'
-    return f'<section class="pricing"><h2>{t["pricing"]}</h2><div class="plan-lists">{lists}</div>{offer}</section>'
+    lists = f'<div class="plan-lists">{lists}</div>' if lists else ""   # on sale before the lists are written: only the offer
+    return f'<section class="pricing"><h2>{t["pricing"]}</h2>{lists}{offer}</section>'
 
 
 def price_tag(p, lang):
@@ -599,7 +630,7 @@ def price_tag(p, lang):
 def updates_page(data, rows, icons, lang):
     """/updates/: all published releases of all Mac apps by date (`rows` — feed()), filter chips (assets/site.js; no JS — all shown)."""
     t, base = T[lang], ("en/" if lang == "en" else "")
-    macs = [p for p in data if mac_platform(p)]
+    macs = [p for p in data if mac_platform(p) or windows_log(p)]
     chips = (f'<div class="chips" role="group" aria-label="{t["filter"]}" hidden>'
              f'<button type="button" class="chip" data-app="all" aria-pressed="true">{t["allChip"]}</button>'
              + "".join(f'<button type="button" class="chip" data-app="{p["id"]}" aria-pressed="false">{e(p["name"])}</button>' for p in macs)
@@ -675,7 +706,7 @@ def uninstall(p, lang):
     settings = u.get("settings", {}).get(lang) or t["uninstallSettings"]
     keeps = f' {e(u["keeps"][lang])}' if u.get("keeps") else ""
     note = f' {e(u["manual_note"][lang])}' if u.get("manual_note") else ""
-    return (f'<section class="uninstall"><h2>{t["uninstall"]}</h2>'
+    return (f'<section class="uninstall"><h2>{t["uninstallMac" if windows_log(p) else "uninstall"]}</h2>'
             f'<p>{e(t["uninstallMenu"].format(name=name, settings=settings))} {e(u["removes"][lang])}{keeps}</p>'
             f'<p>{e(t["uninstallKeep"].format(name=name, label=u.get("keep_label", {}).get(lang) or t["uninstallKeepLabel"]))}</p><p class="meta">{since}</p>'
             f'<details><summary>{t["uninstallManual"]}</summary>'
@@ -687,6 +718,18 @@ def uninstall(p, lang):
             ' const c = b.parentElement.querySelector("code"), done = () => { b.textContent = b.dataset.done; };'
             ' const select = () => { const r = document.createRange(); r.selectNodeContents(c); getSelection().removeAllRanges(); getSelection().addRange(r); };'
             ' navigator.clipboard ? navigator.clipboard.writeText(c.textContent).then(done, select) : select(); }));</script>')
+
+
+def check_windows(pid, pl, rpl):
+    """What a Windows page needs (core/spec/rules/NEW-PLATFORM.md): a clear stop instead of a KeyError in the middle of a build."""
+    missing = [f"{k} (ru, en)" for k in ("license_path", "keeps") if not all((pl.get(k) or {}).get(lang) for lang in ("ru", "en"))]
+    missing += [] if pl.get("log") else ["log"]
+    if missing:
+        sys.exit(f"❌ сайт: у «{pid}» для Windows в content.json нет: {', '.join(missing)} (core/spec/rules/NEW-PLATFORM.md)")
+    if not rpl.get("arch"):
+        sys.exit(f"❌ сайт: у «{pid}» для Windows в реестре нет arch")
+    if rpl.get("minOS") not in WINDOWS_NAMES:
+        sys.exit(f"❌ сайт: у «{pid}» для Windows минимальная система {rpl.get('minOS')}: добавь её название в WINDOWS_NAMES в build.py")
 
 
 def merge_registry(data):
@@ -719,8 +762,10 @@ def merge_registry(data):
                 if rpl.get(key):
                     pl[key] = rpl[key]
             if pl["kind"] == "windows":
+                check_windows(p["id"], pl, rpl)
                 pl["min"] = WINDOWS_NAMES[rpl["minOS"]]   # from the registry: a new minimum must get its name here
                 pl["status"] = "public"   # here only public ones, or KVP_SITE_SHOW_WINDOWS
+                pl["arch"] = ", ".join(rpl["arch"])
                 folder = os.path.join(root, rpl["dir"])
                 pl["changelog"] = os.path.join(folder, "CHANGELOG.md")
                 if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
@@ -768,7 +813,7 @@ def build():
                 # The name leads; under it — what the app gives you (`benefit`), not what it is.
                 cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
                           f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
-                          f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
+                          f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang, kind)}</span>'
                           f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span></a>')
                 n += 1
             sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
@@ -778,10 +823,10 @@ def build():
         # busy app doesn't push the others out).
         rows, seen, latest = feed(data, lang), set(), []
         for x in rows:
-            if x[0]["id"] not in seen:
-                seen.add(x[0]["id"])
+            if x[0].get("_key", x[0]["id"]) not in seen:   # Mac and Windows are separate lines, or one would hide the other
+                seen.add(x[0].get("_key", x[0]["id"]))
                 latest.append(x)
-        fresh = "".join(f'<li><a class="feed-row" href="/{base}{p["id"]}/#v{e(r["version"])}"><img src="/{icons[p["id"]]}" alt="" width="32" height="32">'
+        fresh = "".join(f'<li><a class="feed-row" href="/{base}{p["id"]}/#{p.get("_anchor", "v")}{e(r["version"])}"><img src="/{icons[p["id"]]}" alt="" width="32" height="32">'
                         f'<b>{e(p["name"])} {e(r["version"])}</b><span class="feed-text"{ru_attr(headline(p, r, lang, ru)[1])}>{inline(headline(p, r, lang, ru)[0])}</span>'
                         f'<span class="feed-date">{day(r["date"], lang, short=True)}</span></a></li>' for p, r, ru in latest[:3])
         fresh = (f'<section class="fresh-box" aria-labelledby="fresh"><div class="fresh-head"><h2 id="fresh">{t["fresh"]}</h2>'
@@ -807,9 +852,12 @@ def build():
     for lang in ("ru", "en"):
         t = T[lang]
         base = "en/" if lang == "en" else ""
-        apps = [{"id": p["id"], "name": p["name"], "scheme": pl["scheme"], "page": f"/{base}{p['id']}/",
-                 "path": pl.get("license_path", {}).get(lang, "")}
-                for p in data for pl in p["platforms"] if pl.get("scheme") and pl["kind"] != "windows"]
+        apps = []
+        for p in data:   # one line per product, whatever the platforms: the Mac's, or the only one with a link scheme
+            pl = min((pl for pl in p["platforms"] if pl.get("scheme")), key=lambda pl: pl["kind"] == "windows", default=None)
+            if pl:
+                apps.append({"id": p["id"], "name": p["name"], "scheme": pl["scheme"], "page": f"/{base}{p['id']}/",
+                             "path": pl.get("license_path", {}).get(lang, "")})
         texts = {k: t[k] for k in ("openIn", "noKey", "copied", "copyManually", "unknownApp", "paste")}
         texts["download"] = t["downloadApp"]
         payload = json.dumps({"apps": apps, "texts": texts}, ensure_ascii=False).replace("</", "<\\/")
@@ -822,7 +870,7 @@ def build():
     # The privacy page: what leaves the Mac and why (PRIVACY above), linked from every footer.
     for lang in ("ru", "en"):
         pv, base = PRIVACY[lang], ("en/" if lang == "en" else "")
-        contact = f'<a class="mail" href="#" data-u="kvp5359" data-d="gmail.com">{pv["contact"]}</a>'
+        contact = f'{pv["contact"]} {mail_address(lang)}'
         secs = "".join(f'<h2>{e(h)}</h2>' + "".join(f'<p>{x.replace("{contact}", contact)}</p>' for x in paras)
                        for h, paras in pv["sections"])
         body = (f'<section class="hero"><h1>{pv["title"]}</h1>{ink("under", "under")}<p class="lead">{pv["lead"]}</p></section>'
