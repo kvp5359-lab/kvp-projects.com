@@ -9,6 +9,9 @@
     if (t && now - t < 15 * 864e5) b.hidden = false;
   });
 
+  // The support address as text: put together here, not in the page for spam bots. A click still opens mail (the page's own script).
+  document.querySelectorAll('a.mail[data-show]').forEach((a) => { a.textContent = a.dataset.u + '@' + a.dataset.d; });
+
   // /updates/: filter chips (hidden without JS — then everything is shown). #dictum in the address picks an app.
   const chips = document.querySelector('.chips');
   if (chips) {

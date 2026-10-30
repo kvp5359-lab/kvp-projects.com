@@ -55,13 +55,14 @@
 
   copy.onclick = () => {
     const done = () => { copy.querySelector("span").textContent = t.copied; };
-    const manual = () => {   // no clipboard access: select the key so ⌘C works
+    const manual = () => {   // no clipboard access: select the key so ⌘C / Ctrl+C works
       const r = document.createRange();
       r.selectNodeContents(keyLine);
       const s = getSelection();
       s.removeAllRanges();
       s.addRange(r);
-      copy.querySelector("span").textContent = t.copyManually;
+      const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+      copy.querySelector("span").textContent = t.copyManually.replace("{shortcut}", mac ? "⌘C" : "Ctrl+C");
     };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(key).then(done).catch(manual);
     else manual();
