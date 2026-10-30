@@ -201,6 +201,8 @@ summary { cursor: pointer; }
 .prose { max-width: 720px; }
 .prose h2 { margin: 40px 0 8px; font-size: 22px; }
 .prose p { margin: 0 0 12px; }
+.prose ol { margin: 0 0 12px; padding-left: 24px; }
+.prose li { margin-bottom: 6px; }
 
 @media (max-width: 600px) {
   .hero { padding-top: 40px; }
