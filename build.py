@@ -87,6 +87,7 @@ T = {
                      "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
 }
+WINDOWS_NAMES = {"10.0.19041": "Windows 10 2004"}
 PLATFORM = {"mac": "macOS", "chrome": "Chrome", "windows": "Windows", "linux": "Linux", "ios": "iOS", "android": "Android"}
 
 # The privacy page (/privacy/, /en/privacy/). Keep it true to the code: every network request the apps make is here.
@@ -669,7 +670,7 @@ def merge_registry(data):
                 if rpl.get(key):
                     pl[key] = rpl[key]
             if pl["kind"] == "windows":
-                pl["min"] = "Windows 10 2004"
+                pl["min"] = WINDOWS_NAMES[rpl["minOS"]]   # from the registry: a new minimum must get its name here
             elif rpl.get("minOS"):
                 pl["min"] = f"macOS {rpl['minOS']}"
             if rpl.get("arch") == ["arm64"]:
