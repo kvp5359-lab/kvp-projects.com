@@ -88,6 +88,9 @@
             },
             "command": "osascript -e 'if application \"Dictum\" is running then tell application \"Dictum\" to quit'; sleep 2; osascript -e 'tell application \"Finder\" to delete POSIX file \"/Applications/Dictum.app\"' >/dev/null 2>&1 || echo \"Перетащи Dictum в Корзину вручную\"; rm -rf ~/Library/Application\\ Support/Dictum ~/Library/Application\\ Support/FluidAudio/Models/parakeet-tdt-0.6b-v3 ~/Library/Application\\ Support/FluidAudio/Models/silero-vad ~/Library/Logs/Dictum ~/Library/Caches/com.kvp.dictum ~/Library/Caches/Dictum ~/Library/Caches/SentryCrash/Dictum ~/Library/Caches/io.sentry/3e30434917b20929c9cf79af665a61855aafb915 ~/Library/HTTPStorages/com.kvp.dictum ~/Library/HTTPStorages/com.kvp.dictum.binarycookies ~/Library/WebKit/com.kvp.dictum ~/Library/Saved\\ Application\\ State/com.kvp.dictum.savedState; rmdir ~/Library/Application\\ Support/FluidAudio/Models ~/Library/Application\\ Support/FluidAudio ~/Library/Caches/SentryCrash ~/Library/Caches/io.sentry 2>/dev/null; defaults delete com.kvp.dictum 2>/dev/null; while security delete-generic-password -s com.kvp.dictum.apikeys >/dev/null 2>&1; do :; done; while security delete-generic-password -s com.kvp.dictum >/dev/null 2>&1; do :; done; tccutil reset All com.kvp.dictum"
           }
+        },
+        {
+          "kind": "android"
         }
       ],
       "ui_langs": [
@@ -512,6 +515,9 @@
             },
             "command": "osascript -e 'quit app \"Note Calc\"' 2>/dev/null; sleep 2; rm -rf ~/Library/{WebKit,\"Application Support\",Caches,HTTPStorages,Logs}/com.kvp.notecalc ~/Library/HTTPStorages/com.kvp.notecalc.binarycookies ~/Library/Preferences/com.kvp.notecalc.plist ~/Library/\"Saved Application State\"/com.kvp.notecalc.savedState; defaults delete com.kvp.notecalc 2>/dev/null; tccutil reset All com.kvp.notecalc; osascript -e 'tell application \"Finder\" to delete POSIX file \"/Applications/Note Calc.app\"' >/dev/null 2>&1 || echo \"Перетащи Note Calc в Корзину вручную\""
           }
+        },
+        {
+          "kind": "android"
         }
       ],
       "ui_langs": [

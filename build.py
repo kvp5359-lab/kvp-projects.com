@@ -22,7 +22,7 @@ SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
 T = {
     "ru": {
         "title": "kvp projects", "h1": "Маленькие программы,<br>которые экономят время",
-        "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac, Windows и браузера.",
+        "lead": "Говорить вместо того, чтобы печатать. Находить скопированное неделю назад. Считать прямо в заметке. Для Mac, Windows, Android и браузера.",
         "updates": "Обновления", "rss": "RSS", "fresh": "Свежие обновления", "allUpdates": "Все обновления →",
         "updated": "Обновлено · {v}", "newIn": "Новое в {v}", "newInMac": "Новое в {v} для Mac", "gains": "Что даёт",
         "pricing": "Бесплатно и Pro", "freeList": "Бесплатно — всегда", "proList": "В Pro", "perMonth": "{p} в месяц",
@@ -31,7 +31,7 @@ T = {
         "subscribe": "Подписаться через RSS", "manualUpdate": "Как обновиться вручную", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
         "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac и Windows.",
-        "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
+        "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "downloadAndroid": "Скачать для Android", "platformsLabel": "Платформы", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "changesMac": "Что нового в версии для Mac", "older": "Предыдущие версии",
@@ -50,12 +50,10 @@ T = {
         "uninstallManual": "Вручную (для старых версий)",
         "uninstallManualLead": "Открой Терминал, вставь строку и нажми Return. Она закроет {name} и удалит его вместе с данными.",
         "copyCmd": "Скопировать", "copiedCmd": "Скопировано",
-        "sections": {"mac": ("Для Mac", "macOS"), "chrome": ("Для браузера", "Google Chrome"), "windows": ("Для Windows", ""),
-                     "linux": ("Для Linux", ""), "ios": ("Для iPhone и iPad", "iOS"), "android": ("Для Android", "")},
     },
     "en": {
         "title": "kvp projects", "h1": "Small apps<br>that save you time",
-        "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac, Windows and the browser.",
+        "lead": "Speak instead of typing. Find what you copied a week ago. Do the math right in your notes. For Mac, Windows, Android and the browser.",
         "updates": "Updates", "rss": "RSS", "fresh": "Latest updates", "allUpdates": "All updates →",
         "updated": "Updated · {v}", "newIn": "New in {v}", "newInMac": "New in {v} for Mac", "gains": "What you get",
         "pricing": "Free and Pro", "freeList": "Free — always", "proList": "In Pro", "perMonth": "{p} a month",
@@ -64,7 +62,7 @@ T = {
         "subscribe": "Subscribe via RSS", "manualUpdate": "How to update by hand", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
         "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac and Windows.",
-        "download": "Download for Mac", "downloadWindows": "Download for Windows", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
+        "download": "Download for Mac", "downloadWindows": "Download for Windows", "downloadAndroid": "Download for Android", "platformsLabel": "Platforms", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "changesMac": "What’s new on Mac", "older": "Earlier versions",
@@ -83,11 +81,17 @@ T = {
         "uninstallManual": "By hand (for older versions)",
         "uninstallManualLead": "Open Terminal, paste the line and press Return. It quits {name} and deletes it along with its data.",
         "copyCmd": "Copy", "copiedCmd": "Copied",
-        "sections": {"mac": ("For Mac", "macOS"), "chrome": ("For the browser", "Google Chrome"), "windows": ("For Windows", ""),
-                     "linux": ("For Linux", ""), "ios": ("For iPhone and iPad", "iOS"), "android": ("For Android", "")},
     },
 }
 WINDOWS_NAMES = {"10.0.19041": "Windows 10 2004"}
+ANDROID_NAMES = {"33": "Android 13"}   # the registry's minOS (API level) → what people know
+# Small grey marks on a card (one line per platform, in this order), Simple Icons (CC0) for the brands, Windows drawn here.
+PLATFORM_ICONS = {
+    "mac": "M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701",
+    "windows": "M0 0h11.4v11.4H0zM12.6 0H24v11.4H12.6zM0 12.6h11.4V24H0zM12.6 12.6H24V24H12.6z",
+    "android": "M18.4395 5.5586c-.675 1.1664-1.352 2.3318-2.0274 3.498-.0366-.0155-.0742-.0286-.1113-.043-1.8249-.6957-3.484-.8-4.42-.787-1.8551.0185-3.3544.4643-4.2597.8203-.084-.1494-1.7526-3.021-2.0215-3.4864a1.1451 1.1451 0 0 0-.1406-.1914c-.3312-.364-.9054-.4859-1.379-.203-.475.282-.7136.9361-.3886 1.5019 1.9466 3.3696-.0966-.2158 1.9473 3.3593.0172.031-.4946.2642-1.3926 1.0177C2.8987 12.176.452 14.772 0 18.9902h24c-.119-1.1108-.3686-2.099-.7461-3.0683-.7438-1.9118-1.8435-3.2928-2.7402-4.1836a12.1048 12.1048 0 0 0-2.1309-1.6875c.6594-1.122 1.312-2.2559 1.9649-3.3848.2077-.3615.1886-.7956-.0079-1.1191a1.1001 1.1001 0 0 0-.8515-.5332c-.5225-.0536-.9392.3128-1.0488.5449zm-.0391 8.461c.3944.5926.324 1.3306-.1563 1.6503-.4799.3197-1.188.0985-1.582-.4941-.3944-.5927-.324-1.3307.1563-1.6504.4727-.315 1.1812-.1086 1.582.4941zM7.207 13.5273c.4803.3197.5506 1.0577.1563 1.6504-.394.5926-1.1038.8138-1.584.4941-.48-.3197-.5503-1.0577-.1563-1.6504.4008-.6021 1.1087-.8106 1.584-.4941z",
+    "chrome": "M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z",
+}
 MAIL_AT = {"ru": "собака", "en": "at"}   # the address without JavaScript; with it assets/site.js writes the real one
 WINDOWS_HELP = {
     "ru": {"title": "{name} для Windows", "changes": "Что нового в версии для Windows",
@@ -103,6 +107,20 @@ WINDOWS_HELP = {
            "problem": "If something goes wrong: Settings → About → Log → “Open folder” (or {log}). Send the log file and your Windows version to {mail}: it holds no captures or texts.",
            "update": "No update coming on its own? {link}."},
 }
+# An Android page besides the button: installing a file from the site (Android asks once to allow its source; Google Play
+# Protect may warn about an app from outside the store), removing, what to do when something breaks.
+ANDROID_HELP = {
+    "ru": {"title": "{name} для Android", "changes": "Что нового в версии для Android",
+           "install": "Как поставить: нажми «Скачать для Android» на телефоне и открой скачанный файл {file}-….apk. Android один раз попросит разрешить установку из браузера: «Настройки» → «Разрешить из этого источника», затем «Назад» и «Установить». Если Google Play Защита предупредит о незнакомом приложении, нажми «Подробнее» → «Всё равно установить»: приложения нет в Google Play, поэтому телефон его не знает.",
+           "updates": "Обновления приходят из самого приложения: оно скачивает новую версию с этого сайта и перед установкой проверяет подпись файла. Android попросит подтвердить установку.",
+           "remove": "Как удалить: Настройки → Приложения → {name} → Удалить. Данные на телефоне Android удалит вместе с приложением; то, что синхронизировано, останется в твоей учётной записи kvp.",
+           "problem": "Если что-то пошло не так, напиши мне на {mail}: укажи модель телефона, версию Android и версию приложения."},
+    "en": {"title": "{name} for Android", "changes": "What’s new on Android",
+           "install": "To install: press “Download for Android” on the phone and open the downloaded {file}-….apk file. Android asks once to allow installing from the browser: “Settings” → “Allow from this source”, then “Back” and “Install”. If Google Play Protect warns about an unknown app, press “More details” → “Install anyway”: the app isn’t on Google Play, so the phone doesn’t know it.",
+           "updates": "Updates come from within the app: it downloads the new version from this site and checks the file’s signature before installing. Android asks you to confirm the install.",
+           "remove": "To uninstall: Settings → Apps → {name} → Uninstall. Android removes the data on the phone along with the app; what’s synced stays in your kvp account.",
+           "problem": "If something goes wrong, write to me at {mail}: mention the phone model, the Android version and the app’s version."},
+}
 # The manual update page (/update/, /en/update/). Mac: the app is one bundle, its data lives elsewhere. Windows: core/release/windows/installer/kvp-installer.nsh
 # swaps only the app's folder, data and the license are outside it (%LOCALAPPDATA%\\<App>, %APPDATA%\\<App>, %LOCALAPPDATA%\\kvp-projects).
 UPDATE_HELP = {
@@ -117,6 +135,8 @@ UPDATE_HELP = {
                                    "Если появится синее окно «Система Windows защитила ваш компьютер»: нажми «Подробнее», проверь, что файл скачан с этого сайта и его имя заканчивается на -setup.exe, затем нажми «Выполнить в любом случае». У программы пока нет сертификата издателя, поэтому Windows предупреждает.",
                                    "Установщик сам закроет программу и поставит новую версию на место старой."],
                     "Данные, настройки и лицензия лежат в другой папке, поэтому останутся. Если установить не получилось, установщик скажет об этом, а прежняя версия продолжит работать."),
+        "android": ("На Android", ["Открой страницу программы на телефоне и нажми «Скачать для Android».", "Открой скачанный файл …apk и нажми «Обновить»."],
+                    "Данные останутся: новая версия ставится поверх старой с той же подписью. Если Android скажет, что приложение не может быть обновлено, напиши мне, не удаляй старое: вместе с ним удалятся и данные на телефоне."),
         "chrome": ("Расширения для браузера", ["Их обновляет сам Chrome, ничего скачивать не нужно."]),
         "help": ("Не получилось", ["Напиши мне: {mail}. Укажи программу, её версию и систему."]),
     },
@@ -131,6 +151,8 @@ UPDATE_HELP = {
                                    "If a blue “Windows protected your PC” window appears: press “More info”, check that the file came from this site and its name ends in -setup.exe, then press “Run anyway”. The app has no publisher certificate yet, so Windows warns about it.",
                                    "The installer closes the app by itself and puts the new version in place of the old one."],
                     "Data, settings and the license live in another folder, so they stay. If installing fails, the installer says so and the previous version keeps working."),
+        "android": ("On Android", ["Open the app’s page on the phone and press “Download for Android”.", "Open the downloaded …apk file and press “Update”."],
+                    "Your data stays: the new version installs over the old one with the same signature. If Android says the app can’t be updated, write to me, don’t uninstall the old one: its data on the phone would go with it."),
         "chrome": ("Browser extensions", ["Chrome updates them by itself, there’s nothing to download."]),
         "help": ("Didn’t work", ["Write to me: {mail}. Mention the app, its version and your system."]),
     },
@@ -153,6 +175,11 @@ PRIVACY = {
                 "Раз в день приложение проверяет, нет ли новой версии, и читает файл с правилами лицензий на updates.kvp-projects.com. Это обычное скачивание файла: о тебе и о том, как ты пользуешься приложением, ничего не отправляется. Как и любой сайт, сервер видит адрес, с которого пришёл запрос. Новая версия ставится только с твоего согласия, автоматическую проверку можно выключить в настройках. Сами файлы приложений скачиваются оттуда же — с моего сервера; журнал обращений к нему не ведётся.",
                 "Лицензионный ключ содержит почту, на которую он выдан, и проверяется прямо на компьютере, без связи с сервером. В ссылке активации ключ стоит после знака «#» — браузер не отправляет эту часть адреса на сервер.",
                 "Версии для Windows устроены так же: данные хранятся на компьютере, отчёты об ошибках отправляются только с твоего согласия (в них версия Windows и сведения о компьютере, без снимков, текстов и имён файлов), а обновления проверяются и скачиваются с того же сервера. Подпись обновления программа проверяет сама перед установкой."]),
+            ("Android и учётная запись kvp", [
+                "Dictum и Note Calc для Android хранят твои данные на телефоне. Обновления они проверяют и скачивают с updates.kvp-projects.com и перед установкой сами проверяют подпись файла. Note Calc отправляет отчёты об ошибках только с твоего согласия, как на компьютере; Dictum для Android отчётов не отправляет.",
+                "<b>Учётная запись kvp — по желанию.</b> Войти можно кодом из письма или через Google. Письмо с кодом отправляет сервис Resend (ЕС). При входе через Google он передаёт твою почту и имя, они хранятся в учётной записи. Учётная запись нужна для синхронизации и чтобы ключ подписки приходил сам.",
+                "<b>Синхронизация.</b> Если ты вошёл, синхронизируемые данные хранятся в твоей учётной записи в Supabase (сервер во Франкфурте) и доступны только тебе: у Note Calc — заметки (без картинок и файлов), у Dictum — сценарии, обработки, словарь, История и записи без звука, а ещё название и версия приложения на каждом устройстве. Удалить учётную запись вместе с этими данными — напиши мне.",
+                "<b>Dictum для Android</b> распознаёт речь средствами самого телефона, без отправки звука. Если ты сам выберешь облачное распознавание или обработку ИИ со своим ключом, запись или текст уходят выбранному сервису, как на Mac."]),
             ("Что отправляют отдельные приложения", [
                 "<b>Dictum.</b> По умолчанию речь распознаётся прямо на Mac; модели для этого один раз скачиваются с сайта Hugging Face. Если ты выберешь облачное распознавание (OpenAI, Groq, Deepgram, ElevenLabs) или обработку текста ИИ (Anthropic, OpenAI, Groq), запись или текст уходят в выбранный тобой сервис с твоим собственным ключом и по его правилам. Ollama, LM Studio и модель Apple работают на твоём Mac. Встроенное распознавание Apple работает по правилам Apple.",
                 "<b>Textum.</b> ИИ-действия отправляют выделенный текст и команду в Anthropic (Claude) с твоим собственным ключом — или обрабатывают его моделью Apple прямо на Mac. Для пересчёта валют загружаются курсы с open.er-api.com — без твоих данных.",
@@ -169,7 +196,7 @@ PRIVACY = {
             ("Сроки и удаление", [
                 "<b>На твоём компьютере</b> данные лежат, пока ты их не удалишь. Как удалить программу вместе с ними и что останется, написано на странице каждой программы.",
                 "<b>На моём сервере</b> (api.kvp-projects.com) хранятся только те, чей ключ выдан или куплен через него. Продажи Pro пока нет: сейчас это ключи, которые я выдаю сам, например для vpn-app. Хранятся почта, на которую выдан ключ, номер лицензии, планы и до какого дня они оплачены, счётчики расхода по месяцам; для vpn-app ещё id и имя устройства, когда оно подключалось первый и последний раз, и имя человека, если я его записал; служебный журнал этих действий. Автоматического срока нет: всё это лежит, пока я не удалю запись по твоей просьбе. В панели VPN запись заведена без имени и почты.",
-                "<b>В Supabase</b> мой сервер копирует почту и список твоих прав с датами: по ним будет открываться синхронизация. Сама синхронизация в выпущенных программах пока выключена.",
+                "<b>В Supabase</b> мой сервер копирует почту и список твоих прав с датами: по ним открывается синхронизация. Она работает в Dictum и Note Calc для Android и в программах, где ты вошёл в учётную запись kvp (раздел «Android и учётная запись kvp»).",
                 "<b>Копии базы.</b> Каждую ночь сервер делает копию этой базы и хранит 14 последних там же, на сервере. Копии не правятся: удалённая запись исчезает из них, когда они стираются по очереди, обычно за 14 дней.",
                 "<b>Журналы сервера.</b> Журнал обращений не ведётся на адресах updates., reports., api. и sync.kvp-projects.com. Служба пишет только вид ошибки, без ключей и почты; этот журнал не больше 30 МБ, старые записи стираются сами.",
                 "<b>Отчёты об ошибках</b> хранятся в Sentry по настройке Sentry: своего срока я не задавал.",
@@ -192,6 +219,11 @@ PRIVACY = {
                 "Once a day an app checks for a new version and reads the license policy file on updates.kvp-projects.com. It’s a plain file download: nothing about you or how you use the app is sent. Like any website, the server sees the address the request came from. A new version is installed only with your consent, and automatic checks can be turned off in settings. The app files themselves come from there too — my own server, which keeps no access log.",
                 "A license key contains the email it was issued to and is checked right on your computer, without contacting a server. In an activation link the key comes after the “#” sign — browsers never send that part of the address to a server.",
                 "The Windows versions work the same way: your data stays on the computer, error reports go only with your consent (they carry the Windows version and computer details, never captures, texts or file names), and updates are checked and downloaded from the same server. The app verifies each update’s signature itself before installing it."]),
+            ("Android and your kvp account", [
+                "Dictum and Note Calc for Android keep your data on the phone. They check for and download updates from updates.kvp-projects.com and verify the file’s signature themselves before installing. Note Calc sends error reports only with your consent, as on the computer; Dictum for Android sends none.",
+                "<b>A kvp account is optional.</b> You can sign in with a code from an email or with Google. The email with the code is sent by Resend (EU). Signing in with Google passes on your email and name; they’re kept in the account. The account is for sync and for your subscription key to arrive by itself.",
+                "<b>Sync.</b> Once you’re signed in, what syncs is kept in your account in Supabase (servers in Frankfurt) and only you can reach it: for Note Calc your notes (no images or files), for Dictum scenarios, processings, the dictionary, History and recordings without sound, plus each device’s name and app version. To delete the account with this data, write to me.",
+                "<b>Dictum for Android</b> recognizes speech with the phone’s own means, without sending sound. If you choose cloud recognition or AI processing with your own key yourself, the recording or text goes to that service, as on the Mac."]),
             ("What individual apps send", [
                 "<b>Dictum.</b> By default speech is recognized right on your Mac; the models are downloaded once from Hugging Face. If you choose cloud recognition (OpenAI, Groq, Deepgram, ElevenLabs) or AI text processing (Anthropic, OpenAI, Groq), the recording or text goes to the service you chose, with your own key and under its terms. Ollama, LM Studio and Apple’s model run on your Mac. Apple’s built-in recognition works under Apple’s terms.",
                 "<b>Textum.</b> AI actions send the selected text and the command to Anthropic (Claude) with your own key — or process it with Apple’s model right on your Mac. Currency conversion downloads exchange rates from open.er-api.com, without any of your data.",
@@ -208,7 +240,7 @@ PRIVACY = {
             ("How long data is kept, and deleting it", [
                 "<b>On your computer</b> data stays until you delete it. How to remove an app along with it, and what stays, is on each app’s page.",
                 "<b>On my server</b> (api.kvp-projects.com) only people whose key was issued or bought through it are stored. Pro isn’t on sale yet: for now these are keys I issue myself, for vpn-app for example. Stored: the email the key is issued to, the license number, plans and the day they’re paid through, usage counters by month; for vpn-app also a device’s id and name, when it first and last connected, and a person’s name if I noted it; a service log of these actions. There’s no automatic deadline: it all stays until I delete the record at your request. The VPN panel’s record has no name or email.",
-                "<b>In Supabase</b> my server keeps a copy of your email and your rights with their dates: sync will open by them. Sync itself is still off in released apps.",
+                "<b>In Supabase</b> my server keeps a copy of your email and your rights with their dates: sync opens by them. It works in Dictum and Note Calc for Android and wherever you signed in to a kvp account (see “Android and your kvp account”).",
                 "<b>Copies of the database.</b> Every night the server copies this database and keeps the last 14, on the same server. Copies aren’t edited: a deleted record leaves them as they’re erased in turn, normally within 14 days.",
                 "<b>Server logs.</b> No access log is kept at updates., reports., api. and sync.kvp-projects.com. The service writes only the kind of an error, without keys or emails; this log is at most 30 MB, and old entries are erased by themselves.",
                 "<b>Error reports</b> are kept in Sentry according to Sentry’s settings: I haven’t set a period of my own.",
@@ -336,13 +368,23 @@ def mac_platform(p):
     return next((pl for pl in p.get("platforms", []) if pl["kind"] == "mac"), None)
 
 
-def windows_log(p):
-    """The product's Windows journal as a product of its own for releases(): same page and icon, its own feed and anchors. None without a Windows platform."""
-    pl = next((pl for pl in p.get("platforms", []) if pl["kind"] == "windows"), None)
+def platform_log(p, kind):
+    """The product's Windows or Android journal as a product of its own for releases(): same page and icon, its own feed and anchors. None without that platform."""
+    pl = next((pl for pl in p.get("platforms", []) if pl["kind"] == kind), None)
     if not pl:
         return None
-    return {"id": p["id"], "_key": p["id"] + "-windows", "_anchor": "vw", "name": f'{p["name"]} (Windows)', "changelog": pl["changelog"], "changelog_en": pl.get("changelog_en"),
+    return {"id": p["id"], "_key": f'{p["id"]}-{kind}', "_kind": kind, "_anchor": {"windows": "vw", "android": "va"}[kind],
+            "name": f'{p["name"]} ({PLATFORM[kind]})', "changelog": pl["changelog"], "changelog_en": pl.get("changelog_en"),
             "headlines": {}, "platforms": [{"kind": "mac", "feed": pl["feed"]}]}
+
+
+def windows_log(p):
+    return platform_log(p, "windows")
+
+
+def other_logs(p):
+    """Journals of the product's platforms besides the Mac, in the order of the page."""
+    return [q for q in (platform_log(p, "windows"), platform_log(p, "android")) if q]
 
 
 def fold(release, older):
@@ -410,7 +452,7 @@ def feed(data, lang):
     order, then the newer version first."""
     out = []
     for idx, p in enumerate(data):
-        for q in (p, windows_log(p)):
+        for q in (p, *other_logs(p)):
             if q and mac_platform(q):
                 rs, ru_only = releases(q, lang)
                 out += [(idx, q, r, ru_only) for r in rs]
@@ -518,6 +560,14 @@ def actions(p, lang):
                            f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])} · {pl["arch"]}{ui} · {t["windowsUnsigned"]}</span>')
             else:
                 out.append(f'<span class="button is-off">{PLATFORM[pl["kind"]]} — {t["soon"]}</span>')
+        elif pl["kind"] == "android":
+            v = latest_mac(pl["feed"]) if pl.get("status") == "public" else None
+            if v:
+                url = f"{RELEASES}/{pl['feed']}-{v}/{urllib.parse.quote(pl['file'])}-{v}.apk"
+                out.append(f'<a class="button" href="{url}">{ink("btn", "frame")}<span>{t["downloadAndroid"]}</span></a>'
+                           f'<span class="meta">{t["version"].format(v=v)} · {t["requires"].format(min=pl["min"])}{ui}</span>')
+            else:
+                out.append(f'<span class="button is-off">{PLATFORM[pl["kind"]]} — {t["soon"]}</span>')
         elif pl["kind"] == "chrome":
             if pl.get("store"):
                 out.append(f'<a class="button is-wide" href="{e(pl["store"])}">{ink("btn", "frame")}<span>{t["store"]}</span></a>')
@@ -551,9 +601,20 @@ def windows_help(p, lang):
             f'<p>{e(h["update"].format(link="{link}")).replace("{link}", update_link(lang))}</p></section>')
 
 
-def windows_changes(p, lang):
-    w = windows_log(p)
-    return changes(w, lang) if w else ""
+def android_help(p, lang):
+    """What an Android page has to say besides the button: installing a file from the site, updates, removing, what to do when something breaks."""
+    pl = next((pl for pl in p["platforms"] if pl["kind"] == "android"), None)
+    if not pl:
+        return ""
+    h = ANDROID_HELP[lang]
+    return (f'<section class="uninstall"><h2>{e(h["title"].format(name=p["name"]))}</h2>'
+            f'<p>{e(h["install"].format(file=pl["file"]))}</p><p>{e(h["updates"])}</p>'
+            f'<p>{e(h["remove"].format(name=p["name"]))}</p>'
+            f'<p>{e(h["problem"].format(mail="{mail}")).replace("{mail}", mail_address(lang))}</p></section>')
+
+
+def platform_changes(p, lang):
+    return "".join(changes(q, lang) for q in other_logs(p))
 
 
 def changes(p, lang):
@@ -576,8 +637,9 @@ def changes(p, lang):
     more = (f'<p class="app-updates"><a href="/{"en/" if lang == "en" else ""}updates/#{p["id"]}">{t["appUpdates"].format(name=e(p["name"]))}</a></p>'
             if mac_platform(p) and "_key" not in p else "")
     if "_key" in p:
-        return f'<section class="changes" id="changes-windows"><h2>{WINDOWS_HELP[lang]["changes"]}</h2>{note}{block(first)}{older}</section>'
-    title = t["changesMac"] if windows_log(p) else t["changes"]   # a page with Windows too: say which one this is
+        help = {"windows": WINDOWS_HELP, "android": ANDROID_HELP}[p["_kind"]][lang]
+        return f'<section class="changes" id="changes-{p["_kind"]}"><h2>{help["changes"]}</h2>{note}{block(first)}{older}</section>'
+    title = t["changesMac"] if other_logs(p) else t["changes"]   # a page with another platform too: say which one this is
     return f'<section class="changes" id="changes"><h2>{title}</h2>{ink("under", "under")}{note}{block(first)}{older}{more}</section>'
 
 
@@ -590,21 +652,32 @@ def news(p, lang):
         return ""
     r = released[0]
     return (f'<a class="news" href="#changes"><span class="pulse" aria-hidden="true"></span>'
-            f'<b>{T[lang]["newInMac" if windows_log(p) else "newIn"].format(v=e(r["version"]))}</b><span class="news-text"{ru_attr(headline(p, r, lang, ru_only)[1])}>{inline(headline(p, r, lang, ru_only)[0])}</span>'
+            f'<b>{T[lang]["newInMac" if other_logs(p) else "newIn"].format(v=e(r["version"]))}</b><span class="news-text"{ru_attr(headline(p, r, lang, ru_only)[1])}>{inline(headline(p, r, lang, ru_only)[0])}</span>'
             f'<span class="news-date">{day(r["date"], lang, short=True)} →</span></a>')
 
 
-def fresh_badge(p, lang, kind):
-    """«Обновлено · x.y.z» next to the name on a card of section `kind`, from that platform's journal: hidden; assets/site.js
-    shows it while the latest PUBLISHED release is at most 14 days old (the site is rebuilt only on publish, so the date is checked in the browser). No JS — no badge."""
-    q = windows_log(p) if kind == "windows" else p if kind == "mac" else None
-    if not q or not mac_platform(q):
+def fresh_badge(p, lang):
+    """«Обновлено · x.y.z» next to the name on a product's card: the newest published release of any of its platforms; hidden,
+    assets/site.js shows it while it is at most 14 days old (the site is rebuilt only on publish, so the date is checked in the browser). No JS — no badge."""
+    newest, label = None, ""
+    for q in (p, *other_logs(p)):
+        if mac_platform(q):
+            released, _ = releases(q, lang)
+            if released and released[0]["date"] and (newest is None or released[0]["date"] > newest["date"]):
+                # Another platform's version isn't the Mac's: «Android 0.1.4» next to a Mac at 0.7.0, not a bare «0.1.4».
+                newest, label = released[0], (f'{PLATFORM[q["_kind"]]} ' if "_kind" in q else "")
+    if not newest:
         return ""
-    released, _ = releases(q, lang)
-    if not released or not released[0]["date"]:
-        return ""
-    r = released[0]
-    return f' <span class="fresh" data-released="{r["date"]}" hidden>{T[lang]["updated"].format(v=e(r["version"]))}</span>'
+    return f' <span class="fresh" data-released="{newest["date"]}" hidden>{T[lang]["updated"].format(v=e(label + newest["version"]))}</span>'
+
+
+def platform_marks(p, lang):
+    """Small grey marks of the platforms the product can be had on, in the card's corner (only what the site offers: a Windows or Android
+    platform appears once it is public)."""
+    kinds = [k for k in PLATFORM_ICONS if any(pl["kind"] == k for pl in p["platforms"])]
+    marks = "".join(f'<svg viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="{PLATFORM[k]}"><title>{PLATFORM[k]}</title>'
+                    f'<path d="{PLATFORM_ICONS[k]}"/></svg>' for k in kinds)
+    return f'<span class="platforms" aria-label="{T[lang]["platformsLabel"]}">{marks}</span>'
 
 
 def gains(p, lang):
@@ -685,7 +758,7 @@ def price_tag(p, lang):
 def updates_page(data, rows, icons, lang):
     """/updates/: all published releases of all Mac apps by date (`rows` — feed()), filter chips (assets/site.js; no JS — all shown)."""
     t, base = T[lang], ("en/" if lang == "en" else "")
-    macs = [p for p in data if mac_platform(p) or windows_log(p)]
+    macs = [p for p in data if mac_platform(p) or other_logs(p)]
     chips = (f'<div class="chips" role="group" aria-label="{t["filter"]}" hidden>'
              f'<button type="button" class="chip" data-app="all" aria-pressed="true">{t["allChip"]}</button>'
              + "".join(f'<button type="button" class="chip" data-app="{p["id"]}" aria-pressed="false">{e(p["name"])}</button>' for p in macs)
@@ -761,7 +834,7 @@ def uninstall(p, lang):
     settings = u.get("settings", {}).get(lang) or t["uninstallSettings"]
     keeps = f' {e(u["keeps"][lang])}' if u.get("keeps") else ""
     note = f' {e(u["manual_note"][lang])}' if u.get("manual_note") else ""
-    return (f'<section class="uninstall"><h2>{t["uninstallMac" if windows_log(p) else "uninstall"]}</h2>'
+    return (f'<section class="uninstall"><h2>{t["uninstallMac" if other_logs(p) else "uninstall"]}</h2>'
             f'<p>{e(t["uninstallMenu"].format(name=name, settings=settings))} {e(u["removes"][lang])}{keeps}</p>'
             f'<p>{e(t["uninstallKeep"].format(name=name, label=u.get("keep_label", {}).get(lang) or t["uninstallKeepLabel"]))}</p><p class="meta">{since}</p>'
             f'<details><summary>{t["uninstallManual"]}</summary>'
@@ -809,8 +882,8 @@ def merge_registry(data):
                 sys.exit(f"❌ сайт: у «{p['id']}» в content.json есть платформа «{pl['kind']}», а в реестре — нет "
                          "(поле site у платформы в core/spec/products.json)")
             name, rpl = found
-            # A Windows platform isn't on the site until it is public: no «soon» and no section (KVP_SITE_SHOW_WINDOWS: to preview it, never in a real build).
-            if pl["kind"] == "windows" and rpl.get("status") != "public" and not os.environ.get("KVP_SITE_SHOW_WINDOWS"):
+            # A Windows or Android platform isn't on the site until it is public: no «soon» and no mark (KVP_SITE_SHOW_WINDOWS: to preview them, never in a real build).
+            if pl["kind"] in ("windows", "android") and rpl.get("status") != "public" and not os.environ.get("KVP_SITE_SHOW_WINDOWS"):
                 hidden.append(pl)
                 continue
             for key in ("feed", "file", "scheme", "status"):
@@ -821,6 +894,16 @@ def merge_registry(data):
                 pl["min"] = WINDOWS_NAMES[rpl["minOS"]]   # from the registry: a new minimum must get its name here
                 pl["status"] = "public"   # here only public ones, or KVP_SITE_SHOW_WINDOWS
                 pl["arch"] = ", ".join(rpl["arch"])
+                folder = os.path.join(root, rpl["dir"])
+                pl["changelog"] = os.path.join(folder, "CHANGELOG.md")
+                if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
+                    pl["changelog_en"] = os.path.join(folder, "CHANGELOG.en.md")
+                continue
+            if pl["kind"] == "android":
+                if rpl.get("minOS") not in ANDROID_NAMES:
+                    sys.exit(f"❌ сайт: у «{p['id']}» для Android минимальная система {rpl.get('minOS')}: добавь её название в ANDROID_NAMES в build.py")
+                pl["min"] = ANDROID_NAMES[rpl["minOS"]]
+                pl["status"] = "public"
                 folder = os.path.join(root, rpl["dir"])
                 pl["changelog"] = os.path.join(folder, "CHANGELOG.md")
                 if os.path.exists(os.path.join(folder, "CHANGELOG.en.md")):
@@ -856,23 +939,20 @@ def build():
     icons = {p["id"]: make_icon(p) for p in data}
     kinds = [k for k in PLATFORM if any(pl["kind"] == k for p in data for pl in p["platforms"])]
     later = [k for k in ("windows", "android", "ios") if k not in kinds]
+    # Apps first, extensions after them (content.json order within each): one list, not grouped by platform; each card shows its platforms.
+    shown = sorted(data, key=lambda p: all(pl["kind"] == "chrome" for pl in p["platforms"]))
 
     for lang in ("ru", "en"):
         t = T[lang]
         base = "en/" if lang == "en" else ""
-        sections, n = "", 0
-        for kind in kinds:
-            title, sub = t["sections"][kind]
-            cards = ""
-            for p in (p for p in data if any(pl["kind"] == kind for pl in p["platforms"])):
-                # The name leads; under it — what the app gives you (`benefit`), not what it is.
-                cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
-                          f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
-                          f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang, kind)}</span>'
-                          f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span></a>')
-                n += 1
-            sections += (f'<section class="group" id="{kind}"><div class="group-head"><h2>{title}</h2>'
-                         f'<span class="meta">{sub}</span></div><div class="grid">{cards}</div></section>')
+        cards = ""
+        for n, p in enumerate(shown):
+            # The name leads; under it — what the app gives you (`benefit`), not what it is; in the corner — where it runs.
+            cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
+                      f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
+                      f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
+                      f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span>{platform_marks(p, lang)}</a>')
+        sections = f'<section class="group" id="apps"><div class="grid">{cards}</div></section>'
         nxt = f'<p class="meta next">{t["next"].format(list=", ".join(PLATFORM[k] for k in later))}</p>' if later else ""
         # «Latest updates»: the newest published release of each Mac app, the three most recent (one line per app — a
         # busy app doesn't push the others out).
@@ -899,7 +979,7 @@ def build():
                     f'<div class="product-head"><h1>{e(p["name"])}{beta(p, lang)}</h1><p class="lead benefit-lead">{e(p["benefit"][lang])}</p></div></section>'
                     f'{news(p, lang)}<p class="summary">{e(p["summary"][lang])}</p><div class="actions">{actions(p, lang)}</div>'
                     f'{beta_note(p, lang)}{gains(p, lang)}{pricing(p, lang)}'
-                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}{windows_changes(p, lang)}{windows_help(p, lang)}')
+                    f'<section class="features"><h2>{t["features"]}</h2><ul>{feats}</ul></section>{changes(p, lang)}{uninstall(p, lang)}{platform_changes(p, lang)}{windows_help(p, lang)}{android_help(p, lang)}')
             write(f'{base}{p["id"]}/index.html', page(lang, f'{p["name"]} — {p["tagline"][lang]}', p["summary"][lang], body, p["id"] + "/", image=icons[p["id"]]))
 
     # The license activation page: the purchase email links here (license-tool issue prints the link); the key is in
@@ -952,7 +1032,7 @@ def update_page(data, lang):
     h, base = UPDATE_HELP[lang], ("en/" if lang == "en" else "")
     # Only apps with a button on their page right now.
     def downloadable(p):
-        return any(pl["kind"] == "mac" and latest_mac(pl["feed"]) or pl["kind"] == "windows" and pl.get("status") == "public" and latest_mac(pl["feed"])
+        return any(pl["kind"] == "mac" and latest_mac(pl["feed"]) or pl["kind"] in ("windows", "android") and pl.get("status") == "public" and latest_mac(pl["feed"])
                    for pl in p["platforms"])
     apps = ", ".join(f'<a href="/{base}{p["id"]}/">{e(p["name"])}</a>' for p in data if downloadable(p))
     steps = lambda items: "<ol>" + "".join(f"<li>{e(i)}</li>" for i in items) + "</ol>"
@@ -960,6 +1040,7 @@ def update_page(data, lang):
             f'<h2>{h["where"][0]}</h2>' + "".join(f'<p>{x.replace("{apps}", apps)}</p>' for x in h["where"][1])
             + f'<h2>{h["mac"][0]}</h2>{steps(h["mac"][1])}<p>{h["mac"][2]}</p>'
             f'<h2>{h["windows"][0]}</h2>{steps(h["windows"][1])}<p>{h["windows"][2]}</p>'
+            f'<h2>{h["android"][0]}</h2>{steps(h["android"][1])}<p>{h["android"][2]}</p>'
             f'<h2>{h["chrome"][0]}</h2><p>{h["chrome"][1][0]}</p>'
             f'<h2>{h["help"][0]}</h2><p>{h["help"][1][0].replace("{mail}", mail_address(lang))}</p></section>')
     return page(lang, f'{h["title"]} — kvp projects', h["lead"], body, "update/")
