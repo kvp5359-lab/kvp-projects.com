@@ -31,7 +31,7 @@ T = {
         "subscribe": "Подписаться через RSS", "manualUpdate": "Как обновиться вручную", "filter": "Показать обновления", "allChip": "Все",
         "more": "+ ещё {n}", "details": "Подробнее и скачать", "appUpdates": "Все обновления {name}", "inRu": "",
         "rssTitle": "kvp projects — обновления", "rssDesc": "Новые версии программ kvp projects для Mac и Windows.",
-        "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "downloadAndroid": "Скачать для Android", "platformsLabel": "Платформы", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
+        "download": "Скачать для Mac", "downloadWindows": "Скачать для Windows", "downloadAndroid": "Скачать для Android", "groups": {"apps": "Приложения", "extensions": "Расширения для браузера"}, "platformsLabel": "Платформы", "windowsUnsigned": "Windows может предупредить о новой программе: «Подробнее» → «Выполнить в любом случае»", "soon": "Скоро", "store": "Установить из Chrome Web Store",
         "chromeSoon": "Скоро в Chrome Web Store", "requires": "{min} или новее",
         "beta": "Бета", "betaNote": "Бета-версия: приложение активно развивается, возможности ещё добавляются.",
         "version": "Версия {v}", "features": "Что умеет", "changes": "Что нового", "changesMac": "Что нового в версии для Mac", "older": "Предыдущие версии",
@@ -62,7 +62,7 @@ T = {
         "subscribe": "Subscribe via RSS", "manualUpdate": "How to update by hand", "filter": "Show updates", "allChip": "All",
         "more": "+ {n} more", "details": "Details and download", "appUpdates": "All {name} updates", "inRu": "in Russian",
         "rssTitle": "kvp projects — updates", "rssDesc": "New versions of kvp projects apps for Mac and Windows.",
-        "download": "Download for Mac", "downloadWindows": "Download for Windows", "downloadAndroid": "Download for Android", "platformsLabel": "Platforms", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
+        "download": "Download for Mac", "downloadWindows": "Download for Windows", "downloadAndroid": "Download for Android", "groups": {"apps": "Apps", "extensions": "Browser extensions"}, "platformsLabel": "Platforms", "windowsUnsigned": "Windows may warn about a new program: “More info” → “Run anyway”", "soon": "Coming soon", "store": "Add from Chrome Web Store",
         "chromeSoon": "Coming soon to Chrome Web Store", "requires": "{min} or later",
         "beta": "Beta", "betaNote": "Beta: the app is in active development, more is on the way.",
         "version": "Version {v}", "features": "Features", "changes": "What’s new", "changesMac": "What’s new on Mac", "older": "Earlier versions",
@@ -939,20 +939,26 @@ def build():
     icons = {p["id"]: make_icon(p) for p in data}
     kinds = [k for k in PLATFORM if any(pl["kind"] == k for p in data for pl in p["platforms"])]
     later = [k for k in ("windows", "android", "ios") if k not in kinds]
-    # Apps first, extensions after them (content.json order within each): one list, not grouped by platform; each card shows its platforms.
-    shown = sorted(data, key=lambda p: all(pl["kind"] == "chrome" for pl in p["platforms"]))
+    # Two lists, not by platform: apps (each card shows its platforms) and browser extensions; content.json order within each.
+    is_ext = lambda p: all(pl["kind"] == "chrome" for pl in p["platforms"])
+    groups = [("apps", [p for p in data if not is_ext(p)]), ("extensions", [p for p in data if is_ext(p)])]
 
     for lang in ("ru", "en"):
         t = T[lang]
         base = "en/" if lang == "en" else ""
-        cards = ""
-        for n, p in enumerate(shown):
-            # The name leads; under it — what the app gives you (`benefit`), not what it is; in the corner — where it runs.
-            cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
-                      f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
-                      f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
-                      f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span>{platform_marks(p, lang)}</a>')
-        sections = f'<section class="group" id="apps"><div class="grid">{cards}</div></section>'
+        sections, n = "", 0
+        for gid, products in groups:
+            cards = ""
+            for p in products:
+                # The name leads; under it — what the app gives you (`benefit`), not what it is; in the corner — where it runs.
+                cards += (f'<a class="card" href="/{base}{p["id"]}/">{ink("card1" if n % 2 == 0 else "card2", "frame")}'
+                          f'<img src="/{icons[p["id"]]}" alt="" width="72" height="72">'
+                          f'<span class="card-text"><span class="card-head"><b>{e(p["name"])}</b>{beta(p, lang)}{fresh_badge(p, lang)}</span>'
+                          f'<span class="benefit">{e(p["benefit"][lang])}</span>{price_tag(p, lang)}</span>{platform_marks(p, lang)}</a>')
+                n += 1
+            if cards:
+                sections += (f'<section class="group" id="{gid}"><div class="group-head"><h2>{t["groups"][gid]}</h2></div>'
+                             f'<div class="grid">{cards}</div></section>')
         nxt = f'<p class="meta next">{t["next"].format(list=", ".join(PLATFORM[k] for k in later))}</p>' if later else ""
         # «Latest updates»: the newest published release of each Mac app, the three most recent (one line per app — a
         # busy app doesn't push the others out).
