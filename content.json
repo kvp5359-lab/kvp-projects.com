@@ -646,6 +646,48 @@
           "store": ""
         }
       ]
+    },
+    {
+      "id": "volleyball",
+      "name": "Волейбол",
+      "tagline": {
+        "ru": "Счёт и статистика любительского волейбола",
+        "en": "Score and stats for casual volleyball"
+      },
+      "benefit": {
+        "ru": "Ведёшь счёт с телефона — статистика копится сама",
+        "en": "Keep the score on your phone, the stats add up by themselves"
+      },
+      "summary": {
+        "ru": "Для компании, которая играет вместе: отмечаешь, кто пришёл, делишь на команды и ведёшь счёт по розыгрышам. Очки игроков, победы и сеты считаются сами и видны всем в компании.",
+        "en": "For friends who play together: mark who came, split into teams and keep the score point by point. Players’ points, wins and sets add up by themselves and everyone in the group sees them."
+      },
+      "features": {
+        "ru": [
+          "Игровой день: кто пришёл, составы вручную или случайно, повтор прошлых составов",
+          "Счёт одним нажатием: очко игроку, команде или за ошибку соперника, подсказка подачи, сетбол и матчбол",
+          "Замены и смена подачи по ходу матча, «Закончить» на текущем счёте",
+          "Пляж или зал с гибкими правилами: до скольких очков, сколько сетов",
+          "Статистика игроков за день, месяц, год и всё время",
+          "Компания на несколько телефонов: приглашение по коду, матч другого телефона виден вживую"
+        ],
+        "en": [
+          "Game day: who came, teams by hand or at random, repeat the last teams",
+          "Score with one tap: a point to a player, the team or for the other side’s error; who serves, set and match point",
+          "Substitutions and serve fixes during a match, “Finish” at the current score",
+          "Beach or indoor with flexible rules: points per set, number of sets",
+          "Players’ stats for the day, month, year and all time",
+          "A group on several phones: join with a code, a match on another phone is shown live"
+        ]
+      },
+      "platforms": [
+        {
+          "kind": "android"
+        }
+      ],
+      "ui_langs": [
+        "ru"
+      ]
     }
   ]
 }
