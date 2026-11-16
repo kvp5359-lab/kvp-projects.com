@@ -88,7 +88,7 @@
 ## Android (с 06.11.2026)
 - Так же, как Windows: на сайте только при `status: public` в реестре (у платформы в реестре `site: android`), запись `{kind: android}` в `content.json`, минимальная система — название в `ANDROID_NAMES`. Журнал — `platform_log(p, "android")`, якорь `#va<версия>`, строки «<Имя> (Android)».
 - Кнопка — `actions()`: `<file>-<версия>.apk`; блок `android_help()` — как поставить файл с сайта (разрешение источника, Google Play Защита), обновления, удаление, куда писать. В `/update/` — раздел «На Android», в `/privacy/` — «Android и учётная запись kvp».
-- Сейчас: Dictum и Note Calc. LanguageApp — нет (нет названия и страницы).
+- Сейчас: Dictum, Note Calc и LanguageApp (с 17.11.2026, только Android, рабочее название; в `/privacy/` — свой абзац).
 
 ## Деплой
 - Публичный репозиторий GitHub `kvp5359-lab/kvp-projects.com`, GitHub Pages из папки `docs/` ветки `main`, свой домен

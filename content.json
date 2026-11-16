@@ -536,6 +536,46 @@
       }
     },
     {
+      "id": "languageapp",
+      "name": "LanguageApp",
+      "tagline": {
+        "ru": "Учи язык на своих фразах",
+        "en": "Learn a language from your own phrases"
+      },
+      "benefit": {
+        "ru": "Учишь язык на том, что говоришь и читаешь сам",
+        "en": "Learn a language from what you say and read yourself"
+      },
+      "summary": {
+        "ru": "Записываешь свою речь или вставляешь текст — приложение переводит его, выбирает слова и фразы и делает из них твой личный курс: словарь с повторениями, тренажёры, игры, чтение с переводом и разговор с собеседником-нейросетью.",
+        "en": "Record your speech or paste a text, and the app translates it, picks out words and phrases and turns them into your own course: a dictionary with reviews, drills, games, reading with translation and a conversation with an AI partner."
+      },
+      "features": {
+        "ru": [
+          "Запись речи и распознавание прямо на телефоне, разбор фраз и слов",
+          "Словарь с повторениями по интервалам, группы по темам и «Слова по теме»",
+          "Тренажёры и игры: «Бластер», «Гонка», «Тропа», «Собери слово»",
+          "Чтение книг и текстов с переводом страниц наперёд и словами по нажатию",
+          "Переводчик с озвучкой и разговор вслух с собеседником-нейросетью"
+        ],
+        "en": [
+          "Speech recording and recognition right on the phone, phrases and words picked out",
+          "A dictionary with spaced reviews, topic groups and “Words on a topic”",
+          "Drills and games: Blaster, Race, Trail, Build the word",
+          "Reading books and texts with pages translated ahead and words on a tap",
+          "A translator with voice and a spoken conversation with an AI partner"
+        ]
+      },
+      "platforms": [
+        {
+          "kind": "android"
+        }
+      ],
+      "ui_langs": [
+        "ru"
+      ]
+    },
+    {
       "id": "subtitle-tools",
       "name": "Subtitle Tools",
       "tagline": {
