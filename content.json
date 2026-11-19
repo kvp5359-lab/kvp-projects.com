@@ -576,6 +576,46 @@
       ]
     },
     {
+      "id": "habit-app",
+      "name": "Привычки",
+      "tagline": {
+        "ru": "Привычки, календарь и напоминания",
+        "en": "Habits, a calendar and reminders"
+      },
+      "benefit": {
+        "ru": "Делаешь то, что обещал себе, — каждый день",
+        "en": "Do what you promised yourself — every day"
+      },
+      "summary": {
+        "ru": "Привычки на любое расписание, со временем и длительностью, напоминаниями и своим календарём рядом с Google Календарём. В нужный момент приложение может закрыть экран, как будильник, — до выполненного задания: перевести иностранные слова, решить пример или встряхнуть телефон. Родитель видит привычки ребёнка и его результаты.",
+        "en": "Habits on any schedule, with a time and a duration, reminders and a calendar of their own beside Google Calendar. At the right moment the app can cover the screen like an alarm clock until a task is done: translate foreign words, solve a sum or shake the phone. A parent sees a child’s habits and results."
+      },
+      "features": {
+        "ru": [
+          "Каждый день, по дням недели, раз в несколько дней, по числам месяца или N раз в неделю",
+          "Привычки «не делать», несколько раз в день, пауза и пропуск без потери серии",
+          "Несколько напоминаний, как в Google Календаре, и «Сделано» прямо из уведомления",
+          "Календарь месяц / неделя / день и привычки в Google Календаре",
+          "Блокировка экрана с заданием и аварийным выходом, статистика по каждой привычке, семья"
+        ],
+        "en": [
+          "Every day, on weekdays, every few days, on days of the month or N times a week",
+          "“Don’t do” habits, several times a day, pauses and skips that keep the streak",
+          "Several reminders, like in Google Calendar, and “Done” right from the notification",
+          "A month / week / day calendar and habits in Google Calendar",
+          "A screen lock with a task and an emergency exit, statistics for each habit, family"
+        ]
+      },
+      "platforms": [
+        {
+          "kind": "android"
+        }
+      ],
+      "ui_langs": [
+        "ru"
+      ]
+    },
+    {
       "id": "subtitle-tools",
       "name": "Subtitle Tools",
       "tagline": {
